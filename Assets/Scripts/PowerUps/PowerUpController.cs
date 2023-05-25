@@ -4,31 +4,52 @@ public class PowerUpController : IPowerUp
 {
     private PowerUpView powerUpView;
 
+    private bool isActive;
+    private float activeDuration;
     private float activeTime;
 
     public PowerUpController(PowerUpView powerUpPrefab, float activeDuration)
     {
         powerUpView = Object.Instantiate(powerUpPrefab);
         powerUpView.SetController(this);
-        activeTime = activeDuration;
+        this.activeDuration = activeDuration;
     }
 
-    public void SetPosition(Vector2 spawnPosition) => powerUpView.transform.position = spawnPosition;
-    
+    public void Configure(Vector2 spawnPosition)
+    {
+        isActive = false;
+        activeTime = activeDuration;
+        powerUpView.transform.position = spawnPosition;
+        powerUpView.gameObject.SetActive(true);
+        powerUpView.Toggle(true);
+    }
+
     public void UpdateTimer()
     {
-        if (activeTime <= 0)
-            Deactivate();
-        else
-            activeTime -= Time.deltaTime;
+        if (isActive)
+        {
+            activeTime -= Time.deltaTime; 
+            if (activeTime <= 0)
+                Deactivate();
+        }
     }
 
-    public void PowerUpTriggerEntered(GameObject colidedObject)
+    public void PowerUpTriggerEntered(GameObject collidedObject)
     {
-        // TODO: Implement collider trigger logic for powerUp.
+        if(collidedObject.GetComponent<PlayerView>() != null)
+            Activate();
     }
 
-    public virtual void Activate() { }
+    public virtual void Activate() 
+    {
+        isActive = true;
+        powerUpView.Toggle(false);
+    }
 
-    public virtual void Deactivate() { }
+    public virtual void Deactivate() 
+    {
+        isActive = false;
+        powerUpView.gameObject.SetActive(false);
+        GameService.Instance.GetPowerUpService().ReturnPowerUpToPool(this);
+    }
 }

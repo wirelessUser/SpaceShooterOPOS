@@ -15,7 +15,7 @@ public class GenericObjectPool<T> where T : class
     {
         if (pooledItems.Count > 0)
         {
-            PooledItem<T> item = pooledItems.Find(item => !item.isUsed && item is IT);
+            PooledItem<T> item = pooledItems.Find(item => !item.isUsed && item.Item is IT);
             if (item != null)
             {
                 item.isUsed = true;

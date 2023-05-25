@@ -10,6 +10,8 @@ public class EnemyView : MonoBehaviour
     public void SetController(EnemyController enemyController) => this.enemyController = enemyController;
     
     private void Update() => enemyController.UpdateMotion();
-    
-    private void OnCollisionEnter(Collision collision) => enemyController?.OnEnemyCollided(collision.gameObject);
+
+    public void TakeBulletDamage(int damageToTake) => enemyController.TakeDamage(damageToTake);
+
+    private void OnTriggerEnter2D(Collider2D collision) => enemyController?.OnEnemyCollided(collision.gameObject);
 }

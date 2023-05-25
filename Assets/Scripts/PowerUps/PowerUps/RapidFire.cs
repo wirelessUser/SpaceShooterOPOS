@@ -4,11 +4,13 @@ public class RapidFire : PowerUpController
 
     public override void Activate()
     {
-        GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(true);
+        base.Activate();
+        GameService.Instance.GetPlayerService().GetPlayerController().ToggleRapidFire(true);
     }
 
     public override void Deactivate()
     {
-        GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(false);
+        base.Deactivate();
+        GameService.Instance.GetPlayerService().GetPlayerController().ToggleRapidFire(false);
     }
 }

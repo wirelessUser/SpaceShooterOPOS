@@ -12,4 +12,10 @@ public class PlayerService
     }
 
     public PlayerController GetPlayerController() => playerController;
+
+
+    public void ResetPlayerBullet(BulletController bulletToReset)
+    {
+        playerBulletPool.ReturnItem(bulletToReset);
+    }
 }

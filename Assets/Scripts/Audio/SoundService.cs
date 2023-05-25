@@ -6,9 +6,10 @@ using UnityEngine;
 /// </summary>
 public class SoundService
 {
+    private SoundScriptableObject soundSO;
+
     private AudioSource audioEffects;
     private AudioSource backgroundMusic;
-    private SoundScriptableObject soundSO;
 
     public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
     {
@@ -29,12 +30,11 @@ public class SoundService
         if (clip != null)
         {
             audioEffects.loop = loopSound;
+            audioEffects.clip = clip;
             audioEffects.PlayOneShot(clip);
         }
         else
-        {
             Debug.LogError("No Audio Clip selected.");
-        }
     }
 
     /// <summary>
@@ -48,7 +48,8 @@ public class SoundService
         if (clip != null)
         {
             backgroundMusic.loop = loopSound;
-            backgroundMusic.PlayOneShot(clip);
+            backgroundMusic.clip = clip;
+            backgroundMusic.Play();
         }
         else
         {

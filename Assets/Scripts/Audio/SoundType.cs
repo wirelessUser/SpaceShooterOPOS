@@ -1,8 +1,8 @@
 public enum SoundType
 {
     BackgroundMusic,
-    EnemyShipExplosion,
-    PlayerShipExplosion,
+    EnemyDamaged,
+    EnemyDeath,
+    PlayerDeath,
     PlayerBullet,
-    EnemyBullet,
 }

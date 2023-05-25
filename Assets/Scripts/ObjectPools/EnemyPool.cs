@@ -1,12 +1,12 @@
 public class EnemyPool : GenericObjectPool<EnemyController>
 {
     private EnemyView enemyPrefab;
-    private EnemyScriptableObject enemySO;
+    private EnemyData enemyData;
 
-    public EnemyPool(EnemyView enemyPrefab, EnemyScriptableObject enemySO)
+    public EnemyPool(EnemyView enemyPrefab, EnemyData enemyData)
     {
         this.enemyPrefab = enemyPrefab;
-        this.enemySO = enemySO;
+        this.enemyData = enemyData;
     }
 
     public EnemyController GetEnemy()
@@ -16,7 +16,7 @@ public class EnemyPool : GenericObjectPool<EnemyController>
 
     protected override EnemyController CreateItem<IT>()
     {
-        EnemyController newEnemy = new EnemyController(enemyPrefab, enemySO);
+        EnemyController newEnemy = new EnemyController(enemyPrefab, enemyData);
         return newEnemy;
     }
 }

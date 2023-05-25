@@ -1,36 +1,102 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyService
 {
     private EnemyPool enemyPool;
+    private EnemyScriptableObject enemySO;
     
     private bool isSpawning;
-    private float spawnRate;
+    private float currentSpawnRate;
+    private float spawnTimer;
 
     public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemySO)
     {
-        enemyPool = new EnemyPool(enemyPrefab, enemySO);
+        enemyPool = new EnemyPool(enemyPrefab, enemySO.enemyData);
+        this.enemySO = enemySO;
+        InitializeVariables();
+    }
+
+    private void InitializeVariables()
+    {
+        isSpawning = true;
+        currentSpawnRate = enemySO.initialSpawnRate;
+        spawnTimer = currentSpawnRate;
+    }
+
+    public void Update()
+    {
+        if (isSpawning)
+        {
+            spawnTimer -= Time.deltaTime;
+            if (spawnTimer <= 0)
+            {
+                SpawnEnemy();
+                IncreaseDifficulty();
+                ResetSpawnTimer();
+            } 
+        }
     }
 
     public void ToggleEnemySpawning(bool setActive) => isSpawning = setActive;
 
-    private async void SpawnEnemy()
+    private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
+
+    private void IncreaseDifficulty()
     {
-        // TODO: If spawning is active then,
-        // Get a random orientation for the enemy (Up/Down/Left/Right)
-        // Calculate spawn position outside the game screen, according to the orientation.
-        // Use SpawnEnemyAtPosition() method to spawn the enemy at the spawn position.
+        if (currentSpawnRate > enemySO.minimumSpawnRate)
+            currentSpawnRate -= enemySO.difficultyDelta;
+        else
+            currentSpawnRate = enemySO.minimumSpawnRate;
     }
 
-    private async void IncreaseDifficulty()
+    private void SpawnEnemy()
     {
-        // TODO: Decrease Spawn Rate over time (if spawning is active) .
+        // Get a random orientation for the enemy (Up / Down / Left / Right)
+        EnemyOrientation randomOrientation = (EnemyOrientation)Random.Range(0, Enum.GetValues(typeof(EnemyOrientation)).Length);
+
+        // Calculate spawn position outside the game screen, according to the orientation and spawn an enemy.
+        SpawnEnemyAtPosition(CalculateSpawnPosition(randomOrientation), randomOrientation);
     }
 
-    private void SpawnEnemyAtPosition(Vector3 spawnPosition)
+    private Vector2 CalculateSpawnPosition(EnemyOrientation enemyOrientation)
+    {
+        // Calculate a random spawn position outside the visible screen
+        Vector3 spawnPosition = Vector3.zero;
+        float halfScreenWidth = Camera.main.aspect * Camera.main.orthographicSize;
+        float halfScreenHeight = Camera.main.orthographicSize;
+
+        switch (enemyOrientation)
+        {
+            case EnemyOrientation.Left: 
+                spawnPosition.x = halfScreenWidth + enemySO.spawnDistance;
+                spawnPosition.y = Random.Range(-halfScreenHeight, halfScreenHeight);
+                break;
+
+            case EnemyOrientation.Right: 
+                spawnPosition.x = -halfScreenWidth - enemySO.spawnDistance;
+                spawnPosition.y = Random.Range(-halfScreenHeight, halfScreenHeight);
+                break;
+
+            case EnemyOrientation.Up: 
+                spawnPosition.x = Random.Range(-halfScreenWidth, halfScreenWidth);
+                spawnPosition.y = - halfScreenHeight - enemySO.spawnDistance;
+                break;
+
+            case EnemyOrientation.Down: 
+                spawnPosition.x = Random.Range(-halfScreenWidth, halfScreenWidth);
+                spawnPosition.y = halfScreenHeight + enemySO.spawnDistance;
+                break;
+        }
+
+        return spawnPosition;
+    }
+
+    private void SpawnEnemyAtPosition(Vector2 spawnPosition, EnemyOrientation enemyOrientation)
     {
         EnemyController spawnedEnemy = enemyPool.GetEnemy();
-        spawnedEnemy.SetPosition(spawnPosition);
+        spawnedEnemy.Configure(spawnPosition, enemyOrientation);
     }
 
     public void ReturnEnemyToPool(EnemyController enemyToReturn) => enemyPool.ReturnItem(enemyToReturn);

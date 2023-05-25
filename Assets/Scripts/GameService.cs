@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Threading;
 
 /// <summary>
 /// This is a Service Locator class which provides access to various game-related services.
@@ -45,16 +46,22 @@ public class GameService : GenericMonoSingleton<GameService>
 
     #endregion
 
-
     private void Start()
     {
         // Initialize all Services.
         playerService = new PlayerService(playerPrefab, playerSO, playerBulletPrefab, playerBulletSO);
-        enemyService = new EnemyService(enemyPrefab, enemySO);
         powerUpService = new PowerUpService(powerUpSO);
-        vfxService = new VFXService(vfxSO);
+        enemyService = new EnemyService(enemyPrefab, enemySO);
         soundService = new SoundService(soundSO, audioEffectSource, backgroundMusicSource);
-        uiService = new UIService(scoreText, healthText);
+        /*
+        vfxService = new VFXService(vfxSO);
+        uiService = new UIService(scoreText, healthText);*/
+    }
+
+    private void Update()
+    {
+        powerUpService?.Update();
+        enemyService?.Update();
     }
 
     public PlayerService GetPlayerService() => playerService;
@@ -68,4 +75,5 @@ public class GameService : GenericMonoSingleton<GameService>
     public SoundService GetSoundService() => soundService;
 
     public UIService GetUIService() => uiService;
+
 }

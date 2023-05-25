@@ -26,11 +26,8 @@ public class PlayerView : MonoBehaviour
     private void HandlePlayerInput()
     {
         // TODO: Implement player input handling
+        playerController.HandlePlayerMovement();
+        playerController.HandlePlayerRotation();
+        playerController.HandleShooting();
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        playerController.OnPlayerCollided(collision.gameObject);
-    }
-
 }

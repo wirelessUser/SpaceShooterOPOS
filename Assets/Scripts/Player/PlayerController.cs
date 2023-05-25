@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerController : IDamageable
@@ -9,6 +10,8 @@ public class PlayerController : IDamageable
     private WeaponMode currentWeaponMode;
     private int currentHealth;
     private float currentRateOfFire;
+    private bool isShooting;
+    private bool shieldActive;
 
     #region Initialization
 
@@ -17,6 +20,7 @@ public class PlayerController : IDamageable
         playerView = Object.Instantiate(playerViewPrefab);
         playerView.SetController(this);
         this.playerSO = playerSO;
+        this.bulletPool = bulletPool;
 
         InitializeVariables();
     }
@@ -24,66 +28,123 @@ public class PlayerController : IDamageable
     private void InitializeVariables()
     {
         currentHealth = playerSO.maxHealth;
-        currentRateOfFire = playerSO.rateOfFire;
+        currentRateOfFire = playerSO.defaultFireRate;
         currentWeaponMode = WeaponMode.SingleCanon;
+        isShooting = false;
     }
 
     #endregion
 
     public void TakeDamage(int damageToTake)
     {
-        // TODO: Implement logic to take damage.
+        if(!shieldActive)
+            currentHealth -= damageToTake;
+
+        // TODO: Update Health in UI.
+        
+        if (currentHealth <= 0)
+            PlayerDeath();
     }
 
     private void PlayerDeath()
     {
         // TODO: Implement player death logic
+        // Player Ship Destroyed.
+        playerView.gameObject.SetActive(false);
+        GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
+        // Spawning of enemies is stopped.
+        // Game Over UI.
     }
 
     public void HandlePlayerMovement()
     {
         // TODO: Implement player movement logic
+        if (Input.GetKey(KeyCode.W))
+        {
+            playerView.transform.Translate(Vector2.up * Time.deltaTime * playerSO.movementSpeed);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            playerView.transform.Translate(Vector2.down * Time.deltaTime * playerSO.movementSpeed);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            playerView.transform.Translate(Vector2.left * Time.deltaTime * playerSO.movementSpeed);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            playerView.transform.Translate(Vector2.right * Time.deltaTime * playerSO.movementSpeed);
+        }
     }
 
-    public void FireWeapon()
+    public void HandlePlayerRotation()
     {
-        // TODO: Fire weapons using bullet pool according to player's current weapon mode.
+        var dir = Input.mousePosition - Camera.main.WorldToScreenPoint(playerView.transform.position);
+        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        playerView.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
     }
 
-    /// <summary>
-    /// Fires a bullet from the given position.
-    /// </summary>
-    /// <param name="fireLocation">The position from which to fire the bullet.</param>
+    public void HandleShooting()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            FireWeapon();
+        if (Input.GetKeyUp(KeyCode.Space))
+            isShooting = false;
+    }
+
+    public async void FireWeapon()
+    {
+        isShooting = true;
+        while (isShooting)
+        {
+            switch (currentWeaponMode)
+            {
+                case WeaponMode.SingleCanon:
+                    FireBulletAtPosition(playerView.canonTransform);
+                    break;
+                case WeaponMode.DoubleTurret:
+                    FireBulletAtPosition(playerView.turretTransform1);
+                    FireBulletAtPosition(playerView.turretTransform2);
+                    break;
+            }
+            await Task.Delay(Mathf.RoundToInt(currentRateOfFire * 1000));
+        }
+    }
+
     private void FireBulletAtPosition(Transform fireLocation)
     {
-        // TODO: Implement the logic to fire a bullet from the given position.
-        // Get a bullet from the playerBulletPool.
-        // Set the bullet's position and rotation to the fireLocation.
-        // Activate the bullet.
+        BulletController bulletToFire = bulletPool.GetBullet();
+        bulletToFire.ConfigureBullet(fireLocation);
+        GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
     }
 
-    public void ResetBullet(BulletController bulletToReset)
-    {
-        bulletPool.ReturnItem(bulletToReset);
-    }
+    #region PowerUp Logic
 
     public void ToggleShield(bool setActive)
     {
-
+        if (setActive)
+            shieldActive = true;
+        else
+            shieldActive = false;
     }
 
     public void ToggleDoubleTurret(bool setActive)
     {
-
+        if (setActive)
+            currentWeaponMode = WeaponMode.DoubleTurret;
+        else
+            currentWeaponMode = WeaponMode.SingleCanon;
     }
 
-    public void OnPlayerCollided(GameObject collidedGameObject)
+    public void ToggleRapidFire(bool setActive)
     {
-
+        if (setActive)
+            currentRateOfFire = playerSO.rapidFireRate;
+        else
+            currentRateOfFire = playerSO.defaultFireRate;
     }
 
-    public void ChangeRateOfFire(float newRateOfFire) => currentRateOfFire = newRateOfFire;
-    public void ResetRateOfFire() => currentRateOfFire = playerSO.rateOfFire;
+    #endregion
 }
 
 public enum WeaponMode

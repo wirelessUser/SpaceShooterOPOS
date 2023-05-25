@@ -4,11 +4,13 @@ public class Shield : PowerUpController
 
     public override void Activate()
     {
+        base.Activate();
         GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(true);
     }
 
     public override void Deactivate()
     {
+        base.Deactivate();
         GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(false);
     }
 }
