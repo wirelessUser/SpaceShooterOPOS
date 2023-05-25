@@ -1,6 +1,14 @@
 using UnityEngine;
 using TMPro;
-using System.Threading;
+using CosmicCuration.Audio;
+using CosmicCuration.Enemy;
+using CosmicCuration.Bullets;
+using CosmicCuration.VFX;
+using CosmicCuration.Player;
+using CosmicCuration.UI;
+using CosmicCuration.Utilities;
+using CosmicCuration.PowerUps;
+
 
 /// <summary>
 /// This is a Service Locator class which provides access to various game-related services.

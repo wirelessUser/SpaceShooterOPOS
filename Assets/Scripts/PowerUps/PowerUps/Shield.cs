@@ -1,16 +1,19 @@
-public class Shield : PowerUpController
+namespace CosmicCuration.PowerUps
 {
-    public Shield(PowerUpView shieldPrefab, float activeDuration) : base(shieldPrefab, activeDuration) { }
-
-    public override void Activate()
+    public class Shield : PowerUpController
     {
-        base.Activate();
-        GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(true);
-    }
+        public Shield(PowerUpView shieldPrefab, float activeDuration) : base(shieldPrefab, activeDuration) { }
 
-    public override void Deactivate()
-    {
-        base.Deactivate();
-        GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(false);
-    }
+        public override void Activate()
+        {
+            base.Activate();
+            GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(true);
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(false);
+        }
+    } 
 }

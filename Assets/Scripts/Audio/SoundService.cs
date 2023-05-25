@@ -1,74 +1,77 @@
 using System;
 using UnityEngine;
 
-/// <summary>
-/// This class handles playing sound effects and background music in the game.
-/// </summary>
-public class SoundService
+namespace CosmicCuration.Audio
 {
-    private SoundScriptableObject soundSO;
-
-    private AudioSource audioEffects;
-    private AudioSource backgroundMusic;
-
-    public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
-    {
-        soundSO = soundScriptableObject;
-        audioEffects = audioEffectSource;
-        backgroundMusic = bgMusicSource;
-        PlaybackgroundMusic(SoundType.BackgroundMusic, true);
-    }
-
     /// <summary>
-    /// Plays the specified sound effect.
+    /// This class handles playing sound effects and background music in the game.
     /// </summary>
-    /// <param name="soundType">The type of the sound effect to play.</param>
-    /// <param name="loopSound">Specifies whether the sound should loop or not.</param>
-    public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
+    public class SoundService
     {
-        AudioClip clip = GetSoundClip(soundType);
-        if (clip != null)
-        {
-            audioEffects.loop = loopSound;
-            audioEffects.clip = clip;
-            audioEffects.PlayOneShot(clip);
-        }
-        else
-            Debug.LogError("No Audio Clip selected.");
-    }
+        private SoundScriptableObject soundSO;
 
-    /// <summary>
-    /// Plays the background music.
-    /// </summary>
-    /// <param name="soundType">The type of the background music to play.</param>
-    /// <param name="loopSound">Specifies whether the background music should loop or not.</param>
-    private void PlaybackgroundMusic(SoundType soundType, bool loopSound = false)
-    {
-        AudioClip clip = GetSoundClip(soundType);
-        if (clip != null)
-        {
-            backgroundMusic.loop = loopSound;
-            backgroundMusic.clip = clip;
-            backgroundMusic.Play();
-        }
-        else
-        {
-            Debug.LogError("No Audio Clip selected.");
-        }
-    }
+        private AudioSource audioEffects;
+        private AudioSource backgroundMusic;
 
-    /// <summary>
-    /// Retrieves the audio clip associated with the specified sound type.
-    /// </summary>
-    /// <param name="soundType">The type of the sound.</param>
-    /// <returns>The audio clip associated with the sound type, or null if not found.</returns>
-    private AudioClip GetSoundClip(SoundType soundType)
-    {
-        Sounds st = Array.Find(soundSO.audioList, item => item.soundType == soundType);
-        if (st.audio != null)
+        public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
         {
-            return st.audio;
+            soundSO = soundScriptableObject;
+            audioEffects = audioEffectSource;
+            backgroundMusic = bgMusicSource;
+            PlaybackgroundMusic(SoundType.BackgroundMusic, true);
         }
-        return null;
+
+        /// <summary>
+        /// Plays the specified sound effect.
+        /// </summary>
+        /// <param name="soundType">The type of the sound effect to play.</param>
+        /// <param name="loopSound">Specifies whether the sound should loop or not.</param>
+        public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
+        {
+            AudioClip clip = GetSoundClip(soundType);
+            if (clip != null)
+            {
+                audioEffects.loop = loopSound;
+                audioEffects.clip = clip;
+                audioEffects.PlayOneShot(clip);
+            }
+            else
+                Debug.LogError("No Audio Clip selected.");
+        }
+
+        /// <summary>
+        /// Plays the background music.
+        /// </summary>
+        /// <param name="soundType">The type of the background music to play.</param>
+        /// <param name="loopSound">Specifies whether the background music should loop or not.</param>
+        private void PlaybackgroundMusic(SoundType soundType, bool loopSound = false)
+        {
+            AudioClip clip = GetSoundClip(soundType);
+            if (clip != null)
+            {
+                backgroundMusic.loop = loopSound;
+                backgroundMusic.clip = clip;
+                backgroundMusic.Play();
+            }
+            else
+            {
+                Debug.LogError("No Audio Clip selected.");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the audio clip associated with the specified sound type.
+        /// </summary>
+        /// <param name="soundType">The type of the sound.</param>
+        /// <returns>The audio clip associated with the sound type, or null if not found.</returns>
+        private AudioClip GetSoundClip(SoundType soundType)
+        {
+            Sounds st = Array.Find(soundSO.audioList, item => item.soundType == soundType);
+            if (st.audio != null)
+            {
+                return st.audio;
+            }
+            return null;
+        }
     }
 }

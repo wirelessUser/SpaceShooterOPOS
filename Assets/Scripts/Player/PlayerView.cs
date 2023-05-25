@@ -2,32 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerView : MonoBehaviour
+namespace CosmicCuration.Player
 {
-    [SerializeField] public Transform canonTransform;
-    [SerializeField] public Transform turretTransform1;
-    [SerializeField] public Transform turretTransform2;
-
-    private PlayerController playerController;
-
-    public void SetController(PlayerController playerController)
+    public class PlayerView : MonoBehaviour
     {
-        this.playerController = playerController;
-    }
+        [SerializeField] public Transform canonTransform;
+        [SerializeField] public Transform turretTransform1;
+        [SerializeField] public Transform turretTransform2;
 
-    private void Update()
-    {
-        HandlePlayerInput();
-    }
+        private PlayerController playerController;
 
-    /// <summary>
-    /// Checks for movement and fire input and tells the PlayerController to handle the logic accordingly.
-    /// </summary>
-    private void HandlePlayerInput()
-    {
-        // TODO: Implement player input handling
-        playerController.HandlePlayerMovement();
-        playerController.HandlePlayerRotation();
-        playerController.HandleShooting();
-    }
+        public void SetController(PlayerController playerController)
+        {
+            this.playerController = playerController;
+        }
+
+        private void Update()
+        {
+            HandlePlayerInput();
+        }
+
+        /// <summary>
+        /// Checks for movement and fire input and tells the PlayerController to handle the logic accordingly.
+        /// </summary>
+        private void HandlePlayerInput()
+        {
+            // TODO: Implement player input handling
+            playerController.HandlePlayerMovement();
+            playerController.HandlePlayerRotation();
+            playerController.HandleShooting();
+        }
+    } 
 }

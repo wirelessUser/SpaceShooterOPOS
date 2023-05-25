@@ -1,21 +1,24 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyScriptableObject", menuName = "ScriptableObjects/EnemySO")]
-public class EnemyScriptableObject : ScriptableObject
+namespace CosmicCuration.Enemy
 {
-    public float spawnDistance;
-    public float initialSpawnRate;
-    public float minimumSpawnRate;
-    public float difficultyDelta;
-    public EnemyData enemyData;
-}
+    [CreateAssetMenu(fileName = "EnemyScriptableObject", menuName = "ScriptableObjects/EnemySO")]
+    public class EnemyScriptableObject : ScriptableObject
+    {
+        public float spawnDistance;
+        public float initialSpawnRate;
+        public float minimumSpawnRate;
+        public float difficultyDelta;
+        public EnemyData enemyData;
+    }
 
-[Serializable]
-public struct EnemyData
-{
-    public int maxHealth;
-    public float speed;
-    public int damage;
-    public int scoreToGrant;
+    [Serializable]
+    public struct EnemyData
+    {
+        public int maxHealth;
+        public float speed;
+        public int damage;
+        public int scoreToGrant;
+    } 
 }

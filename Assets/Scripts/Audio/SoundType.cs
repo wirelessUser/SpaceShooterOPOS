@@ -1,8 +1,11 @@
-public enum SoundType
+namespace CosmicCuration.Audio
 {
-    BackgroundMusic,
-    EnemyDamaged,
-    EnemyDeath,
-    PlayerDeath,
-    PlayerBullet,
+    public enum SoundType
+    {
+        BackgroundMusic,
+        EnemyDamaged,
+        EnemyDeath,
+        PlayerDeath,
+        PlayerBullet,
+    }
 }

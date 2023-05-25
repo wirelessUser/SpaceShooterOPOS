@@ -1,56 +1,58 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VFXView : MonoBehaviour
+namespace CosmicCuration.VFX
 {
-    private VFXController controller;
-
-    [SerializeField] private List<VFXData> particleSystemMap;
-    private ParticleSystem currentPlayingVFX;
-
-    public void SetController(VFXController controllerToSet)
+    public class VFXView : MonoBehaviour
     {
-        controller = controllerToSet;
-    }
+        private VFXController controller;
 
-    public void ConfigureAndPlay(VFXType type, Vector2 positionToSet)
-    {
-        foreach(VFXData item in particleSystemMap)
+        [SerializeField] private List<VFXData> particleSystemMap;
+        private ParticleSystem currentPlayingVFX;
+
+        public void SetController(VFXController controllerToSet)
         {
-            if (item.type == type)
-            {
-                item.particleSystem.transform.position = positionToSet;
-                item.particleSystem.gameObject.SetActive(true);
-                currentPlayingVFX = item.particleSystem;
-                // item.particleSystem.Play();
-            }
-            else
-                item.particleSystem.gameObject.SetActive(false);
+            controller = controllerToSet;
         }
-        gameObject.SetActive(true);
-    }
 
-    private void Update()
-    {
-        if(currentPlayingVFX != null)
+        public void ConfigureAndPlay(VFXType type, Vector2 positionToSet)
         {
-            if(currentPlayingVFX.isStopped)
+            foreach (VFXData item in particleSystemMap)
             {
-                currentPlayingVFX.gameObject.SetActive(false);
-                currentPlayingVFX = null;
-                controller.OnParticleEffectCompleted();
-                gameObject.SetActive(false);
+                if (item.type == type)
+                {
+                    item.particleSystem.transform.position = positionToSet;
+                    item.particleSystem.gameObject.SetActive(true);
+                    currentPlayingVFX = item.particleSystem;
+                    // item.particleSystem.Play();
+                }
+                else
+                    item.particleSystem.gameObject.SetActive(false);
+            }
+            gameObject.SetActive(true);
+        }
+
+        private void Update()
+        {
+            if (currentPlayingVFX != null)
+            {
+                if (currentPlayingVFX.isStopped)
+                {
+                    currentPlayingVFX.gameObject.SetActive(false);
+                    currentPlayingVFX = null;
+                    controller.OnParticleEffectCompleted();
+                    gameObject.SetActive(false);
+                }
             }
         }
+
     }
 
-}
-
-[Serializable]
-public struct VFXData
-{
-    public VFXType type;
-    public ParticleSystem particleSystem;
+    [Serializable]
+    public struct VFXData
+    {
+        public VFXType type;
+        public ParticleSystem particleSystem;
+    } 
 }

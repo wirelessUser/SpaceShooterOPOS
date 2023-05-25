@@ -1,30 +1,34 @@
 using System;
+using CosmicCuration.Utilities;
 
-public class PowerUpPool : GenericObjectPool<IPowerUp>
+namespace CosmicCuration.PowerUps
 {
-    private PowerUpView currentPowerUpPrefab;
-    private float currentActiveDuration;
-
-    public IPowerUp GetPowerUp<IT>(PowerUpView powerUpPrefab, float activeDuration) where IT : IPowerUp
+    public class PowerUpPool : GenericObjectPool<IPowerUp>
     {
-        currentPowerUpPrefab = powerUpPrefab;
-        currentActiveDuration = activeDuration;
-        return GetItem<IT>();
-    }
+        private PowerUpView currentPowerUpPrefab;
+        private float currentActiveDuration;
 
-    protected override IPowerUp CreateItem<IT>()
-    {
-        PowerUpController newPowerUp;
+        public IPowerUp GetPowerUp<IT>(PowerUpView powerUpPrefab, float activeDuration) where IT : IPowerUp
+        {
+            currentPowerUpPrefab = powerUpPrefab;
+            currentActiveDuration = activeDuration;
+            return GetItem<IT>();
+        }
 
-        if (typeof(IT) == typeof(Shield))
-            newPowerUp = new Shield(currentPowerUpPrefab, currentActiveDuration);
-        else if (typeof(IT) == typeof(DoubleTurret))
-            newPowerUp = new DoubleTurret(currentPowerUpPrefab, currentActiveDuration);
-        else if (typeof(IT) == typeof(RapidFire))
-            newPowerUp = new RapidFire(currentPowerUpPrefab, currentActiveDuration);
-        else
-            throw new NotSupportedException($"Power-up type '{typeof(IT)}' is not supported.");
+        protected override IPowerUp CreateItem<IT>()
+        {
+            PowerUpController newPowerUp;
 
-        return newPowerUp;
-    }
+            if (typeof(IT) == typeof(Shield))
+                newPowerUp = new Shield(currentPowerUpPrefab, currentActiveDuration);
+            else if (typeof(IT) == typeof(DoubleTurret))
+                newPowerUp = new DoubleTurret(currentPowerUpPrefab, currentActiveDuration);
+            else if (typeof(IT) == typeof(RapidFire))
+                newPowerUp = new RapidFire(currentPowerUpPrefab, currentActiveDuration);
+            else
+                throw new NotSupportedException($"Power-up type '{typeof(IT)}' is not supported.");
+
+            return newPowerUp;
+        }
+    } 
 }

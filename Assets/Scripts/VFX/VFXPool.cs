@@ -1,21 +1,22 @@
-using UnityEngine;
-using System;
-using System.Collections.Generic;
+using CosmicCuration.Utilities;
 
-public class VFXPool : GenericObjectPool<VFXController>
+namespace CosmicCuration.VFX
 {
-    private VFXView vfxPrefab;
-
-    public VFXPool(VFXView vfxPrefab) => this.vfxPrefab = vfxPrefab;
-    
-    public VFXController GetVFX()
+    public class VFXPool : GenericObjectPool<VFXController>
     {
-        return GetItem<VFXController>();
-    }
+        private VFXView vfxPrefab;
 
-    protected override VFXController CreateItem<IT>()
-    {
-        VFXController newVFXController = new VFXController(vfxPrefab);
-        return newVFXController;
-    }
+        public VFXPool(VFXView vfxPrefab) => this.vfxPrefab = vfxPrefab;
+
+        public VFXController GetVFX()
+        {
+            return GetItem<VFXController>();
+        }
+
+        protected override VFXController CreateItem<IT>()
+        {
+            VFXController newVFXController = new VFXController(vfxPrefab);
+            return newVFXController;
+        }
+    } 
 }

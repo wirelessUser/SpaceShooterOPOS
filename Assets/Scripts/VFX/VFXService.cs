@@ -1,23 +1,25 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class VFXService
+namespace CosmicCuration.VFX
 {
-    private VFXPool vfxPool;
-
-    public VFXService(VFXView vfxPrefab)
+    public class VFXService
     {
-        vfxPool = new VFXPool(vfxPrefab);
-    }
+        private VFXPool vfxPool;
 
-    public void PlayVFXAtPosition(VFXType type, Vector2 spawnPosition)
-    {
-        VFXController vfxToPlay = vfxPool.GetVFX();
-        vfxToPlay.Configure(type, spawnPosition);
-    }
+        public VFXService(VFXView vfxPrefab)
+        {
+            vfxPool = new VFXPool(vfxPrefab);
+        }
 
-    public void ReturnVFXToPool(VFXController vfxToReturn)
-    {
-        vfxPool.ReturnItem(vfxToReturn);
-    }
+        public void PlayVFXAtPosition(VFXType type, Vector2 spawnPosition)
+        {
+            VFXController vfxToPlay = vfxPool.GetVFX();
+            vfxToPlay.Configure(type, spawnPosition);
+        }
+
+        public void ReturnVFXToPool(VFXController vfxToReturn)
+        {
+            vfxPool.ReturnItem(vfxToReturn);
+        }
+    } 
 }

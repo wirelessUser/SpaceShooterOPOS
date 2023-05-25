@@ -1,6 +1,9 @@
-public enum PowerUpType
+namespace CosmicCuration.PowerUps
 {
-    Shield,
-    RapidFire,
-    DoubleTurret
+    public enum PowerUpType
+    {
+        Shield,
+        RapidFire,
+        DoubleTurret
+    } 
 }

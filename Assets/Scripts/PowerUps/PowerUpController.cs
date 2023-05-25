@@ -1,55 +1,59 @@
 using UnityEngine;
+using CosmicCuration.Player;
 
-public class PowerUpController : IPowerUp
+namespace CosmicCuration.PowerUps
 {
-    private PowerUpView powerUpView;
-
-    private bool isActive;
-    private float activeDuration;
-    private float activeTime;
-
-    public PowerUpController(PowerUpView powerUpPrefab, float activeDuration)
+    public class PowerUpController : IPowerUp
     {
-        powerUpView = Object.Instantiate(powerUpPrefab);
-        powerUpView.SetController(this);
-        this.activeDuration = activeDuration;
-    }
+        private PowerUpView powerUpView;
 
-    public void Configure(Vector2 spawnPosition)
-    {
-        isActive = false;
-        activeTime = activeDuration;
-        powerUpView.transform.position = spawnPosition;
-        powerUpView.gameObject.SetActive(true);
-        powerUpView.Toggle(true);
-    }
+        private bool isActive;
+        private float activeDuration;
+        private float activeTime;
 
-    public void UpdateTimer()
-    {
-        if (isActive)
+        public PowerUpController(PowerUpView powerUpPrefab, float activeDuration)
         {
-            activeTime -= Time.deltaTime; 
-            if (activeTime <= 0)
-                Deactivate();
+            powerUpView = Object.Instantiate(powerUpPrefab);
+            powerUpView.SetController(this);
+            this.activeDuration = activeDuration;
         }
-    }
 
-    public void PowerUpTriggerEntered(GameObject collidedObject)
-    {
-        if(collidedObject.GetComponent<PlayerView>() != null)
-            Activate();
-    }
+        public void Configure(Vector2 spawnPosition)
+        {
+            isActive = false;
+            activeTime = activeDuration;
+            powerUpView.transform.position = spawnPosition;
+            powerUpView.gameObject.SetActive(true);
+            powerUpView.Toggle(true);
+        }
 
-    public virtual void Activate() 
-    {
-        isActive = true;
-        powerUpView.Toggle(false);
-    }
+        public void UpdateTimer()
+        {
+            if (isActive)
+            {
+                activeTime -= Time.deltaTime;
+                if (activeTime <= 0)
+                    Deactivate();
+            }
+        }
 
-    public virtual void Deactivate() 
-    {
-        isActive = false;
-        powerUpView.gameObject.SetActive(false);
-        GameService.Instance.GetPowerUpService().ReturnPowerUpToPool(this);
-    }
+        public void PowerUpTriggerEntered(GameObject collidedObject)
+        {
+            if (collidedObject.GetComponent<PlayerView>() != null)
+                Activate();
+        }
+
+        public virtual void Activate()
+        {
+            isActive = true;
+            powerUpView.Toggle(false);
+        }
+
+        public virtual void Deactivate()
+        {
+            isActive = false;
+            powerUpView.gameObject.SetActive(false);
+            GameService.Instance.GetPowerUpService().ReturnPowerUpToPool(this);
+        }
+    } 
 }

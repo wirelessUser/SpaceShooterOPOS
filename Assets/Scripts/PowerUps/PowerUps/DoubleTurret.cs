@@ -1,16 +1,19 @@
-public class DoubleTurret : PowerUpController
+namespace CosmicCuration.PowerUps
 {
-    public DoubleTurret(PowerUpView shieldPrefab, float activeDuration) : base(shieldPrefab, activeDuration) { }
-
-    public override void Activate()
+    public class DoubleTurret : PowerUpController
     {
-        base.Activate();
-        GameService.Instance.GetPlayerService().GetPlayerController().ToggleDoubleTurret(true);
-    }
+        public DoubleTurret(PowerUpView shieldPrefab, float activeDuration) : base(shieldPrefab, activeDuration) { }
 
-    public override void Deactivate()
-    {
-        base.Deactivate();
-        GameService.Instance.GetPlayerService().GetPlayerController().ToggleDoubleTurret(false);
-    }
+        public override void Activate()
+        {
+            base.Activate();
+            GameService.Instance.GetPlayerService().GetPlayerController().ToggleDoubleTurret(true);
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            GameService.Instance.GetPlayerService().GetPlayerController().ToggleDoubleTurret(false);
+        }
+    } 
 }

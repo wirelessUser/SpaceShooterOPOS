@@ -1,6 +1,9 @@
-public enum VFXType
+namespace CosmicCuration.VFX
 {
-    PlayerExplosion,
-    EnemyExplosion,
-    BulletHitExplosion
+    public enum VFXType
+    {
+        PlayerExplosion,
+        EnemyExplosion,
+        BulletHitExplosion
+    } 
 }

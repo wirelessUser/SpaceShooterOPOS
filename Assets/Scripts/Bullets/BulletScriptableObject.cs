@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BulletScriptableObject", menuName = "ScriptableObjects/BulletSO")]
-public class BulletScriptableObject : ScriptableObject
+namespace CosmicCuration.Bullets
 {
-    public float speed;
-    public int damage;
+    [CreateAssetMenu(fileName = "BulletScriptableObject", menuName = "ScriptableObjects/BulletSO")]
+    public class BulletScriptableObject : ScriptableObject
+    {
+        public float speed;
+        public int damage;
+    } 
 }
