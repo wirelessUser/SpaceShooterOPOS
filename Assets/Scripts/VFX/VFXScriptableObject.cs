@@ -7,10 +7,3 @@ public class VFXScriptableObject : ScriptableObject
 {
     public List<VFXData> data;
 }
-
-[Serializable]
-public struct VFXData
-{
-    public VFXType type;
-    public VFXView prefab;
-}

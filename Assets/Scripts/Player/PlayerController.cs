@@ -31,17 +31,19 @@ public class PlayerController : IDamageable
         currentRateOfFire = playerSO.defaultFireRate;
         currentWeaponMode = WeaponMode.SingleCanon;
         isShooting = false;
+        GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
     }
 
     #endregion
 
     public void TakeDamage(int damageToTake)
     {
-        if(!shieldActive)
+        if (!shieldActive)
+        {
             currentHealth -= damageToTake;
+            GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
+        }
 
-        // TODO: Update Health in UI.
-        
         if (currentHealth <= 0)
             PlayerDeath();
     }
@@ -51,6 +53,7 @@ public class PlayerController : IDamageable
         // TODO: Implement player death logic
         // Player Ship Destroyed.
         playerView.gameObject.SetActive(false);
+        GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
         GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
         // Spawning of enemies is stopped.
         // Game Over UI.

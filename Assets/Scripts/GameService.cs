@@ -23,6 +23,7 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private PlayerView playerPrefab;
     [SerializeField] private EnemyView enemyPrefab;
     [SerializeField] private BulletView playerBulletPrefab;
+    [SerializeField] private VFXView vfxPrefab;
 
     #endregion
 
@@ -32,7 +33,6 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private EnemyScriptableObject enemySO;
     [SerializeField] private BulletScriptableObject playerBulletSO;
     [SerializeField] private PowerUpScriptableObject powerUpSO;
-    [SerializeField] private VFXScriptableObject vfxSO;
     [SerializeField] private SoundScriptableObject soundSO;
 
     #endregion
@@ -49,13 +49,12 @@ public class GameService : GenericMonoSingleton<GameService>
     private void Start()
     {
         // Initialize all Services.
+        uiService = new UIService(scoreText, healthText);
+        soundService = new SoundService(soundSO, audioEffectSource, backgroundMusicSource);
         playerService = new PlayerService(playerPrefab, playerSO, playerBulletPrefab, playerBulletSO);
         powerUpService = new PowerUpService(powerUpSO);
         enemyService = new EnemyService(enemyPrefab, enemySO);
-        soundService = new SoundService(soundSO, audioEffectSource, backgroundMusicSource);
-        /*
-        vfxService = new VFXService(vfxSO);
-        uiService = new UIService(scoreText, healthText);*/
+        vfxService = new VFXService(vfxPrefab);
     }
 
     private void Update()

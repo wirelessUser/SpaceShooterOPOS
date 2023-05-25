@@ -1,23 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class VFXService
 {
-    private VFXScriptableObject vfxSO;
     private VFXPool vfxPool;
 
-    public VFXService(VFXScriptableObject vfxSO)
+    public VFXService(VFXView vfxPrefab)
     {
-        this.vfxSO = vfxSO;
-        vfxPool = new VFXPool();
+        vfxPool = new VFXPool(vfxPrefab);
     }
 
-    public void SpawnVFXAtPosition(VFXType type, Vector2 spawnPosition)
+    public void PlayVFXAtPosition(VFXType type, Vector2 spawnPosition)
     {
-        /* TODO: 
-         * Fetch the vfx Prefab for given type from vfxSO.
-         * Fetch the vfxController from pool
-         * Set the spawnPosition of the vfx.
-         */
+        VFXController vfxToPlay = vfxPool.GetVFX();
+        vfxToPlay.Configure(type, spawnPosition);
     }
 
     public void ReturnVFXToPool(VFXController vfxToReturn)

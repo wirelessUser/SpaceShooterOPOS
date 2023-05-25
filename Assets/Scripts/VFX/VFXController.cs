@@ -10,13 +10,13 @@ public class VFXController
         vfxView.SetController(this);
     }
 
-    public void SetPosition(Vector2 positionToSet)
+    public void Configure(VFXType vfxType, Vector2 spawnPosition)
     {
-        vfxView.transform.position = positionToSet;
+        vfxView.ConfigureAndPlay(vfxType, spawnPosition);
     }
 
     public void OnParticleEffectCompleted()
     {
-        // TODO: implementn logic to reset this vfx when done playing.
+        GameService.Instance.GetVFXService().ReturnVFXToPool(this);
     }
 }

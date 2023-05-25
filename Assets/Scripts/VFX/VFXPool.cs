@@ -1,27 +1,21 @@
+using UnityEngine;
 using System;
+using System.Collections.Generic;
+
 public class VFXPool : GenericObjectPool<VFXController>
 {
-    private VFXView currentVFXPrefab;
+    private VFXView vfxPrefab;
 
-    public VFXController GetVFX<IT>(VFXView vfxPrefab) where IT : VFXController
+    public VFXPool(VFXView vfxPrefab) => this.vfxPrefab = vfxPrefab;
+    
+    public VFXController GetVFX()
     {
-        currentVFXPrefab = vfxPrefab;
-        return GetItem<IT>();
+        return GetItem<VFXController>();
     }
 
     protected override VFXController CreateItem<IT>()
     {
-        VFXController newVFXController;
-
-        if (typeof(IT) == typeof(EnemyExplosion))
-            newVFXController = new EnemyExplosion(currentVFXPrefab);
-        else if (typeof(IT) == typeof(PlayerExplosion))
-            newVFXController = new PlayerExplosion(currentVFXPrefab);
-        else if (typeof(IT) == typeof(BulletHitExplosion))
-            newVFXController = new BulletHitExplosion(currentVFXPrefab);
-        else
-            throw new NotSupportedException($"Power-up type '{typeof(IT)}' is not supported.");
-
+        VFXController newVFXController = new VFXController(vfxPrefab);
         return newVFXController;
     }
 }

@@ -34,6 +34,7 @@ public class BulletController : IBullet
             collidedGameObject.GetComponent<EnemyView>().TakeBulletDamage(bulletScriptableObject.damage);
             bulletView.gameObject.SetActive(false);
             // TODO: Play particle effects for the bullet hit.
+            GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
             GameService.Instance.GetPlayerService().ResetPlayerBullet(this);
         }
     }

@@ -17,4 +17,5 @@ public struct EnemyData
     public int maxHealth;
     public float speed;
     public int damage;
+    public int scoreToGrant;
 }

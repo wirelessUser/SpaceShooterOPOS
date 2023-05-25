@@ -10,12 +10,15 @@ public class UIService
     TextMeshProUGUI healthText;
 
     private int currentScore;
+    private const string scorePrefix = "Score: ";
+    private const string healthPrefix = "Health: ";
 
     public UIService(TextMeshProUGUI scoreText, TextMeshProUGUI healthText)
     {
         this.scoreText = scoreText;
         this.healthText = healthText;
         currentScore = 0;
+        IncrementScore(currentScore);
     }
 
     /// <summary>
@@ -25,7 +28,7 @@ public class UIService
     public void IncrementScore(int scoreToIncrement)
     {
         currentScore += scoreToIncrement;
-        scoreText.SetText(currentScore.ToString());
+        scoreText.SetText(scorePrefix + currentScore.ToString());
     }
 
     /// <summary>
@@ -34,6 +37,6 @@ public class UIService
     /// <param name="healthToDisplay">The health value to display.</param>
     public void UpdateHealthUI(int healthToDisplay)
     {
-        healthText.SetText(healthToDisplay.ToString());
+        healthText.SetText(healthPrefix + healthToDisplay.ToString());
     }
 }
