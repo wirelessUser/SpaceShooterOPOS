@@ -11,7 +11,7 @@ namespace CosmicCuration.Bullets
 
         public void SetController(BulletController bulletController) => this.bulletController = bulletController;
 
-        private void Update() => bulletController?.UpdateBulletMotion(this.transform);
+        private void Update() => bulletController?.UpdateBulletMotion();
 
         private void OnTriggerEnter2D(Collider2D collision) => bulletController?.OnBulletEnteredTrigger(collision.gameObject);
     }

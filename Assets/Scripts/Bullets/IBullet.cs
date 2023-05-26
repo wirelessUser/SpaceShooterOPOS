@@ -10,10 +10,10 @@ namespace CosmicCuration.Bullets
         /// <summary>
         /// Updates the motion of the bullet.
         /// </summary>
-        public void UpdateBulletMotion(Transform bulletTransform);
+        public void UpdateBulletMotion();
 
         /// <summary>
-        /// Handles the event when the bullet enters a trigger collider.
+        /// Called when bullet enters a trigger collider.
         /// </summary>
         /// <param name="collidedGameObject">The game object the bullet collided with.</param>
         public void OnBulletEnteredTrigger(GameObject collidedObject);

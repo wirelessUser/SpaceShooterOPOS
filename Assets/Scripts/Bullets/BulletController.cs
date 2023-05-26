@@ -23,22 +23,17 @@ namespace CosmicCuration.Bullets
         {
             bulletView.transform.position = spawnTransform.position;
             bulletView.transform.rotation = spawnTransform.rotation;
-            bulletView.gameObject.SetActive(true);
         }
 
-        public void UpdateBulletMotion(Transform bulletTransform)
-        {
-            bulletTransform.Translate(Vector2.up * Time.deltaTime * bulletScriptableObject.speed);
-        }
+        public void UpdateBulletMotion() => bulletView.transform.Translate(Vector2.up * Time.deltaTime * bulletScriptableObject.speed);
 
         public void OnBulletEnteredTrigger(GameObject collidedGameObject)
         {
             if (collidedGameObject.GetComponent<EnemyView>() != null)
             {
                 collidedGameObject.GetComponent<EnemyView>().TakeBulletDamage(bulletScriptableObject.damage);
-                bulletView.gameObject.SetActive(false);
                 GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
-                Object.Destroy(bulletView);
+                Object.Destroy(bulletView.gameObject);
             }
         }
     }
