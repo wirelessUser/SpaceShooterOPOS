@@ -18,7 +18,7 @@ namespace CosmicCuration.Enemy
     {
         public int maxHealth;
         public float speed;
-        public int damage;
+        public int damageToInflict;
         public int scoreToGrant;
     } 
 }

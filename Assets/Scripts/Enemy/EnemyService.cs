@@ -6,13 +6,18 @@ namespace CosmicCuration.Enemy
 {
     public class EnemyService
     {
+        #region Dependencies
         private EnemyView enemyPrefab;
         private EnemyScriptableObject enemySO;
+        #endregion
 
+        #region Variables
         private bool isSpawning;
         private float currentSpawnRate;
-        private float spawnTimer;
+        private float spawnTimer; 
+        #endregion
 
+        #region Initialization
         public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemySO)
         {
             this.enemyPrefab = enemyPrefab;
@@ -25,7 +30,8 @@ namespace CosmicCuration.Enemy
             isSpawning = true;
             currentSpawnRate = enemySO.initialSpawnRate;
             spawnTimer = currentSpawnRate;
-        }
+        } 
+        #endregion
 
         public void Update()
         {
@@ -41,25 +47,20 @@ namespace CosmicCuration.Enemy
             }
         }
 
-        public void ToggleEnemySpawning(bool setActive) => isSpawning = setActive;
-
-        private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
-
-        private void IncreaseDifficulty()
-        {
-            if (currentSpawnRate > enemySO.minimumSpawnRate)
-                currentSpawnRate -= enemySO.difficultyDelta;
-            else
-                currentSpawnRate = enemySO.minimumSpawnRate;
-        }
-
+        #region Spawning Enemies
         private void SpawnEnemy()
         {
             // Get a random orientation for the enemy (Up / Down / Left / Right)
             EnemyOrientation randomOrientation = (EnemyOrientation)Random.Range(0, Enum.GetValues(typeof(EnemyOrientation)).Length);
 
-            // Calculate spawn position outside the game screen, according to the orientation and spawn an enemy.
+            // Calculate a spawn position outside the game screen according to the orientation and spawn an enemy.
             SpawnEnemyAtPosition(CalculateSpawnPosition(randomOrientation), randomOrientation);
+        }
+
+        private void SpawnEnemyAtPosition(Vector2 spawnPosition, EnemyOrientation enemyOrientation)
+        {
+            EnemyController spawnedEnemy = new EnemyController(enemyPrefab, enemySO.enemyData);
+            spawnedEnemy.Configure(spawnPosition, enemyOrientation);
         }
 
         private Vector2 CalculateSpawnPosition(EnemyOrientation enemyOrientation)
@@ -93,13 +94,20 @@ namespace CosmicCuration.Enemy
             }
 
             return spawnPosition;
+        } 
+        #endregion
+
+        private void IncreaseDifficulty()
+        {
+            if (currentSpawnRate > enemySO.minimumSpawnRate)
+                currentSpawnRate -= enemySO.difficultyDelta;
+            else
+                currentSpawnRate = enemySO.minimumSpawnRate;
         }
 
-        private void SpawnEnemyAtPosition(Vector2 spawnPosition, EnemyOrientation enemyOrientation)
-        {
-            EnemyController spawnedEnemy = new EnemyController(enemyPrefab, enemySO.enemyData);
-            spawnedEnemy.Configure(spawnPosition, enemyOrientation);
-        }
+        private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
+
+        public void ToggleEnemySpawning(bool setActive) => isSpawning = setActive;
     }
 
     public enum EnemyOrientation

@@ -9,24 +9,21 @@ namespace CosmicCuration.Enemy
     {
         private EnemyView enemyView;
         private EnemyData enemyData;
-
         private int currentHealth;
         private Vector2 moveDirection;
 
+        #region Initialization
         public EnemyController(EnemyView enemyPrefab, EnemyData enemyData)
         {
             enemyView = Object.Instantiate(enemyPrefab);
             enemyView.SetController(this);
-
             this.enemyData = enemyData;
-            currentHealth = enemyData.maxHealth;
         }
 
         public void Configure(Vector3 positionToSet, EnemyOrientation enemyOrientation)
         {
             currentHealth = enemyData.maxHealth;
             enemyView.transform.position = positionToSet;
-            enemyView.gameObject.SetActive(true);
             SetEnemyOrientation(enemyOrientation);
         }
 
@@ -55,7 +52,8 @@ namespace CosmicCuration.Enemy
                     moveDirection = -enemyView.transform.up;
                     break;
             }
-        }
+        } 
+        #endregion
 
         public void TakeDamage(int damageToTake)
         {
@@ -69,23 +67,19 @@ namespace CosmicCuration.Enemy
 
         public void OnEnemyCollided(GameObject collidedGameObject)
         {
-            // TODO : Handle Enemy Collision Logic.
             if (collidedGameObject.GetComponent<PlayerView>() != null)
             {
-                GameService.Instance.GetPlayerService().GetPlayerController().TakeDamage(enemyData.damage);
+                GameService.Instance.GetPlayerService().GetPlayerController().TakeDamage(enemyData.damageToInflict);
                 EnemyDestroyed();
             }
         }
 
         private void EnemyDestroyed()
         {
-            // TODO: Handle Enemy Death Logic.
-            enemyView.gameObject.SetActive(false);
-            // Add Particle Effects.
             GameService.Instance.GetUIService().IncrementScore(enemyData.scoreToGrant);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.EnemyDeath);
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
-            Object.Destroy(enemyView);
+            Object.Destroy(enemyView.gameObject);
         }
     } 
 }
