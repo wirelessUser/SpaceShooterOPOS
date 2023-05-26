@@ -1,3 +1,4 @@
+#region Namespaces
 using UnityEngine;
 using TMPro;
 using CosmicCuration.Audio;
@@ -7,7 +8,8 @@ using CosmicCuration.VFX;
 using CosmicCuration.Player;
 using CosmicCuration.UI;
 using CosmicCuration.Utilities;
-using CosmicCuration.PowerUps;
+using CosmicCuration.PowerUps; 
+#endregion
 
 
 /// <summary>
@@ -27,31 +29,25 @@ public class GameService : GenericMonoSingleton<GameService>
     #endregion
 
     #region Prefabs
-
     [SerializeField] private PlayerView playerPrefab;
-    [SerializeField] private EnemyView enemyPrefab;
     [SerializeField] private BulletView playerBulletPrefab;
+    [SerializeField] private EnemyView enemyPrefab;
     [SerializeField] private VFXView vfxPrefab;
-
     #endregion
 
     #region Scriptable Objects
-
     [SerializeField] private PlayerScriptableObject playerSO;
-    [SerializeField] private EnemyScriptableObject enemySO;
     [SerializeField] private BulletScriptableObject playerBulletSO;
+    [SerializeField] private EnemyScriptableObject enemySO;
     [SerializeField] private PowerUpScriptableObject powerUpSO;
     [SerializeField] private SoundScriptableObject soundSO;
-
     #endregion
 
     #region Scene References
-
     [SerializeField] private AudioSource audioEffectSource;
     [SerializeField] private AudioSource backgroundMusicSource;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI healthText;
-
     #endregion
 
     private void Start()
@@ -71,6 +67,7 @@ public class GameService : GenericMonoSingleton<GameService>
         enemyService?.Update();
     }
 
+    #region Getters
     public PlayerService GetPlayerService() => playerService;
 
     public EnemyService GetEnemyService() => enemyService;
@@ -81,6 +78,7 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public SoundService GetSoundService() => soundService;
 
-    public UIService GetUIService() => uiService;
+    public UIService GetUIService() => uiService; 
+    #endregion
 
 }
