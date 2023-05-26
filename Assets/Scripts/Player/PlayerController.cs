@@ -8,16 +8,20 @@ namespace CosmicCuration.Player
 {
     public class PlayerController : IDamageable
     {
+        #region Dependencies
         private PlayerView playerView;
         private PlayerScriptableObject playerSO;
         private BulletView bulletPrefab;
         private BulletScriptableObject bulletSO;
+        #endregion
 
+        #region Variables
         private WeaponMode currentWeaponMode;
         private int currentHealth;
         private float currentRateOfFire;
         private bool isShooting;
-        private bool shieldActive;
+        private bool shieldActive; 
+        #endregion
 
         #region Initialization
 
@@ -34,74 +38,54 @@ namespace CosmicCuration.Player
 
         private void InitializeVariables()
         {
+            currentWeaponMode = WeaponMode.SingleCanon;
             currentHealth = playerSO.maxHealth;
             currentRateOfFire = playerSO.defaultFireRate;
-            currentWeaponMode = WeaponMode.SingleCanon;
-            isShooting = false;
+            isShooting = shieldActive = false;
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
 
         #endregion
 
-        public void TakeDamage(int damageToTake)
+        #region Input Handling
+        public void HandlePlayerInput()
         {
-            if (!shieldActive)
-            {
-                currentHealth -= damageToTake;
-                GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
-            }
-
-            if (currentHealth <= 0)
-                PlayerDeath();
+            HandlePlayerMovement();
+            HandlePlayerRotation();
+            HandleShooting();
         }
 
-        private void PlayerDeath()
+        private void HandlePlayerMovement()
         {
-            // TODO: Implement player death logic
-            playerView.gameObject.SetActive(false);
-            GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
-            GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
-            // Spawning of enemies is stopped.
-            // Game Over UI.
-        }
-
-        public void HandlePlayerMovement()
-        {
-            // TODO: Implement player movement logic
             if (Input.GetKey(KeyCode.W))
-            {
                 playerView.transform.Translate(Vector2.up * Time.deltaTime * playerSO.movementSpeed);
-            }
             if (Input.GetKey(KeyCode.S))
-            {
                 playerView.transform.Translate(Vector2.down * Time.deltaTime * playerSO.movementSpeed);
-            }
             if (Input.GetKey(KeyCode.A))
-            {
                 playerView.transform.Translate(Vector2.left * Time.deltaTime * playerSO.movementSpeed);
-            }
             if (Input.GetKey(KeyCode.D))
-            {
                 playerView.transform.Translate(Vector2.right * Time.deltaTime * playerSO.movementSpeed);
-            }
         }
 
-        public void HandlePlayerRotation()
+        private void HandlePlayerRotation()
         {
+            // Rotate the player to look in the direction of mouse position.
             var dir = Input.mousePosition - Camera.main.WorldToScreenPoint(playerView.transform.position);
             var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             playerView.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         }
 
-        public void HandleShooting()
+        private void HandleShooting()
         {
             if (Input.GetKeyDown(KeyCode.Space))
                 FireWeapon();
             if (Input.GetKeyUp(KeyCode.Space))
                 isShooting = false;
         }
+        #endregion
 
-        public async void FireWeapon()
+        #region Firing Weapons
+        private async void FireWeapon()
         {
             isShooting = true;
             while (isShooting)
@@ -125,7 +109,8 @@ namespace CosmicCuration.Player
             BulletController bulletToFire = new BulletController(bulletPrefab, bulletSO);
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
-        }
+        } 
+        #endregion
 
         #region PowerUp Logic
 
@@ -154,6 +139,28 @@ namespace CosmicCuration.Player
         }
 
         #endregion
+
+        public void TakeDamage(int damageToTake)
+        {
+            if (!shieldActive)
+            {
+                currentHealth -= damageToTake;
+                GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
+            }
+
+            if (currentHealth <= 0)
+                PlayerDeath();
+        }
+
+        private void PlayerDeath()
+        {
+            // TODO: Implement player death logic
+            Object.Destroy(playerView.gameObject);
+            GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
+            GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
+            GameService.Instance.GetEnemyService().ToggleEnemySpawning(false);
+            // Game Over UI.
+        }
     }
 
     public enum WeaponMode

@@ -12,25 +12,8 @@ namespace CosmicCuration.Player
 
         private PlayerController playerController;
 
-        public void SetController(PlayerController playerController)
-        {
-            this.playerController = playerController;
-        }
+        public void SetController(PlayerController playerController) => this.playerController = playerController;
 
-        private void Update()
-        {
-            HandlePlayerInput();
-        }
-
-        /// <summary>
-        /// Checks for movement and fire input and tells the PlayerController to handle the logic accordingly.
-        /// </summary>
-        private void HandlePlayerInput()
-        {
-            // TODO: Implement player input handling
-            playerController.HandlePlayerMovement();
-            playerController.HandlePlayerRotation();
-            playerController.HandleShooting();
-        }
+        private void Update() => playerController.HandlePlayerInput();
     } 
 }
