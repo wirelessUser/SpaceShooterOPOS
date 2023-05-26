@@ -75,5 +75,7 @@ namespace CosmicCuration.PowerUps
             // Return the calculated random spawn position
             return new Vector2(randomX, randomY);
         }
+
+        public void DisablePowerUpSpawning() => isSpawning = false;
     } 
 }

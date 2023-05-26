@@ -24,7 +24,7 @@ public class GameService : GenericMonoSingleton<GameService>
     private PowerUpService powerUpService;
     private VFXService vfxService;
     private SoundService soundService;
-    private UIService uiService;
+    [SerializeField] private UIView uiService;
 
     #endregion
 
@@ -46,14 +46,11 @@ public class GameService : GenericMonoSingleton<GameService>
     #region Scene References
     [SerializeField] private AudioSource audioEffectSource;
     [SerializeField] private AudioSource backgroundMusicSource;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI healthText;
     #endregion
 
     private void Start()
     {
         // Initialize all Services.
-        uiService = new UIService(scoreText, healthText);
         soundService = new SoundService(soundSO, audioEffectSource, backgroundMusicSource);
         playerService = new PlayerService(playerPrefab, playerSO, playerBulletPrefab, playerBulletSO);
         powerUpService = new PowerUpService(powerUpSO);
@@ -78,7 +75,7 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public SoundService GetSoundService() => soundService;
 
-    public UIService GetUIService() => uiService; 
+    public UIView GetUIService() => uiService; 
     #endregion
 
 }

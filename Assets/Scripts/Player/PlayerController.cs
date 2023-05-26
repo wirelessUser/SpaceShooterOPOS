@@ -152,14 +152,15 @@ namespace CosmicCuration.Player
                 PlayerDeath();
         }
 
-        private void PlayerDeath()
+        private async void PlayerDeath()
         {
-            // TODO: Implement player death logic
             Object.Destroy(playerView.gameObject);
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
             GameService.Instance.GetEnemyService().ToggleEnemySpawning(false);
-            // Game Over UI.
+            GameService.Instance.GetPowerUpService().DisablePowerUpSpawning();
+            await Task.Delay(2000);
+            GameService.Instance.GetUIService().EnableGameOverUI();
         }
     }
 
