@@ -19,7 +19,7 @@ namespace CosmicCuration.VFX
 
         public void OnParticleEffectCompleted()
         {
-            GameService.Instance.GetVFXService().ReturnVFXToPool(this);
+            Object.Destroy(vfxView);
         }
     } 
 }

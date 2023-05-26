@@ -53,7 +53,7 @@ namespace CosmicCuration.PowerUps
         {
             isActive = false;
             powerUpView.gameObject.SetActive(false);
-            GameService.Instance.GetPowerUpService().ReturnPowerUpToPool(this);
+            Object.Destroy(powerUpView);
         }
     } 
 }

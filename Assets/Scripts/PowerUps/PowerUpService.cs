@@ -5,7 +5,6 @@ namespace CosmicCuration.PowerUps
 {
     public class PowerUpService
     {
-        private PowerUpPool powerUpPool;
         private PowerUpScriptableObject powerUpSO;
 
         private bool isSpawning;
@@ -13,8 +12,6 @@ namespace CosmicCuration.PowerUps
 
         public PowerUpService(PowerUpScriptableObject powerUpScriptableObject)
         {
-            powerUpPool = new PowerUpPool();
-
             powerUpSO = powerUpScriptableObject;
             spawnTimer = powerUpSO.spawnRate;
             isSpawning = true;
@@ -55,11 +52,11 @@ namespace CosmicCuration.PowerUps
             switch (randomPowerUp)
             {
                 case PowerUpType.Shield:
-                    return (PowerUpController)powerUpPool.GetPowerUp<Shield>(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    return new Shield(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
                 case PowerUpType.DoubleTurret:
-                    return (PowerUpController)powerUpPool.GetPowerUp<DoubleTurret>(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    return new DoubleTurret(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
                 case PowerUpType.RapidFire:
-                    return (PowerUpController)powerUpPool.GetPowerUp<RapidFire>(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    return new RapidFire(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
                 default:
                     return new PowerUpController(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
             }
@@ -80,7 +77,5 @@ namespace CosmicCuration.PowerUps
             // Return the calculated random spawn position
             return new Vector2(randomX, randomY);
         }
-
-        public void ReturnPowerUpToPool(PowerUpController powerUpToDestroy) => powerUpPool.ReturnItem(powerUpToDestroy);
     } 
 }

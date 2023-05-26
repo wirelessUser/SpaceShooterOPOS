@@ -37,9 +37,8 @@ namespace CosmicCuration.Bullets
             {
                 collidedGameObject.GetComponent<EnemyView>().TakeBulletDamage(bulletScriptableObject.damage);
                 bulletView.gameObject.SetActive(false);
-                // TODO: Play particle effects for the bullet hit.
                 GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
-                GameService.Instance.GetPlayerService().ResetPlayerBullet(this);
+                Object.Destroy(bulletView);
             }
         }
     }

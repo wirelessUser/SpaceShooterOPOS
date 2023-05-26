@@ -83,9 +83,9 @@ namespace CosmicCuration.Enemy
             enemyView.gameObject.SetActive(false);
             // Add Particle Effects.
             GameService.Instance.GetUIService().IncrementScore(enemyData.scoreToGrant);
-            GameService.Instance.GetEnemyService().ReturnEnemyToPool(this);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.EnemyDeath);
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
+            Object.Destroy(enemyView);
         }
     } 
 }

@@ -10,7 +10,8 @@ namespace CosmicCuration.Player
     {
         private PlayerView playerView;
         private PlayerScriptableObject playerSO;
-        private BulletPool bulletPool;
+        private BulletView bulletPrefab;
+        private BulletScriptableObject bulletSO;
 
         private WeaponMode currentWeaponMode;
         private int currentHealth;
@@ -20,12 +21,13 @@ namespace CosmicCuration.Player
 
         #region Initialization
 
-        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletPool bulletPool)
+        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
         {
             playerView = Object.Instantiate(playerViewPrefab);
             playerView.SetController(this);
             this.playerSO = playerSO;
-            this.bulletPool = bulletPool;
+            this.bulletPrefab = bulletPrefab;
+            bulletSO = bulletScriptableObject;
 
             InitializeVariables();
         }
@@ -56,7 +58,6 @@ namespace CosmicCuration.Player
         private void PlayerDeath()
         {
             // TODO: Implement player death logic
-            // Player Ship Destroyed.
             playerView.gameObject.SetActive(false);
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
@@ -121,7 +122,7 @@ namespace CosmicCuration.Player
 
         private void FireBulletAtPosition(Transform fireLocation)
         {
-            BulletController bulletToFire = bulletPool.GetBullet();
+            BulletController bulletToFire = new BulletController(bulletPrefab, bulletSO);
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         }
