@@ -4,12 +4,11 @@ using UnityEngine;
 namespace CosmicCuration.Audio
 {
     /// <summary>
-    /// This class handles playing sound effects and background music in the game.
+    /// This Service is used to play sound effects and background music in the game.
     /// </summary>
     public class SoundService
     {
         private SoundScriptableObject soundSO;
-
         private AudioSource audioEffects;
         private AudioSource backgroundMusic;
 
@@ -54,9 +53,7 @@ namespace CosmicCuration.Audio
                 backgroundMusic.Play();
             }
             else
-            {
                 Debug.LogError("No Audio Clip selected.");
-            }
         }
 
         /// <summary>
@@ -68,9 +65,7 @@ namespace CosmicCuration.Audio
         {
             Sounds st = Array.Find(soundSO.audioList, item => item.soundType == soundType);
             if (st.audio != null)
-            {
                 return st.audio;
-            }
             return null;
         }
     }
