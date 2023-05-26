@@ -2,7 +2,7 @@ namespace CosmicCuration.PowerUps
 {
     public class DoubleTurret : PowerUpController
     {
-        public DoubleTurret(PowerUpView shieldPrefab, float activeDuration) : base(shieldPrefab, activeDuration) { }
+        public DoubleTurret(PowerUpData powerUpData) : base(powerUpData) { }
 
         public override void Activate()
         {

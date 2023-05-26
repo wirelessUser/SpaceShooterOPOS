@@ -6,7 +6,6 @@ namespace CosmicCuration.PowerUps
     public class PowerUpService
     {
         private PowerUpScriptableObject powerUpSO;
-
         private bool isSpawning;
         private float spawnTimer;
 
@@ -33,32 +32,31 @@ namespace CosmicCuration.PowerUps
         {
             if (isSpawning)
             {
-                // Select a random powerup type from Shield/RapidFire/Turret.
+                // Select a random powerup type (Shield/RapidFire/DoubleTurret).
                 PowerUpType randomPowerUp = (PowerUpType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(PowerUpType)).Length);
 
+                // Fetch the corresponding PowerUpController
                 PowerUpController powerUp = FetchPowerUp(randomPowerUp);
 
-                // Set a random position of the fetched PowerUp using PowerUpController.SetPosition()
+                // Configure the PowerUp to be spawned.
                 powerUp.Configure(CalculateRandomSpawnPosition());
             }
         }
 
-        private PowerUpController FetchPowerUp(PowerUpType randomPowerUp)
+        private PowerUpController FetchPowerUp(PowerUpType typeToFetch)
         {
-            // for this random PowerUp type, fetch its data from powerUpSO. Data includes prefab and active duration for that type.
-            PowerUpData randomPowerUpData = powerUpSO.powerUpData.Find(item => item.powerUpType == randomPowerUp);
+            PowerUpData fetchedData = powerUpSO.powerUpData.Find(item => item.powerUpType == typeToFetch);
 
-            // Use this data to fetch a powerup instance from the powerUpPool.
-            switch (randomPowerUp)
+            switch (typeToFetch)
             {
                 case PowerUpType.Shield:
-                    return new Shield(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    return new Shield(fetchedData);
                 case PowerUpType.DoubleTurret:
-                    return new DoubleTurret(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    return new DoubleTurret(fetchedData);
                 case PowerUpType.RapidFire:
-                    return new RapidFire(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    return new RapidFire(fetchedData);
                 default:
-                    return new PowerUpController(randomPowerUpData.powerUpPrefab, randomPowerUpData.activeDuration);
+                    throw new Exception($"Failed to Create PowerUpController for: {typeToFetch}");
             }
         }
 

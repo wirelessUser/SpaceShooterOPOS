@@ -2,7 +2,7 @@ namespace CosmicCuration.PowerUps
 {
     public class Shield : PowerUpController
     {
-        public Shield(PowerUpView shieldPrefab, float activeDuration) : base(shieldPrefab, activeDuration) { }
+        public Shield(PowerUpData powerUpData) : base(powerUpData) { }
 
         public override void Activate()
         {

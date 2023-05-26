@@ -1,39 +1,34 @@
 using UnityEngine;
 using CosmicCuration.Player;
+using System.Threading.Tasks;
 
 namespace CosmicCuration.PowerUps
 {
     public class PowerUpController : IPowerUp
     {
         private PowerUpView powerUpView;
-
-        private bool isActive;
         private float activeDuration;
-        private float activeTime;
+        private bool isActive;
 
-        public PowerUpController(PowerUpView powerUpPrefab, float activeDuration)
+        public PowerUpController(PowerUpData powerUpData)
         {
-            powerUpView = Object.Instantiate(powerUpPrefab);
+            powerUpView = Object.Instantiate(powerUpData.powerUpPrefab);
             powerUpView.SetController(this);
-            this.activeDuration = activeDuration;
+            activeDuration = powerUpData.activeDuration;
         }
 
         public void Configure(Vector2 spawnPosition)
         {
             isActive = false;
-            activeTime = activeDuration;
             powerUpView.transform.position = spawnPosition;
-            powerUpView.gameObject.SetActive(true);
-            powerUpView.Toggle(true);
         }
 
-        public void UpdateTimer()
+        public async void StartTimer()
         {
             if (isActive)
             {
-                activeTime -= Time.deltaTime;
-                if (activeTime <= 0)
-                    Deactivate();
+                await Task.Delay(Mathf.RoundToInt(activeDuration * 1000));
+                Deactivate();
             }
         }
 
@@ -46,14 +41,10 @@ namespace CosmicCuration.PowerUps
         public virtual void Activate()
         {
             isActive = true;
-            powerUpView.Toggle(false);
+            Object.Destroy(powerUpView.gameObject);
+            StartTimer();
         }
 
-        public virtual void Deactivate()
-        {
-            isActive = false;
-            powerUpView.gameObject.SetActive(false);
-            Object.Destroy(powerUpView);
-        }
+        public virtual void Deactivate() => isActive = false;
     } 
 }
