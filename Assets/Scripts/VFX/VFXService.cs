@@ -1,20 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.VFX
 {
     public class VFXService
     {
-        private VFXView vfxPrefab;
+        private List<VFXData> vfxData = new List<VFXData>();
 
-        public VFXService(VFXView vfxPrefab)
-        {
-            this.vfxPrefab = vfxPrefab;
-        }
+        public VFXService(VFXScriptableObject vfxSO) => vfxData = vfxSO.vfxData;
 
         public void PlayVFXAtPosition(VFXType type, Vector2 spawnPosition)
         {
-            VFXController vfxToPlay = new VFXController(vfxPrefab);
-            vfxToPlay.Configure(type, spawnPosition);
+            VFXView prefabToSpawn = vfxData.Find(item => item.type == type).prefab;
+            VFXController vfxToPlay = new VFXController(prefabToSpawn);
+            vfxToPlay.Configure(spawnPosition);
         }
     } 
 }

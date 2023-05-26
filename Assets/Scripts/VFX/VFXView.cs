@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.VFX
@@ -7,52 +5,20 @@ namespace CosmicCuration.VFX
     public class VFXView : MonoBehaviour
     {
         private VFXController controller;
+        private ParticleSystem vfx;
 
-        [SerializeField] private List<VFXData> particleSystemMap;
-        private ParticleSystem currentPlayingVFX;
+        public void SetController(VFXController controllerToSet) => controller = controllerToSet;
 
-        public void SetController(VFXController controllerToSet)
+        public void ConfigureAndPlay(Vector2 positionToSet)
         {
-            controller = controllerToSet;
-        }
-
-        public void ConfigureAndPlay(VFXType type, Vector2 positionToSet)
-        {
-            foreach (VFXData item in particleSystemMap)
-            {
-                if (item.type == type)
-                {
-                    item.particleSystem.transform.position = positionToSet;
-                    item.particleSystem.gameObject.SetActive(true);
-                    currentPlayingVFX = item.particleSystem;
-                    // item.particleSystem.Play();
-                }
-                else
-                    item.particleSystem.gameObject.SetActive(false);
-            }
-            gameObject.SetActive(true);
+            transform.position = positionToSet;
+            vfx = GetComponent<ParticleSystem>();
         }
 
         private void Update()
         {
-            if (currentPlayingVFX != null)
-            {
-                if (currentPlayingVFX.isStopped)
-                {
-                    currentPlayingVFX.gameObject.SetActive(false);
-                    currentPlayingVFX = null;
-                    controller.OnParticleEffectCompleted();
-                    gameObject.SetActive(false);
-                }
-            }
+            if (vfx != null && vfx.isStopped)
+                    Destroy(gameObject);
         }
-
     }
-
-    [Serializable]
-    public struct VFXData
-    {
-        public VFXType type;
-        public ParticleSystem particleSystem;
-    } 
 }
