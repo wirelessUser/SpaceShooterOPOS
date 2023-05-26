@@ -8,7 +8,7 @@ namespace CosmicCuration.VFX
 
         public VFXService(VFXView vfxPrefab)
         {
-            
+            this.vfxPrefab = vfxPrefab;
         }
 
         public void PlayVFXAtPosition(VFXType type, Vector2 spawnPosition)
