@@ -39,7 +39,7 @@ namespace CosmicCuration.Enemy
 
         private EnemyController CreateEnemy() => new EnemyController(enemyPrefab, enemyData);
 
-        public void ReturnBullet(EnemyController enemy)
+        public void ReturnEnemy(EnemyController enemy)
         {
             PooledEnemy pooledEnemy = pooledEnemies.Find(e => e.Enemy.Equals(enemy));
             pooledEnemy.isUsed = false;
