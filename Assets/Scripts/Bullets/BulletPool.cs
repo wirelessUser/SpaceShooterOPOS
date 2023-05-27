@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace CosmicCuration.Bullets
 {
@@ -24,7 +22,7 @@ namespace CosmicCuration.Bullets
                 if (item != null)
                 {
                     item.isUsed = true;
-                    return item.Item;
+                    return item.Bullet;
                 }
             }
             return CreateNewPooledBullet();
@@ -33,23 +31,23 @@ namespace CosmicCuration.Bullets
         private BulletController CreateNewPooledBullet()
         {
             PooledBullet newBullet = new PooledBullet();
-            newBullet.Item = CreateBullet();
+            newBullet.Bullet = CreateBullet();
             newBullet.isUsed = true;
             pooledBullets.Add(newBullet);
-            return newBullet.Item;
+            return newBullet.Bullet;
         }
 
         private BulletController CreateBullet() => new BulletController(bulletPrefab, bulletSO);
 
         public void ReturnBullet(BulletController bullet)
         {
-            PooledBullet pooledBullet = pooledBullets.Find(i => i.Item.Equals(bullet));
+            PooledBullet pooledBullet = pooledBullets.Find(i => i.Bullet.Equals(bullet));
             pooledBullet.isUsed = false;
         }
 
         public class PooledBullet
         {
-            public BulletController Item;
+            public BulletController Bullet;
             public bool isUsed;
         }
     }
