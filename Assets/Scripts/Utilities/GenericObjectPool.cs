@@ -11,30 +11,30 @@ namespace CosmicCuration.Utilities
     {
         public List<PooledItem<T>> pooledItems = new List<PooledItem<T>>();
 
-        public virtual T GetItem()
+        public virtual T GetItem<IT>() where IT : T
         {
             if (pooledItems.Count > 0)
             {
-                PooledItem<T> item = pooledItems.Find(item => !item.isUsed);
+                PooledItem<T> item = pooledItems.Find(item => !item.isUsed && item.Item is IT);
                 if (item != null)
                 {
                     item.isUsed = true;
                     return item.Item;
                 }
             }
-            return CreateNewPooledItem();
+            return CreateNewPooledItem<IT>();
         }
 
-        private T CreateNewPooledItem()
+        private T CreateNewPooledItem<IT>() where IT : T
         {
             PooledItem<T> newItem = new PooledItem<T>();
-            newItem.Item = CreateItem();
+            newItem.Item = CreateItem<IT>();
             newItem.isUsed = true;
             pooledItems.Add(newItem);
             return newItem.Item;
         }
 
-        protected virtual T CreateItem()
+        protected virtual T CreateItem<IT>() where IT : T
         {
             throw new NotImplementedException("CreateItem() method not implemented in derived class");
         }
