@@ -8,7 +8,7 @@ namespace CosmicCuration.Bullets
     {
         private BulletView bulletPrefab;
         private BulletScriptableObject bulletSO;
-        private List<PooledBullets> pooledBullets = new List<PooledBullets>();
+        private List<PooledBullet> pooledBullets = new List<PooledBullet>();
 
         public BulletPool(BulletView bulletPrefab, BulletScriptableObject bulletSO)
         {
@@ -20,7 +20,7 @@ namespace CosmicCuration.Bullets
         {
             if (pooledBullets.Count > 0)
             {
-                PooledBullets item = pooledBullets.Find(item => !item.isUsed);
+                PooledBullet item = pooledBullets.Find(item => !item.isUsed);
                 if (item != null)
                 {
                     item.isUsed = true;
@@ -32,7 +32,7 @@ namespace CosmicCuration.Bullets
 
         private BulletController CreateNewPooledBullet()
         {
-            PooledBullets newBullet = new PooledBullets();
+            PooledBullet newBullet = new PooledBullet();
             newBullet.Item = CreateBullet();
             newBullet.isUsed = true;
             pooledBullets.Add(newBullet);
@@ -41,7 +41,13 @@ namespace CosmicCuration.Bullets
 
         private BulletController CreateBullet() => new BulletController(bulletPrefab, bulletSO);
 
-        public class PooledBullets
+        public void ReturnBullet(BulletController bullet)
+        {
+            PooledBullet pooledBullet = pooledBullets.Find(i => i.Item.Equals(bullet));
+            pooledBullet.isUsed = false;
+        }
+
+        public class PooledBullet
         {
             public BulletController Item;
             public bool isUsed;
