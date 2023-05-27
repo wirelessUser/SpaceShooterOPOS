@@ -11,8 +11,7 @@ namespace CosmicCuration.Player
         #region Dependencies
         private PlayerView playerView;
         private PlayerScriptableObject playerSO;
-        private BulletView bulletPrefab;
-        private BulletScriptableObject bulletSO;
+        private BulletPool bulletPool;
         #endregion
 
         #region Variables
@@ -25,13 +24,12 @@ namespace CosmicCuration.Player
 
         #region Initialization
 
-        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
+        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletPool bulletPool)
         {
             playerView = Object.Instantiate(playerViewPrefab);
             playerView.SetController(this);
             this.playerSO = playerSO;
-            this.bulletPrefab = bulletPrefab;
-            bulletSO = bulletScriptableObject;
+            this.bulletPool = bulletPool;
 
             InitializeVariables();
         }
@@ -106,7 +104,7 @@ namespace CosmicCuration.Player
 
         private void FireBulletAtPosition(Transform fireLocation)
         {
-            BulletController bulletToFire = new BulletController(bulletPrefab, bulletSO);
+            BulletController bulletToFire = bulletPool.GetBullet();
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 

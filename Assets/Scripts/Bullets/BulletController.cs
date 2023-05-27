@@ -21,6 +21,7 @@ namespace CosmicCuration.Bullets
 
         public void ConfigureBullet(Transform spawnTransform)
         {
+            bulletView.gameObject.SetActive(true);
             bulletView.transform.position = spawnTransform.position;
             bulletView.transform.rotation = spawnTransform.rotation;
         }
@@ -33,7 +34,8 @@ namespace CosmicCuration.Bullets
             {
                 collidedGameObject.GetComponent<EnemyView>().TakeBulletDamage(bulletScriptableObject.damage);
                 GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
-                Object.Destroy(bulletView.gameObject);
+                bulletView.gameObject.SetActive(false);
+                GameService.Instance.GetPlayerService().ReturnBulletToPool(this);
             }
         }
     }
