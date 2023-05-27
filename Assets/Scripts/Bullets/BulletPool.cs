@@ -39,7 +39,7 @@ namespace CosmicCuration.Bullets
             return newBullet.Item;
         }
 
-        private BulletController CreateBullet() => return new BulletController(bulletPrefab, bulletSO);
+        private BulletController CreateBullet() => new BulletController(bulletPrefab, bulletSO);
 
         public class PooledBullets
         {
