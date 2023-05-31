@@ -1,6 +1,7 @@
 using UnityEngine;
 using CosmicCuration.Enemy;
 using CosmicCuration.VFX;
+using CosmicCuration.Player;
 
 namespace CosmicCuration.Bullets
 {
@@ -31,12 +32,13 @@ namespace CosmicCuration.Bullets
         public void OnBulletEnteredTrigger(GameObject collidedGameObject)
         {
             if (collidedGameObject.GetComponent<EnemyView>() != null)
-            {
                 collidedGameObject.GetComponent<EnemyView>().TakeBulletDamage(bulletScriptableObject.damage);
-                GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
-                bulletView.gameObject.SetActive(false);
-                GameService.Instance.GetPlayerService().ReturnBulletToPool(this);
-            }
+            if(collidedGameObject.GetComponent<PlayerView>() != null)
+                collidedGameObject.GetComponent<PlayerView>().TakeBulletDamage(bulletScriptableObject.damage);
+
+            GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
+            bulletView.gameObject.SetActive(false);
+            GameService.Instance.GetPlayerService().ReturnBulletToPool(this);
         }
     }
 }

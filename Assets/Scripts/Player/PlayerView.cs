@@ -14,6 +14,8 @@ namespace CosmicCuration.Player
 
         public void SetController(PlayerController playerController) => this.playerController = playerController;
 
+        public void TakeBulletDamage(int damageToTake) => playerController.TakeDamage(damageToTake);
+
         private void Update() => playerController.HandlePlayerInput();
     } 
 }
