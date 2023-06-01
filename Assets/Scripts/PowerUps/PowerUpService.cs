@@ -76,6 +76,6 @@ namespace CosmicCuration.PowerUps
             return new Vector2(randomX, randomY);
         }
 
-        public void DisablePowerUpSpawning() => isSpawning = false;
+        public void SetPowerUpSpawning(bool setSpawningActive) => isSpawning = setSpawningActive;
     } 
 }

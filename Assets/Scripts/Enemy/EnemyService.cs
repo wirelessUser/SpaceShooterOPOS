@@ -107,7 +107,7 @@ namespace CosmicCuration.Enemy
 
         private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
 
-        public void ToggleEnemySpawning(bool setActive) => isSpawning = setActive;
+        public void SetEnemySpawning(bool setActive) => isSpawning = setActive;
     }
 
     public enum EnemyOrientation

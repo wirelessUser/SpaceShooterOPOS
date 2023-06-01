@@ -133,11 +133,11 @@ namespace CosmicCuration.Player
             
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
-            GameService.Instance.GetEnemyService().ToggleEnemySpawning(false); // 
-            GameService.Instance.GetPowerUpService().DisablePowerUpSpawning();
+            GameService.Instance.GetEnemyService().SetEnemySpawning(false);
+            GameService.Instance.GetPowerUpService().SetPowerUpSpawning(false);
             
             // Wait for Player Ship Destruction.
-            await Task.Delay(2000); //hardcoded
+            await Task.Delay(playerScriptableObject.deathDelay * 1000);
             GameService.Instance.GetUIService().EnableGameOverUI();
         }
 
