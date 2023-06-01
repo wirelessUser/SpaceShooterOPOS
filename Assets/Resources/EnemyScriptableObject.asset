@@ -18,6 +18,6 @@ MonoBehaviour:
   difficultyDelta: 0.05
   enemyData:
     maxHealth: 3
-    speed: 3
+    speed: 6
     damageToInflict: 1
     scoreToGrant: 5
