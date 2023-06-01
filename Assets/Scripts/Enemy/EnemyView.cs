@@ -5,7 +5,7 @@ namespace CosmicCuration.Enemy
     /// <summary>
     /// Represents the view component of an Enemy.
     /// </summary>
-    public class EnemyView : MonoBehaviour
+    public class EnemyView : MonoBehaviour, IDamageable
     {
         private EnemyController enemyController;
 
@@ -13,8 +13,8 @@ namespace CosmicCuration.Enemy
 
         private void Update() => enemyController.UpdateMotion();
 
-        public void TakeBulletDamage(int damageToTake) => enemyController.TakeDamage(damageToTake);
-
         private void OnTriggerEnter2D(Collider2D collision) => enemyController?.OnEnemyCollided(collision.gameObject);
+
+        public void TakeDamage(int damageToTake) => enemyController.TakeDamage(damageToTake);
     } 
 }

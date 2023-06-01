@@ -1,6 +1,7 @@
 using UnityEngine;
 using CosmicCuration.Enemy;
 using CosmicCuration.VFX;
+using CosmicCuration.Audio;
 
 namespace CosmicCuration.Bullets
 {
@@ -29,9 +30,10 @@ namespace CosmicCuration.Bullets
 
         public void OnBulletEnteredTrigger(GameObject collidedGameObject)
         {
-            if (collidedGameObject.GetComponent<EnemyView>() != null)
+            if (collidedGameObject.GetComponent<IDamageable>() != null)
             {
-                collidedGameObject.GetComponent<EnemyView>().TakeBulletDamage(bulletScriptableObject.damage);
+                collidedGameObject.GetComponent<IDamageable>().TakeDamage(bulletScriptableObject.damage);
+                GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.BulletHit);
                 GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.BulletHitExplosion, bulletView.transform.position);
                 Object.Destroy(bulletView.gameObject);
             }

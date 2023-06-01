@@ -5,7 +5,7 @@ using CosmicCuration.Player;
 
 namespace CosmicCuration.Enemy
 {
-    public class EnemyController : IDamageable
+    public class EnemyController
     {
         private EnemyView enemyView;
         private EnemyData enemyData;
@@ -58,7 +58,6 @@ namespace CosmicCuration.Enemy
         public void TakeDamage(int damageToTake)
         {
             currentHealth -= damageToTake;
-            GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.EnemyDamaged);
             if (currentHealth <= 0)
                 EnemyDestroyed();
         }

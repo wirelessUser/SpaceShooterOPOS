@@ -6,7 +6,7 @@ using CosmicCuration.VFX;
 
 namespace CosmicCuration.Player
 {
-    public class PlayerController : IDamageable
+    public class PlayerController
     {
         #region Dependencies
         private PlayerView playerView;
