@@ -7,7 +7,7 @@ namespace CosmicCuration.Enemy
     public class EnemyService
     {
         #region Dependencies
-        private EnemyScriptableObject enemySO;
+        private EnemyScriptableObject enemyScriptableObject;
         private EnemyPool enemyPool;
         #endregion
 
@@ -20,8 +20,8 @@ namespace CosmicCuration.Enemy
         #region Initialization
         public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemyScriptableObject)
         {
-            this.enemySO = enemySO;
-            enemyPool = new EnemyPool(enemyPrefab, enemySO.enemyData);
+            this.enemyScriptableObject = enemyScriptableObject;
+            enemyPool = new EnemyPool(enemyPrefab, enemyScriptableObject.enemyData);
             InitializeVariables();
         }
 

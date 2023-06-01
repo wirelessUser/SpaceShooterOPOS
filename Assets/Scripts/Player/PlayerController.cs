@@ -12,8 +12,6 @@ namespace CosmicCuration.Player
         private PlayerView playerView;
         private PlayerScriptableObject playerScriptableObject;
         private BulletPool bulletPool;
-        #endregion
-        #endregion
 
         // Variables
         private WeaponMode currentWeaponMode;
@@ -21,12 +19,11 @@ namespace CosmicCuration.Player
         private ShieldState currentShieldState;
         private int currentHealth;
         private float currentRateOfFire;
-        #region Initialization
 
-        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletPool bulletPool)
-        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
+        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletPool bulletPool)
         {
             playerView = Object.Instantiate(playerViewPrefab);
+            playerView.SetController(this);
             this.playerScriptableObject = playerScriptableObject;
             this.bulletPool = bulletPool;
 
@@ -44,7 +41,7 @@ namespace CosmicCuration.Player
         }
 
 
-        // Input Handling
+        // Input Handling:
         public void HandlePlayerInput()
         {
             HandlePlayerMovement();
@@ -80,7 +77,7 @@ namespace CosmicCuration.Player
                 currentShootingState = ShootingState.NotFiring;
         }
 
-        // Firing Weapons
+        // Firing Weapons:
         private async void FireWeapon()
         {
             currentShootingState = ShootingState.Firing;
@@ -101,14 +98,13 @@ namespace CosmicCuration.Player
         }
 
         private void FireBulletAtPosition(Transform fireLocation)
+        { 
             BulletController bulletToFire = bulletPool.GetBullet();
-            BulletController bulletToFire = new BulletController(bulletPrefab, bulletSO);
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 
 
-        // PowerUp Logic
-
+        // PowerUp Logic:
         public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
