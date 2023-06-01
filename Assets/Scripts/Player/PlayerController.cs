@@ -38,6 +38,7 @@ namespace CosmicCuration.Player
             currentWeaponMode = WeaponMode.SingleCanon;
             currentHealth = playerScriptableObject.maxHealth;
             currentRateOfFire = playerScriptableObject.defaultFireRate;
+            currentShieldState = ShieldState.Deactivated;
             currentShootingState = ShootingState.NotFiring;
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
