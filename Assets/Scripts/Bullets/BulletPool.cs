@@ -31,13 +31,11 @@ namespace CosmicCuration.Bullets
         private BulletController CreateNewPooledBullet()
         {
             PooledBullet newBullet = new PooledBullet();
-            newBullet.Bullet = CreateBullet();
+            newBullet.Bullet = new BulletController(bulletPrefab, bulletSO);
             newBullet.isUsed = true;
             pooledBullets.Add(newBullet);
             return newBullet.Bullet;
         }
-
-        private BulletController CreateBullet() => new BulletController(bulletPrefab, bulletSO);
 
         public void ReturnBullet(BulletController bullet)
         {
