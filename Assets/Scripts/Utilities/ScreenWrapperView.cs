@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// This class is used to implement screen wrapping for the object it is attached to.
-/// </summary>
 public class ScreenWrapperView : MonoBehaviour
 {
     private Renderer RendererComponent;
@@ -20,7 +17,7 @@ public class ScreenWrapperView : MonoBehaviour
         if (!hasEnteredScreen)
             CheckIfEntered();
         else if(RendererComponent.isVisible)
-            WrapScreen();
+            WrapObjectOnScreen();
     }
 
     private void CheckIfEntered()
@@ -31,10 +28,7 @@ public class ScreenWrapperView : MonoBehaviour
         if (onScreen) hasEnteredScreen = true;
     }
 
-    /// <summary>
-    /// Wraps game object on screen if it goes out of bounds.
-    /// </summary>
-    private void WrapScreen()
+    private void WrapObjectOnScreen()
     {
         var viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
         var newPosition = transform.position;

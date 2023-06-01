@@ -3,9 +3,6 @@ using UnityEngine;
 
 namespace CosmicCuration.Audio
 {
-    /// <summary>
-    /// Represents a sound configuration in the game.
-    /// </summary>
     [Serializable]
     public struct Sounds
     {

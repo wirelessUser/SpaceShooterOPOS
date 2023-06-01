@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    /// <summary>
-    /// This class handles updating the UI elements in the game.
-    /// </summary>
     public class UIView : MonoBehaviour
     {
         #region References
@@ -22,7 +19,6 @@ namespace CosmicCuration.UI
         #region Variables
         private int currentScore;
         #endregion
-
 
         private void Start()
         {
