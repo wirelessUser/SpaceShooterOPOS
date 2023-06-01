@@ -18,6 +18,10 @@ MonoBehaviour:
   difficultyDelta: 0.05
   enemyData:
     maxHealth: 3
-    speed: 6
+    minimumSpeed: 4
+    maximumSpeed: 8
     damageToInflict: 1
     scoreToGrant: 5
+    movementDuration: 5
+    rotationSpeed: 50
+    rotationTolerance: 2
