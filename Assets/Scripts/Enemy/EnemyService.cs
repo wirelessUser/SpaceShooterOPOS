@@ -8,7 +8,7 @@ namespace CosmicCuration.Enemy
     {
         #region Dependencies
         private EnemyView enemyPrefab;
-        private EnemyScriptableObject enemySO;
+        private EnemyScriptableObject enemyScriptableObject;
         #endregion
 
         #region Variables
@@ -18,17 +18,17 @@ namespace CosmicCuration.Enemy
         #endregion
 
         #region Initialization
-        public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemySO)
+        public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemyScriptableObject)
         {
             this.enemyPrefab = enemyPrefab;
-            this.enemySO = enemySO;
+            this.enemyScriptableObject = enemyScriptableObject;
             InitializeVariables();
         }
 
         private void InitializeVariables()
         {
             isSpawning = true;
-            currentSpawnRate = enemySO.initialSpawnRate;
+            currentSpawnRate = enemyScriptableObject.initialSpawnRate;
             spawnTimer = currentSpawnRate;
         } 
         #endregion
@@ -59,7 +59,7 @@ namespace CosmicCuration.Enemy
 
         private void SpawnEnemyAtPosition(Vector2 spawnPosition, EnemyOrientation enemyOrientation)
         {
-            EnemyController spawnedEnemy = new EnemyController(enemyPrefab, enemySO.enemyData);
+            EnemyController spawnedEnemy = new EnemyController(enemyPrefab, enemyScriptableObject.enemyData);
             spawnedEnemy.Configure(spawnPosition, enemyOrientation);
         }
 
@@ -73,23 +73,23 @@ namespace CosmicCuration.Enemy
             switch (enemyOrientation)
             {
                 case EnemyOrientation.Left:
-                    spawnPosition.x = halfScreenWidth + enemySO.spawnDistance;
+                    spawnPosition.x = halfScreenWidth + enemyScriptableObject.spawnDistance;
                     spawnPosition.y = Random.Range(-halfScreenHeight, halfScreenHeight);
                     break;
 
                 case EnemyOrientation.Right:
-                    spawnPosition.x = -halfScreenWidth - enemySO.spawnDistance;
+                    spawnPosition.x = -halfScreenWidth - enemyScriptableObject.spawnDistance;
                     spawnPosition.y = Random.Range(-halfScreenHeight, halfScreenHeight);
                     break;
 
                 case EnemyOrientation.Up:
                     spawnPosition.x = Random.Range(-halfScreenWidth, halfScreenWidth);
-                    spawnPosition.y = -halfScreenHeight - enemySO.spawnDistance;
+                    spawnPosition.y = -halfScreenHeight - enemyScriptableObject.spawnDistance;
                     break;
 
                 case EnemyOrientation.Down:
                     spawnPosition.x = Random.Range(-halfScreenWidth, halfScreenWidth);
-                    spawnPosition.y = halfScreenHeight + enemySO.spawnDistance;
+                    spawnPosition.y = halfScreenHeight + enemyScriptableObject.spawnDistance;
                     break;
             }
 
@@ -99,10 +99,10 @@ namespace CosmicCuration.Enemy
 
         private void IncreaseDifficulty()
         {
-            if (currentSpawnRate > enemySO.minimumSpawnRate)
-                currentSpawnRate -= enemySO.difficultyDelta;
+            if (currentSpawnRate > enemyScriptableObject.minimumSpawnRate)
+                currentSpawnRate -= enemyScriptableObject.difficultyDelta;
             else
-                currentSpawnRate = enemySO.minimumSpawnRate;
+                currentSpawnRate = enemyScriptableObject.minimumSpawnRate;
         }
 
         private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;

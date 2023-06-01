@@ -10,9 +10,9 @@ namespace CosmicCuration.Player
     {
         #region Dependencies
         private PlayerView playerView;
-        private PlayerScriptableObject playerSO;
+        private PlayerScriptableObject playerScriptableObject;
         private BulletView bulletPrefab;
-        private BulletScriptableObject bulletSO;
+        private BulletScriptableObject bulletScriptableObject;
         #endregion
 
         #region Variables
@@ -25,13 +25,13 @@ namespace CosmicCuration.Player
 
         #region Initialization
 
-        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
+        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
         {
             playerView = Object.Instantiate(playerViewPrefab);
             playerView.SetController(this);
-            this.playerSO = playerSO;
+            this.playerScriptableObject = playerScriptableObject;
             this.bulletPrefab = bulletPrefab;
-            bulletSO = bulletScriptableObject;
+            this.bulletScriptableObject = bulletScriptableObject;
 
             InitializeVariables();
         }
@@ -39,8 +39,8 @@ namespace CosmicCuration.Player
         private void InitializeVariables()
         {
             currentWeaponMode = WeaponMode.SingleCanon;
-            currentHealth = playerSO.maxHealth;
-            currentRateOfFire = playerSO.defaultFireRate;
+            currentHealth = playerScriptableObject.maxHealth;
+            currentRateOfFire = playerScriptableObject.defaultFireRate;
             isShooting = shieldActive = false;
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
@@ -58,13 +58,13 @@ namespace CosmicCuration.Player
         private void HandlePlayerMovement()
         {
             if (Input.GetKey(KeyCode.W))
-                playerView.transform.Translate(Vector2.up * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.up * Time.deltaTime * playerScriptableObject.movementSpeed);
             if (Input.GetKey(KeyCode.S))
-                playerView.transform.Translate(Vector2.down * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.down * Time.deltaTime * playerScriptableObject.movementSpeed);
             if (Input.GetKey(KeyCode.A))
-                playerView.transform.Translate(Vector2.left * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.left * Time.deltaTime * playerScriptableObject.movementSpeed);
             if (Input.GetKey(KeyCode.D))
-                playerView.transform.Translate(Vector2.right * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.right * Time.deltaTime * playerScriptableObject.movementSpeed);
         }
 
         private void HandlePlayerRotation()
@@ -106,7 +106,7 @@ namespace CosmicCuration.Player
 
         private void FireBulletAtPosition(Transform fireLocation)
         {
-            BulletController bulletToFire = new BulletController(bulletPrefab, bulletSO);
+            BulletController bulletToFire = new BulletController(bulletPrefab, bulletScriptableObject);
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 
@@ -118,7 +118,7 @@ namespace CosmicCuration.Player
 
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
 
-        public void ToggleRapidFire(bool rapidFireActive) => currentRateOfFire = rapidFireActive ? playerSO.rapidFireRate : playerSO.defaultFireRate;
+        public void ToggleRapidFire(bool rapidFireActive) => currentRateOfFire = rapidFireActive ? playerScriptableObject.rapidFireRate : playerScriptableObject.defaultFireRate;
 
         #endregion
 

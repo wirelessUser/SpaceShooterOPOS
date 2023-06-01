@@ -32,12 +32,12 @@ public class GameService : GenericMonoSingleton<GameService>
     #endregion
 
     #region Scriptable Objects
-    [SerializeField] private PlayerScriptableObject playerSO;
-    [SerializeField] private BulletScriptableObject playerBulletSO;
-    [SerializeField] private EnemyScriptableObject enemySO;
-    [SerializeField] private PowerUpScriptableObject powerUpSO;
-    [SerializeField] private SoundScriptableObject soundSO;
-    [SerializeField] private VFXScriptableObject vfxSO;
+    [SerializeField] private PlayerScriptableObject playerScriptableObject;
+    [SerializeField] private BulletScriptableObject playerBulletScriptableObject;
+    [SerializeField] private EnemyScriptableObject enemyScriptableObject;
+    [SerializeField] private PowerUpScriptableObject powerUpScriptableObject;
+    [SerializeField] private SoundScriptableObject soundScriptableObject;
+    [SerializeField] private VFXScriptableObject vfxScriptableObject;
     #endregion
 
     #region Scene References
@@ -48,11 +48,11 @@ public class GameService : GenericMonoSingleton<GameService>
     private void Start()
     {
         // Initialize all Services.
-        soundService = new SoundService(soundSO, audioEffectSource, backgroundMusicSource);
-        playerService = new PlayerService(playerPrefab, playerSO, playerBulletPrefab, playerBulletSO);
-        powerUpService = new PowerUpService(powerUpSO);
-        enemyService = new EnemyService(enemyPrefab, enemySO);
-        vfxService = new VFXService(vfxSO);
+        soundService = new SoundService(soundScriptableObject, audioEffectSource, backgroundMusicSource);
+        playerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
+        powerUpService = new PowerUpService(powerUpScriptableObject);
+        enemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
+        vfxService = new VFXService(vfxScriptableObject);
     }
 
     private void Update()

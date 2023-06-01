@@ -5,13 +5,13 @@ namespace CosmicCuration.Audio
 {
     public class SoundService
     {
-        private SoundScriptableObject soundSO;
+        private SoundScriptableObject soundScriptableObject;
         private AudioSource audioEffects;
         private AudioSource backgroundMusic;
 
         public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
         {
-            soundSO = soundScriptableObject;
+            this.soundScriptableObject = soundScriptableObject;
             audioEffects = audioEffectSource;
             backgroundMusic = bgMusicSource;
             PlaybackgroundMusic(SoundType.BackgroundMusic, true);
@@ -45,7 +45,7 @@ namespace CosmicCuration.Audio
 
         private AudioClip GetSoundClip(SoundType soundType)
         {
-            Sounds st = Array.Find(soundSO.audioList, item => item.soundType == soundType);
+            Sounds st = Array.Find(soundScriptableObject.audioList, item => item.soundType == soundType);
             if (st.audio != null)
                 return st.audio;
             return null;

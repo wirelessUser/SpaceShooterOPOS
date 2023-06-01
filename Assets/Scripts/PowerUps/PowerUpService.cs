@@ -5,14 +5,14 @@ namespace CosmicCuration.PowerUps
 {
     public class PowerUpService
     {
-        private PowerUpScriptableObject powerUpSO;
+        private PowerUpScriptableObject powerUpScriptableObject;
         private bool isSpawning;
         private float spawnTimer;
 
         public PowerUpService(PowerUpScriptableObject powerUpScriptableObject)
         {
-            powerUpSO = powerUpScriptableObject;
-            spawnTimer = powerUpSO.spawnRate;
+            this.powerUpScriptableObject = powerUpScriptableObject;
+            spawnTimer = this.powerUpScriptableObject.spawnRate;
             isSpawning = true;
         }
 
@@ -26,7 +26,7 @@ namespace CosmicCuration.PowerUps
             }
         }
 
-        private void ResetSpawnTimer() => spawnTimer = powerUpSO.spawnRate;
+        private void ResetSpawnTimer() => spawnTimer = powerUpScriptableObject.spawnRate;
 
         private void SpawnPowerUps()
         {
@@ -45,7 +45,7 @@ namespace CosmicCuration.PowerUps
 
         private PowerUpController FetchPowerUp(PowerUpType typeToFetch)
         {
-            PowerUpData fetchedData = powerUpSO.powerUpData.Find(item => item.powerUpType == typeToFetch);
+            PowerUpData fetchedData = powerUpScriptableObject.powerUpData.Find(item => item.powerUpType == typeToFetch);
 
             switch (typeToFetch)
             {
