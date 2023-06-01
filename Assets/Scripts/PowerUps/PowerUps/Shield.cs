@@ -1,3 +1,6 @@
+
+using CosmicCuration.Player;
+
 namespace CosmicCuration.PowerUps
 {
     public class Shield : PowerUpController
@@ -7,13 +10,13 @@ namespace CosmicCuration.PowerUps
         public override void Activate()
         {
             base.Activate();
-            GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(true);
+            GameService.Instance.GetPlayerService().GetPlayerController().SetShieldState(ShieldState.Activated);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
-            GameService.Instance.GetPlayerService().GetPlayerController().ToggleShield(false);
+            GameService.Instance.GetPlayerService().GetPlayerController().SetShieldState(ShieldState.Deactivated);
         }
     } 
 }

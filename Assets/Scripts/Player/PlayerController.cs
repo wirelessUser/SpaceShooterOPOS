@@ -8,23 +8,20 @@ namespace CosmicCuration.Player
 {
     public class PlayerController
     {
-        #region Dependencies
+        // Dependencies
         private PlayerView playerView;
         private PlayerScriptableObject playerScriptableObject;
         private BulletView bulletPrefab;
         private BulletScriptableObject bulletScriptableObject;
-        #endregion
 
-        #region Variables
+        // Variables
         private WeaponMode currentWeaponMode;
+        private ShootingState currentShootingState;
+        private ShieldState currentShieldState;
         private int currentHealth;
         private float currentRateOfFire;
-        private bool isShooting;
-        private bool shieldActive; 
-        #endregion
 
-        #region Initialization
-
+        // Initialization
         public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
         {
             playerView = Object.Instantiate(playerViewPrefab);
@@ -41,13 +38,12 @@ namespace CosmicCuration.Player
             currentWeaponMode = WeaponMode.SingleCanon;
             currentHealth = playerScriptableObject.maxHealth;
             currentRateOfFire = playerScriptableObject.defaultFireRate;
-            isShooting = shieldActive = false;
+            currentShootingState = ShootingState.NotFiring;
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
 
-        #endregion
 
-        #region Input Handling
+        // Input Handling
         public void HandlePlayerInput()
         {
             HandlePlayerMovement();
@@ -80,15 +76,14 @@ namespace CosmicCuration.Player
             if (Input.GetKeyDown(KeyCode.Space))
                 FireWeapon();
             if (Input.GetKeyUp(KeyCode.Space))
-                isShooting = false;
+                currentShootingState = ShootingState.NotFiring;
         }
-        #endregion
 
-        #region Firing Weapons
+        // Firing Weapons
         private async void FireWeapon()
         {
-            isShooting = true;
-            while (isShooting)
+            currentShootingState = ShootingState.Firing;
+            while (currentShootingState == ShootingState.Firing)
             {
                 switch (currentWeaponMode)
                 {
@@ -110,21 +105,18 @@ namespace CosmicCuration.Player
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 
-        #endregion
 
-        #region PowerUp Logic
+        // PowerUp Logic
 
-        public void ToggleShield(bool shieldActive) => this.shieldActive = shieldActive;
+        public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
 
         public void ToggleRapidFire(bool rapidFireActive) => currentRateOfFire = rapidFireActive ? playerScriptableObject.rapidFireRate : playerScriptableObject.defaultFireRate;
 
-        #endregion
-
         public void TakeDamage(int damageToTake)
         {
-            if (!shieldActive)
+            if (currentShieldState != ShieldState.Activated)
             {
                 currentHealth -= damageToTake;
                 GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
@@ -137,20 +129,34 @@ namespace CosmicCuration.Player
         private async void PlayerDeath()
         {
             Object.Destroy(playerView.gameObject);
+            
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
-            GameService.Instance.GetEnemyService().ToggleEnemySpawning(false);
+            GameService.Instance.GetEnemyService().ToggleEnemySpawning(false); // 
             GameService.Instance.GetPowerUpService().DisablePowerUpSpawning();
             
             // Wait for Player Ship Destruction.
-            await Task.Delay(2000);
+            await Task.Delay(2000); //hardcoded
             GameService.Instance.GetUIService().EnableGameOverUI();
         }
 
-        public enum WeaponMode
+        // Enums
+        private enum WeaponMode
         {
             SingleCanon,
             DoubleTurret
         }
+
+        private enum ShootingState
+        {
+            Firing,
+            NotFiring
+        }
+    }
+
+    public enum ShieldState
+    {
+        Activated,
+        Deactivated
     }
 }
