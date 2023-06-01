@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CosmicCuration.Player
 {
-    public class PlayerView : MonoBehaviour
+    public class PlayerView : MonoBehaviour, IDamageable
     {
         [SerializeField] public Transform canonTransform;
         [SerializeField] public Transform turretTransform1;
@@ -15,5 +15,7 @@ namespace CosmicCuration.Player
         public void SetController(PlayerController playerController) => this.playerController = playerController;
 
         private void Update() => playerController.HandlePlayerInput();
+
+        public void TakeDamage(int damageToTake) => playerController.TakeDamage(damageToTake);
     } 
 }

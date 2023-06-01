@@ -5,7 +5,7 @@ namespace CosmicCuration.PowerUps
 {
     public class PowerUpService
     {
-        private PowerUpScriptableObject powerUpSO;
+        private PowerUpScriptableObject powerUpScriptableObject;
         private PowerUpPool powerUpPool;
 
         private bool isSpawning;
@@ -13,10 +13,10 @@ namespace CosmicCuration.PowerUps
 
         public PowerUpService(PowerUpScriptableObject powerUpScriptableObject)
         {
-            powerUpSO = powerUpScriptableObject;
+            this.powerUpScriptableObject = powerUpScriptableObject;
             powerUpPool = new PowerUpPool();
+            spawnTimer = this.powerUpScriptableObject.spawnRate;
             isSpawning = true;
-            spawnTimer = powerUpSO.spawnRate;
         }
 
         public void Update()
@@ -29,7 +29,7 @@ namespace CosmicCuration.PowerUps
             }
         }
 
-        private void ResetSpawnTimer() => spawnTimer = powerUpSO.spawnRate;
+        private void ResetSpawnTimer() => spawnTimer = powerUpScriptableObject.spawnRate;
 
         private void SpawnPowerUps()
         {
@@ -48,7 +48,7 @@ namespace CosmicCuration.PowerUps
 
         private PowerUpController FetchPowerUp(PowerUpType typeToFetch)
         {
-            PowerUpData fetchedData = powerUpSO.powerUpData.Find(item => item.powerUpType == typeToFetch);
+            PowerUpData fetchedData = powerUpScriptableObject.powerUpData.Find(item => item.powerUpType == typeToFetch);
 
             switch (typeToFetch)
             {
@@ -79,7 +79,7 @@ namespace CosmicCuration.PowerUps
             return new Vector2(randomX, randomY);
         }
 
-        public void DisablePowerUpSpawning() => isSpawning = false;
+        public void SetPowerUpSpawning(bool setSpawningActive) => isSpawning = setSpawningActive;
 
         public void ReturnPowerUpToPool(PowerUpController powerUpToReturn) => powerUpPool.ReturnItem(powerUpToReturn);
     } 

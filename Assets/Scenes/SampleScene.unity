@@ -2286,25 +2286,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1364658040279970260, guid: 059d6c966602d204f8b1f0c5d6dff02d,
         type: 3}
-      propertyPath: vfxSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 4a95c1a59f4a1704b8f38102cf86ba49,
-        type: 2}
-    - target: {fileID: 1364658040279970260, guid: 059d6c966602d204f8b1f0c5d6dff02d,
-        type: 3}
-      propertyPath: scoreText
-      value: 
-      objectReference: {fileID: 2002272612}
-    - target: {fileID: 1364658040279970260, guid: 059d6c966602d204f8b1f0c5d6dff02d,
-        type: 3}
       propertyPath: uiService
       value: 
       objectReference: {fileID: 1030558812}
-    - target: {fileID: 1364658040279970260, guid: 059d6c966602d204f8b1f0c5d6dff02d,
-        type: 3}
-      propertyPath: healthText
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1364658040279970260, guid: 059d6c966602d204f8b1f0c5d6dff02d,
         type: 3}
       propertyPath: audioEffectSource

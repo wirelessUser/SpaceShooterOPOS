@@ -12,9 +12,6 @@ using CosmicCuration.PowerUps;
 #endregion
 
 
-/// <summary>
-/// This is a Service Locator class which provides access to various game-related services.
-/// </summary>
 public class GameService : GenericMonoSingleton<GameService>
 {
     #region Dependencies
@@ -36,11 +33,11 @@ public class GameService : GenericMonoSingleton<GameService>
     #endregion
 
     #region Scriptable Objects
-    [SerializeField] private PlayerScriptableObject playerSO;
-    [SerializeField] private BulletScriptableObject playerBulletSO;
-    [SerializeField] private EnemyScriptableObject enemySO;
-    [SerializeField] private PowerUpScriptableObject powerUpSO;
-    [SerializeField] private SoundScriptableObject soundSO;
+    [SerializeField] private PlayerScriptableObject playerScriptableObject;
+    [SerializeField] private BulletScriptableObject playerBulletScriptableObject;
+    [SerializeField] private EnemyScriptableObject enemyScriptableObject;
+    [SerializeField] private PowerUpScriptableObject powerUpScriptableObject;
+    [SerializeField] private SoundScriptableObject soundScriptableObject;
     #endregion
 
     #region Scene References
@@ -51,10 +48,10 @@ public class GameService : GenericMonoSingleton<GameService>
     private void Start()
     {
         // Initialize all Services.
-        soundService = new SoundService(soundSO, audioEffectSource, backgroundMusicSource);
-        playerService = new PlayerService(playerPrefab, playerSO, playerBulletPrefab, playerBulletSO);
-        powerUpService = new PowerUpService(powerUpSO);
-        enemyService = new EnemyService(enemyPrefab, enemySO);
+        soundService = new SoundService(soundScriptableObject, audioEffectSource, backgroundMusicSource);
+        playerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
+        powerUpService = new PowerUpService(powerUpScriptableObject);
+        enemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
         vfxService = new VFXService(vfxPrefab);
     }
 

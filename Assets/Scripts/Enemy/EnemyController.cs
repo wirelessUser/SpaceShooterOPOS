@@ -5,14 +5,19 @@ using CosmicCuration.Player;
 
 namespace CosmicCuration.Enemy
 {
-    public class EnemyController : IDamageable
+    public class EnemyController
     {
+        // Dependencies:
         private EnemyView enemyView;
         private EnemyData enemyData;
-        private int currentHealth;
-        private Vector2 moveDirection;
 
-        #region Initialization
+        // Variables:
+        private EnemyState currentEnemyState;
+        private int currentHealth;
+        private float speed;
+        private float movementTimer;
+        private Quaternion targetRotation;
+
         public EnemyController(EnemyView enemyPrefab, EnemyData enemyData)
         {
             enemyView = Object.Instantiate(enemyPrefab);
@@ -22,9 +27,13 @@ namespace CosmicCuration.Enemy
 
         public void Configure(Vector3 positionToSet, EnemyOrientation enemyOrientation)
         {
-            currentHealth = enemyData.maxHealth;
             enemyView.transform.position = positionToSet;
             SetEnemyOrientation(enemyOrientation);
+            
+            currentEnemyState = EnemyState.Moving;
+            currentHealth = enemyData.maxHealth;
+            speed = Random.Range(enemyData.minimumSpeed, enemyData.maximumSpeed);
+            movementTimer = enemyData.movementDuration;
             enemyView.gameObject.SetActive(true);
         }
 
@@ -35,36 +44,54 @@ namespace CosmicCuration.Enemy
             {
                 case EnemyOrientation.Left:
                     enemyView.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
-                    moveDirection = enemyView.transform.right;
                     break;
-
                 case EnemyOrientation.Right:
                     enemyView.transform.rotation = Quaternion.Euler(0f, 0f, -90f);
-                    moveDirection = -enemyView.transform.right;
                     break;
-
                 case EnemyOrientation.Up:
                     enemyView.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                    moveDirection = enemyView.transform.up;
                     break;
-
                 case EnemyOrientation.Down:
                     enemyView.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
-                    moveDirection = -enemyView.transform.up;
                     break;
             }
         } 
-        #endregion
 
         public void TakeDamage(int damageToTake)
         {
             currentHealth -= damageToTake;
-            GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.EnemyDamaged);
             if (currentHealth <= 0)
                 EnemyDestroyed();
         }
 
-        public void UpdateMotion() => enemyView.transform.Translate(moveDirection * Time.deltaTime * enemyData.speed);
+        public void UpdateMotion()
+        {
+            if(currentEnemyState == EnemyState.Moving)
+            {
+                enemyView.transform.position += enemyView.transform.up * Time.deltaTime * speed;
+                movementTimer -= Time.deltaTime;
+
+                if (movementTimer <= 0)
+                {
+                    SetTargetRotation();
+                    movementTimer = enemyData.movementDuration;
+                }
+            }
+            else if(currentEnemyState == EnemyState.Rotating)
+            {
+                enemyView.transform.rotation = Quaternion.RotateTowards(enemyView.transform.rotation, targetRotation, enemyData.rotationSpeed * Time.deltaTime);
+
+                if (Quaternion.Angle(enemyView.transform.rotation, targetRotation) < enemyData.rotationTolerance)
+                    currentEnemyState = EnemyState.Moving;
+            }
+        }
+
+        private void SetTargetRotation()
+        {
+            Vector3 direction = GameService.Instance.GetPlayerService().GetPlayerPosition() - enemyView.transform.position;
+            targetRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f);
+            currentEnemyState = EnemyState.Rotating;
+        }
 
         public void OnEnemyCollided(GameObject collidedGameObject)
         {
@@ -82,6 +109,12 @@ namespace CosmicCuration.Enemy
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
             enemyView.gameObject.SetActive(false);
             GameService.Instance.GetEnemyService().ReturnEnemyToPool(this);
+        }
+
+        private enum EnemyState
+        {
+            Moving, 
+            Rotating
         }
     } 
 }
