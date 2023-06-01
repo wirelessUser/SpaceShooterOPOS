@@ -14,14 +14,13 @@ namespace CosmicCuration.Player
         private BulletView bulletPrefab;
         private BulletScriptableObject bulletScriptableObject;
 
-        // Variables
         private WeaponMode currentWeaponMode;
         private ShootingState currentShootingState;
         private ShieldState currentShieldState;
         private int currentHealth;
         private float currentRateOfFire;
 
-        // Initialization
+
         public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
         {
             playerView = Object.Instantiate(playerViewPrefab);
@@ -42,9 +41,6 @@ namespace CosmicCuration.Player
             currentShootingState = ShootingState.NotFiring;
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
-
-
-        // Input Handling
         public void HandlePlayerInput()
         {
             HandlePlayerMovement();
@@ -79,8 +75,6 @@ namespace CosmicCuration.Player
             if (Input.GetKeyUp(KeyCode.Space))
                 currentShootingState = ShootingState.NotFiring;
         }
-
-        // Firing Weapons
         private async void FireWeapon()
         {
             currentShootingState = ShootingState.Firing;
@@ -105,10 +99,7 @@ namespace CosmicCuration.Player
             BulletController bulletToFire = new BulletController(bulletPrefab, bulletScriptableObject);
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
-        } 
-
-        // PowerUp Logic
-
+        }
         public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
@@ -130,14 +121,14 @@ namespace CosmicCuration.Player
         private async void PlayerDeath()
         {
             Object.Destroy(playerView.gameObject);
-            
+
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
 
             currentShootingState = ShootingState.NotFiring;
             GameService.Instance.GetEnemyService().SetEnemySpawning(false);
             GameService.Instance.GetPowerUpService().SetPowerUpSpawning(false);
-            
+
             // Wait for Player Ship Destruction.
             await Task.Delay(playerScriptableObject.deathDelay * 1000);
             GameService.Instance.GetUIService().EnableGameOverUI();
@@ -145,7 +136,6 @@ namespace CosmicCuration.Player
 
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
 
-        // Enums
         private enum WeaponMode
         {
             SingleCanon,
