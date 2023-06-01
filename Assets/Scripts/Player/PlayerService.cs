@@ -1,4 +1,5 @@
 using CosmicCuration.Bullets;
+using UnityEngine;
 
 namespace CosmicCuration.Player
 {
@@ -12,6 +13,8 @@ namespace CosmicCuration.Player
         }
 
         public PlayerController GetPlayerController() => playerController;
+
+        public Vector3 GetPlayerPosition() => playerController.GetPlayerPosition();
         
     } 
 }

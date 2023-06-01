@@ -133,6 +133,8 @@ namespace CosmicCuration.Player
             
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
+
+            currentShootingState = ShootingState.NotFiring;
             GameService.Instance.GetEnemyService().SetEnemySpawning(false);
             GameService.Instance.GetPowerUpService().SetPowerUpSpawning(false);
             
@@ -140,6 +142,8 @@ namespace CosmicCuration.Player
             await Task.Delay(playerScriptableObject.deathDelay * 1000);
             GameService.Instance.GetUIService().EnableGameOverUI();
         }
+
+        public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
 
         // Enums
         private enum WeaponMode
