@@ -3,9 +3,6 @@ using UnityEngine;
 
 namespace CosmicCuration.Audio
 {
-    /// <summary>
-    /// This Service is used to play sound effects and background music in the game.
-    /// </summary>
     public class SoundService
     {
         private SoundScriptableObject soundSO;
@@ -20,11 +17,6 @@ namespace CosmicCuration.Audio
             PlaybackgroundMusic(SoundType.BackgroundMusic, true);
         }
 
-        /// <summary>
-        /// Plays the specified sound effect.
-        /// </summary>
-        /// <param name="soundType">The type of the sound effect to play.</param>
-        /// <param name="loopSound">Specifies whether the sound should loop or not.</param>
         public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
         {
             AudioClip clip = GetSoundClip(soundType);
@@ -38,11 +30,6 @@ namespace CosmicCuration.Audio
                 Debug.LogError("No Audio Clip selected.");
         }
 
-        /// <summary>
-        /// Plays the background music.
-        /// </summary>
-        /// <param name="soundType">The type of the background music to play.</param>
-        /// <param name="loopSound">Specifies whether the background music should loop or not.</param>
         private void PlaybackgroundMusic(SoundType soundType, bool loopSound = false)
         {
             AudioClip clip = GetSoundClip(soundType);
@@ -56,11 +43,6 @@ namespace CosmicCuration.Audio
                 Debug.LogError("No Audio Clip selected.");
         }
 
-        /// <summary>
-        /// Retrieves the audio clip associated with the specified sound type.
-        /// </summary>
-        /// <param name="soundType">The type of the sound.</param>
-        /// <returns>The audio clip associated with the sound type, or null if not found.</returns>
         private AudioClip GetSoundClip(SoundType soundType)
         {
             Sounds st = Array.Find(soundSO.audioList, item => item.soundType == soundType);

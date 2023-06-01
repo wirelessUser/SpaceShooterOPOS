@@ -12,9 +12,6 @@ using CosmicCuration.PowerUps;
 #endregion
 
 
-/// <summary>
-/// This is a Service Locator class which provides access to various game-related services.
-/// </summary>
 public class GameService : GenericMonoSingleton<GameService>
 {
     #region Dependencies

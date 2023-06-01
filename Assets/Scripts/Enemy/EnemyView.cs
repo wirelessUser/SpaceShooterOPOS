@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace CosmicCuration.Enemy
 {
-    /// <summary>
-    /// Represents the view component of an Enemy.
-    /// </summary>
     public class EnemyView : MonoBehaviour, IDamageable
     {
         private EnemyController enemyController;

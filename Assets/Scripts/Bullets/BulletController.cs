@@ -1,13 +1,9 @@
 using UnityEngine;
-using CosmicCuration.Enemy;
 using CosmicCuration.VFX;
 using CosmicCuration.Audio;
 
 namespace CosmicCuration.Bullets
 {
-    /// <summary>
-    /// Handles buisness logic for a bullet.
-    /// </summary>
     public class BulletController : IBullet
     {
         private BulletView bulletView;
