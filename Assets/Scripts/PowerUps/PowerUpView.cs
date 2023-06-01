@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace CosmicCuration.PowerUps
 {
-    /// <summary>
-    /// Represents the view component of a PowerUp object.
-    /// </summary>
     public class PowerUpView : MonoBehaviour
     {
         private PowerUpController powerUpController;

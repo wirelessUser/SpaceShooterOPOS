@@ -6,29 +6,25 @@ using CosmicCuration.VFX;
 
 namespace CosmicCuration.Player
 {
-    public class PlayerController : IDamageable
+    public class PlayerController
     {
-        #region Dependencies
+        // Dependencies
         private PlayerView playerView;
-        private PlayerScriptableObject playerSO;
+        private PlayerScriptableObject playerScriptableObject;
         private BulletPool bulletPool;
-        #endregion
 
-        #region Variables
+        // Variables
         private WeaponMode currentWeaponMode;
+        private ShootingState currentShootingState;
+        private ShieldState currentShieldState;
         private int currentHealth;
         private float currentRateOfFire;
-        private bool isShooting;
-        private bool shieldActive; 
-        #endregion
 
-        #region Initialization
-
-        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerSO, BulletPool bulletPool)
+        public PlayerController(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletPool bulletPool)
         {
             playerView = Object.Instantiate(playerViewPrefab);
             playerView.SetController(this);
-            this.playerSO = playerSO;
+            this.playerScriptableObject = playerScriptableObject;
             this.bulletPool = bulletPool;
 
             InitializeVariables();
@@ -37,15 +33,15 @@ namespace CosmicCuration.Player
         private void InitializeVariables()
         {
             currentWeaponMode = WeaponMode.SingleCanon;
-            currentHealth = playerSO.maxHealth;
-            currentRateOfFire = playerSO.defaultFireRate;
-            isShooting = shieldActive = false;
+            currentHealth = playerScriptableObject.maxHealth;
+            currentRateOfFire = playerScriptableObject.defaultFireRate;
+            currentShieldState = ShieldState.Deactivated;
+            currentShootingState = ShootingState.NotFiring;
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
 
-        #endregion
 
-        #region Input Handling
+        // Input Handling:
         public void HandlePlayerInput()
         {
             HandlePlayerMovement();
@@ -56,13 +52,13 @@ namespace CosmicCuration.Player
         private void HandlePlayerMovement()
         {
             if (Input.GetKey(KeyCode.W))
-                playerView.transform.Translate(Vector2.up * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.up * Time.deltaTime * playerScriptableObject.movementSpeed);
             if (Input.GetKey(KeyCode.S))
-                playerView.transform.Translate(Vector2.down * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.down * Time.deltaTime * playerScriptableObject.movementSpeed);
             if (Input.GetKey(KeyCode.A))
-                playerView.transform.Translate(Vector2.left * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.left * Time.deltaTime * playerScriptableObject.movementSpeed);
             if (Input.GetKey(KeyCode.D))
-                playerView.transform.Translate(Vector2.right * Time.deltaTime * playerSO.movementSpeed);
+                playerView.transform.Translate(Vector2.right * Time.deltaTime * playerScriptableObject.movementSpeed);
         }
 
         private void HandlePlayerRotation()
@@ -78,15 +74,14 @@ namespace CosmicCuration.Player
             if (Input.GetKeyDown(KeyCode.Space))
                 FireWeapon();
             if (Input.GetKeyUp(KeyCode.Space))
-                isShooting = false;
+                currentShootingState = ShootingState.NotFiring;
         }
-        #endregion
 
-        #region Firing Weapons
+        // Firing Weapons:
         private async void FireWeapon()
         {
-            isShooting = true;
-            while (isShooting)
+            currentShootingState = ShootingState.Firing;
+            while (currentShootingState == ShootingState.Firing)
             {
                 switch (currentWeaponMode)
                 {
@@ -103,44 +98,22 @@ namespace CosmicCuration.Player
         }
 
         private void FireBulletAtPosition(Transform fireLocation)
-        {
+        { 
             BulletController bulletToFire = bulletPool.GetBullet();
             bulletToFire.ConfigureBullet(fireLocation);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 
-        #endregion
 
-        #region PowerUp Logic
+        // PowerUp Logic:
+        public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
-        public void ToggleShield(bool setActive)
-        {
-            if (setActive)
-                shieldActive = true;
-            else
-                shieldActive = false;
-        }
+        public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
 
-        public void ToggleDoubleTurret(bool setActive)
-        {
-            if (setActive)
-                currentWeaponMode = WeaponMode.DoubleTurret;
-            else
-                currentWeaponMode = WeaponMode.SingleCanon;
-        }
-
-        public void ToggleRapidFire(bool setActive)
-        {
-            if (setActive)
-                currentRateOfFire = playerSO.rapidFireRate;
-            else
-                currentRateOfFire = playerSO.defaultFireRate;
-        }
-
-        #endregion
+        public void ToggleRapidFire(bool rapidFireActive) => currentRateOfFire = rapidFireActive ? playerScriptableObject.rapidFireRate : playerScriptableObject.defaultFireRate;
 
         public void TakeDamage(int damageToTake)
         {
-            if (!shieldActive)
+            if (currentShieldState != ShieldState.Activated)
             {
                 currentHealth -= damageToTake;
                 GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
@@ -153,18 +126,38 @@ namespace CosmicCuration.Player
         private async void PlayerDeath()
         {
             Object.Destroy(playerView.gameObject);
+            
             GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
-            GameService.Instance.GetEnemyService().ToggleEnemySpawning(false);
-            GameService.Instance.GetPowerUpService().DisablePowerUpSpawning();
-            await Task.Delay(2000);
+
+            currentShootingState = ShootingState.NotFiring;
+            GameService.Instance.GetEnemyService().SetEnemySpawning(false);
+            GameService.Instance.GetPowerUpService().SetPowerUpSpawning(false);
+            
+            // Wait for Player Ship Destruction.
+            await Task.Delay(playerScriptableObject.deathDelay * 1000);
             GameService.Instance.GetUIService().EnableGameOverUI();
+        }
+
+        public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
+
+        // Enums
+        private enum WeaponMode
+        {
+            SingleCanon,
+            DoubleTurret
+        }
+
+        private enum ShootingState
+        {
+            Firing,
+            NotFiring
         }
     }
 
-    public enum WeaponMode
+    public enum ShieldState
     {
-        SingleCanon,
-        DoubleTurret
-    } 
+        Activated,
+        Deactivated
+    }
 }
