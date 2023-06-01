@@ -11,9 +11,6 @@ namespace CosmicCuration.PowerUps
         public List<PowerUpData> powerUpData;
     }
 
-    /// <summary>
-    /// Data Container for a particular type of PowerUp.
-    /// </summary>
     [Serializable]
     public struct PowerUpData
     {

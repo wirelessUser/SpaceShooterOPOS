@@ -17,8 +17,12 @@ namespace CosmicCuration.Enemy
     public struct EnemyData
     {
         public int maxHealth;
-        public float speed;
+        public float minimumSpeed;
+        public float maximumSpeed;
         public int damageToInflict;
         public int scoreToGrant;
+        public float movementDuration;
+        public float rotationSpeed;
+        public float rotationTolerance;
     } 
 }

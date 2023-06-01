@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace CosmicCuration.Bullets
 {
-    /// <summary>
-    /// Represents the view component of a bullet object.
-    /// </summary>
     public class BulletView : MonoBehaviour
     {
         private BulletController bulletController;
