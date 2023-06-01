@@ -114,29 +114,11 @@ namespace CosmicCuration.Player
 
         #region PowerUp Logic
 
-        public void ToggleShield(bool setActive)
-        {
-            if (setActive)
-                shieldActive = true;
-            else
-                shieldActive = false;
-        }
+        public void ToggleShield(bool shieldActive) => this.shieldActive = shieldActive;
 
-        public void ToggleDoubleTurret(bool setActive)
-        {
-            if (setActive)
-                currentWeaponMode = WeaponMode.DoubleTurret;
-            else
-                currentWeaponMode = WeaponMode.SingleCanon;
-        }
+        public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
 
-        public void ToggleRapidFire(bool setActive)
-        {
-            if (setActive)
-                currentRateOfFire = playerSO.rapidFireRate;
-            else
-                currentRateOfFire = playerSO.defaultFireRate;
-        }
+        public void ToggleRapidFire(bool rapidFireActive) => currentRateOfFire = rapidFireActive ? playerSO.rapidFireRate : playerSO.defaultFireRate;
 
         #endregion
 
@@ -159,14 +141,16 @@ namespace CosmicCuration.Player
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
             GameService.Instance.GetEnemyService().ToggleEnemySpawning(false);
             GameService.Instance.GetPowerUpService().DisablePowerUpSpawning();
+            
+            // Wait for Player Ship Destruction.
             await Task.Delay(2000);
             GameService.Instance.GetUIService().EnableGameOverUI();
         }
-    }
 
-    public enum WeaponMode
-    {
-        SingleCanon,
-        DoubleTurret
-    } 
+        public enum WeaponMode
+        {
+            SingleCanon,
+            DoubleTurret
+        }
+    }
 }
