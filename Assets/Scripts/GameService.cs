@@ -21,7 +21,7 @@ public class GameService : GenericMonoSingleton<GameService>
     private PowerUpService powerUpService;
     private VFXService vfxService;
     private SoundService soundService;
-    [SerializeField] private UIView uiService;
+    [SerializeField] private UiService uiService;
 
     #endregion
 
@@ -72,7 +72,7 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public SoundService GetSoundService() => soundService;
 
-    public UIView GetUIService() => uiService; 
+    public UiService GetUIService() => uiService; 
     #endregion
 
 }

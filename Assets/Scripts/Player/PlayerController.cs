@@ -40,7 +40,7 @@ namespace CosmicCuration.Player
             currentRateOfFire = playerScriptableObject.defaultFireRate;
             currentShieldState = ShieldState.Deactivated;
             currentShootingState = ShootingState.NotFiring;
-            GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
+            GameService.Instance.GetUIService().GetGameplayUiController().UpdateHealth(currentHealth);
         }
 
 
@@ -120,7 +120,7 @@ namespace CosmicCuration.Player
             if (currentShieldState != ShieldState.Activated)
             {
                 currentHealth -= damageToTake;
-                GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
+                GameService.Instance.GetUIService().GetGameplayUiController().UpdateHealth(currentHealth);
             }
 
             if (currentHealth <= 0)

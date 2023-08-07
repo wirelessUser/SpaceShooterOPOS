@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class UIView : MonoBehaviour
+    public class UiService : MonoBehaviour
     {
         #region References
-        [SerializeField] private TextMeshProUGUI scoreText;
-        [SerializeField] private TextMeshProUGUI healthText;
+
+        [Header("MainMenu UI:")]
+        private MainMenuController mainMenuController;
+        [SerializeField] private MainMenuView mainMenuView;
+
+        [Header("Gameplay UI:")]
+        private GameplayUiController gameplayUiController;
         [SerializeField] private GameObject gameplayPanel;
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private Button playAgainButton;
@@ -20,19 +25,15 @@ namespace CosmicCuration.UI
         private int currentScore;
         #endregion
 
+        #region Getters
+        public MainMenuController GetMainMenuController() => mainMenuController;
+        public GameplayUiController GetGameplayUiController() => gameplayUiController;
+        #endregion
+
         private void Start()
         {
-            currentScore = 0;
-            IncrementScore(currentScore);
+            MainMenuController mainMenuController = new MainMenuController(mainMenuView);
         }
-
-        public void IncrementScore(int scoreToIncrement)
-        {
-            currentScore += scoreToIncrement;
-            scoreText.SetText(currentScore.ToString());
-        }
-
-        public void UpdateHealthUI(int healthToDisplay) => healthText.SetText(healthToDisplay.ToString());
 
         public void EnableGameOverUI()
         {
