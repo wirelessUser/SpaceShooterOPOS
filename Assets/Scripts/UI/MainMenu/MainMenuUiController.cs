@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.UI
 {
-    public class MainMenuController
+    public class MainMenuUiController
     {
         private MainMenuView mainMenuView;
-        public MainMenuController(MainMenuView mainMenuView)
+
+        public MainMenuUiController(MainMenuView mainMenuView)
         {
             this.mainMenuView = mainMenuView;
         }

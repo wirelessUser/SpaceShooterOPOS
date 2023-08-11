@@ -8,7 +8,7 @@ using CosmicCuration.VFX;
 using CosmicCuration.Player;
 using CosmicCuration.UI;
 using CosmicCuration.Utilities;
-using CosmicCuration.PowerUps; 
+using CosmicCuration.PowerUps;
 #endregion
 
 
@@ -45,10 +45,17 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private AudioSource backgroundMusicSource;
     #endregion
 
+    public DifficultyState currentDifficultyState;
+
     private void Start()
     {
         // Initialize all Services.
         soundService = new SoundService(soundScriptableObject, audioEffectSource, backgroundMusicSource);
+    }
+
+    public void InstantiateGameplayObjects()
+    {
+        SetDifficultyVariable();
         playerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
         powerUpService = new PowerUpService(powerUpScriptableObject);
         enemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
@@ -72,7 +79,27 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public SoundService GetSoundService() => soundService;
 
-    public UiService GetUIService() => uiService; 
+    public UiService GetUIService() => uiService;
     #endregion
 
+    private void SetDifficultyVariable()
+    {
+        switch (currentDifficultyState)
+        {
+            case DifficultyState.Easy:
+                // changing data values here
+                break;
+            case DifficultyState.Medium:
+                // changing data values here
+                break;
+            case DifficultyState.Hard:
+                // changing data values here
+                break;
+        }
+    }
+
+    public void SetTimeScale(int value)
+    {
+        Time.timeScale = value;
+    }
 }

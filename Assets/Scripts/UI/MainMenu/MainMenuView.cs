@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,14 +5,33 @@ namespace CosmicCuration.UI
 {
     public class MainMenuView : MonoBehaviour, IUiView
     {
-        private MainMenuController controller;
-        public void SetController(MainMenuController controllerToSet)
+        [SerializeField] private Button playButton;
+        [SerializeField] private Button optionsButton;
+
+        private MainMenuUiController controller;
+
+        private void Awake()
         {
-            controller = controllerToSet;
+            playButton.onClick.AddListener(OnClickPlayBtn);
+            optionsButton.onClick.AddListener(OnClickOptionsBtn);
         }
 
+        public void SetController(MainMenuUiController controllerToSet) => controller = controllerToSet;
+        
         public void DisableView() => gameObject.SetActive(false);
 
         public void EnableView() => gameObject.SetActive(true);
+
+        private void OnClickPlayBtn()
+        {
+            DisableView();
+            GameService.Instance.GetUIService().StartGameplay();
+        }
+
+        private void OnClickOptionsBtn()
+        {
+            DisableView();
+            GameService.Instance.GetUIService().EnableOptionsScreen();
+        }
     }
 }

@@ -1,7 +1,5 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
@@ -10,41 +8,57 @@ namespace CosmicCuration.UI
         #region References
 
         [Header("MainMenu UI:")]
-        private MainMenuController mainMenuController;
+        private MainMenuUiController mainMenuUiController;
         [SerializeField] private MainMenuView mainMenuView;
 
         [Header("Gameplay UI:")]
         private GameplayUiController gameplayUiController;
-        [SerializeField] private GameObject gameplayPanel;
-        [SerializeField] private GameObject gameOverPanel;
-        [SerializeField] private Button playAgainButton;
-        [SerializeField] private Button quitButton;
-        #endregion
+        [SerializeField] private GameplayUiView gameplayUiView;
 
-        #region Variables
-        private int currentScore;
+        [Header("GameOver UI:")]
+        private GameOverUiController gameOverUiController;
+        [SerializeField] private GameOverUiView gameOverUiView;
+
+        [Header("Options UI:")]
+        private OptionsUiController optionsUiController;
+        [SerializeField] private OptionsUiView optionsUiView;
+        [SerializeField] private SoundSettingView soundSettingView;
+        [SerializeField] private DifficultySettingView difficultySettingView;
+        [SerializeField] private GameInfoView gameInfoView;
         #endregion
 
         #region Getters
-        public MainMenuController GetMainMenuController() => mainMenuController;
+        public MainMenuUiController GetMainMenuController() => mainMenuUiController;
         public GameplayUiController GetGameplayUiController() => gameplayUiController;
+        public OptionsUiController GetOptionsUiController() => optionsUiController;
         #endregion
 
+        // Ui service will make screen views.
         private void Start()
         {
-            MainMenuController mainMenuController = new MainMenuController(mainMenuView);
+            mainMenuUiController = new MainMenuUiController(mainMenuView);
+            EnableMainMenuUi();
         }
 
-        public void EnableGameOverUI()
+        public void EnableMainMenuUi() => mainMenuView.EnableView();
+
+        public void EnableGameplayUi() => gameplayUiView.EnableView();
+
+        public void EnableOptionsScreen() => optionsUiView.EnableView();
+
+        public void EnableSoundSettingScreen() => soundSettingView.EnableView();
+
+        public void EnableDifficultySettingScreen() => difficultySettingView.EnableView();
+
+        public void EnableGameInfoScreen() => gameInfoView.EnableView();
+
+        public void EnableGameOverUI() => gameOverUiView.EnableView();
+
+        public void StartGameplay()
         {
-            gameplayPanel.SetActive(false);
-            gameOverPanel.SetActive(true);
-            playAgainButton.onClick.AddListener(OnPlayAgainClicked);
-            quitButton.onClick.AddListener(OnQuitClicked);
+            gameplayUiController = new GameplayUiController(gameplayUiView);
+            GameService.Instance.InstantiateGameplayObjects();
+            EnableGameplayUi();
         }
-
-        private void OnPlayAgainClicked() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
-        private void OnQuitClicked() => Application.Quit();
-    } 
+    }
 }

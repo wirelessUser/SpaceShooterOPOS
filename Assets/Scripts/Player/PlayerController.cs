@@ -111,6 +111,18 @@ namespace CosmicCuration.Player
 
         public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
+        public void SetShieldUi()
+        {
+            if (currentShieldState == ShieldState.Activated)
+            {
+                playerView.EnableShieldUi();
+            }
+            else
+            {
+                playerView.DisableShieldUi();
+            }
+        }
+
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
 
         public void ToggleRapidFire(bool rapidFireActive) => currentRateOfFire = rapidFireActive ? playerScriptableObject.rapidFireRate : playerScriptableObject.defaultFireRate;
