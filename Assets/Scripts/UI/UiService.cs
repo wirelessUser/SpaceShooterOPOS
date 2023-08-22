@@ -38,7 +38,6 @@ namespace CosmicCuration.UI
             gameInfoController = new GameInfoController(gameInfoView);
             gameplayUIController = new GameplayUIController(gameplayUIView);
             gameOverUiController = new GameOverUIController(gameOverUIView);
-
             EnableMainMenuUI();
         }
 
@@ -61,7 +60,7 @@ namespace CosmicCuration.UI
             if (value)
                 gameplayUIController.EnablePowerUpUI(type);
             else
-                gameplayUIController.EnablePowerUpUI(type);
+                gameplayUIController.DisablePowerUpUI(type);
         }
 
         public void UpdateScoreUI(int score) => gameplayUIController.IncrementScore(score);
