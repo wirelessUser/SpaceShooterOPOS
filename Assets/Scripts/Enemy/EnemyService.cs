@@ -6,18 +6,13 @@ namespace CosmicCuration.Enemy
 {
     public class EnemyService
     {
-        #region Dependencies
         private EnemyView enemyPrefab;
         private EnemyScriptableObject enemyScriptableObject;
-        #endregion
 
-        #region Variables
         private bool isSpawning;
         private float currentSpawnRate;
         private float spawnTimer; 
-        #endregion
-
-        #region Initialization
+        
         public EnemyService(EnemyView enemyPrefab, EnemyScriptableObject enemyScriptableObject)
         {
             this.enemyPrefab = enemyPrefab;
@@ -31,7 +26,6 @@ namespace CosmicCuration.Enemy
             currentSpawnRate = enemyScriptableObject.initialSpawnRate;
             spawnTimer = currentSpawnRate;
         } 
-        #endregion
 
         public void Update()
         {
@@ -47,7 +41,6 @@ namespace CosmicCuration.Enemy
             }
         }
 
-        #region Spawning Enemies
         private void SpawnEnemy()
         {
             // Get a random orientation for the enemy (Up / Down / Left / Right)
@@ -95,7 +88,6 @@ namespace CosmicCuration.Enemy
 
             return spawnPosition;
         } 
-        #endregion
 
         private void IncreaseDifficulty()
         {

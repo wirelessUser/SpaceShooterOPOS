@@ -5,7 +5,6 @@ namespace CosmicCuration.UI
 {
     public class UIService : MonoBehaviour
     {
-        #region References
 
         [Header("MainMenu UI:")]
         private MainMenuUiController mainMenuUIController;
@@ -25,13 +24,10 @@ namespace CosmicCuration.UI
         [SerializeField] private SoundSettingView soundSettingView;
         [SerializeField] private DifficultySettingView difficultySettingView;
         [SerializeField] private GameInfoView gameInfoView;
-        #endregion
-
-        #region Getters
+      
         public MainMenuUiController GetMainMenuController() => mainMenuUIController;
         public GameplayUiController GetGameplayUiController() => gameplayUiController;
         public OptionsUiController GetOptionsUiController() => optionsUiController;
-        #endregion
 
         // Ui service will make screen views.
         private void Start()

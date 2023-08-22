@@ -1,4 +1,3 @@
-#region Namespaces
 using UnityEngine;
 using TMPro;
 using CosmicCuration.Audio;
@@ -9,41 +8,32 @@ using CosmicCuration.Player;
 using CosmicCuration.UI;
 using CosmicCuration.Utilities;
 using CosmicCuration.PowerUps;
-#endregion
 
 
 public class GameService : GenericMonoSingleton<GameService>
 {
-    #region Dependencies
 
     private PlayerService playerService;
     private EnemyService enemyService;
     private PowerUpService powerUpService;
     private VFXService vfxService;
     private SoundService soundService;
+
     [SerializeField] private UIService uiService;
 
-    #endregion
-
-    #region Prefabs
     [SerializeField] private PlayerView playerPrefab;
     [SerializeField] private BulletView playerBulletPrefab;
     [SerializeField] private EnemyView enemyPrefab;
-    #endregion
 
-    #region Scriptable Objects
     [SerializeField] private PlayerScriptableObject playerScriptableObject;
     [SerializeField] private BulletScriptableObject playerBulletScriptableObject;
     [SerializeField] private EnemyScriptableObject enemyScriptableObject;
     [SerializeField] private PowerUpScriptableObject powerUpScriptableObject;
     [SerializeField] private SoundScriptableObject soundScriptableObject;
     [SerializeField] private VFXScriptableObject vfxScriptableObject;
-    #endregion
-
-    #region Scene References
+ 
     [SerializeField] private AudioSource audioEffectSource;
     [SerializeField] private AudioSource backgroundMusicSource;
-    #endregion
 
     public DifficultyState currentDifficultyState;
 
@@ -68,7 +58,6 @@ public class GameService : GenericMonoSingleton<GameService>
         enemyService?.Update();
     }
 
-    #region Getters
     public PlayerService GetPlayerService() => playerService;
 
     public EnemyService GetEnemyService() => enemyService;
@@ -80,7 +69,6 @@ public class GameService : GenericMonoSingleton<GameService>
     public SoundService GetSoundService() => soundService;
 
     public UIService GetUIService() => uiService;
-    #endregion
 
     private void SetDifficultyVariable()
     {
