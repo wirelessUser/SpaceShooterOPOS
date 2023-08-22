@@ -111,13 +111,7 @@ namespace CosmicCuration.Player
 
         public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
-        public void ToggleShieldUI(bool value)
-        {
-            if (value)
-                playerView.EnableShieldUI();
-            else
-                playerView.DisableShieldUI();
-        }
+        public void UpdateShieldUI(bool value)=> playerView.ToggleShieldUI(value);
 
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
 

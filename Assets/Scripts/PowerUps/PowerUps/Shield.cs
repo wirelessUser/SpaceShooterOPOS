@@ -11,14 +11,14 @@ namespace CosmicCuration.PowerUps
         {
             base.Activate();
             GameService.Instance.GetPlayerService().GetPlayerController().SetShieldState(ShieldState.Activated);
-            GameService.Instance.GetPlayerService().GetPlayerController().ToggleShieldUI(true);
+            GameService.Instance.GetPlayerService().GetPlayerController().UpdateShieldUI(true);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
             GameService.Instance.GetPlayerService().GetPlayerController().SetShieldState(ShieldState.Deactivated);
-            GameService.Instance.GetPlayerService().GetPlayerController().ToggleShieldUI(false);
+            GameService.Instance.GetPlayerService().GetPlayerController().UpdateShieldUI(false);
         }
     } 
 }

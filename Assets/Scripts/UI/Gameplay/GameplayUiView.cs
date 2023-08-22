@@ -21,13 +21,9 @@ namespace CosmicCuration.UI
 
         public void UpdateHealthUI(int healthToDisplay) => healthText.text = healthToDisplay.ToString();
 
-        public void EnableRapidFireText() => rapidFireText.SetActive(true);
+        public void ToggleRapidFireText(bool value) => rapidFireText.SetActive(value);
 
-        public void DisableRapidFireText() => rapidFireText.SetActive(false);
-
-        public void EnableDoubleTurretText() => doubleTurretText.SetActive(true);
-
-        public void DisableDoubleTurretText() => doubleTurretText.SetActive(false);
+        public void ToggleDoubleTurretText(bool value) => doubleTurretText.SetActive(value);
         
     }
 }

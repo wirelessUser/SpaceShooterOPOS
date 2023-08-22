@@ -39,10 +39,10 @@ namespace CosmicCuration.UI
             switch (powerUpType)
             {
                 case PowerUpType.RapidFire:
-                    gameplayUiView.EnableRapidFireText();
+                    gameplayUiView.ToggleRapidFireText();
                     break;
                 case PowerUpType.DoubleTurret:
-                    gameplayUiView.EnableDoubleTurretText();
+                    gameplayUiView.ToggleDoubleTurretText();
                     break;
             }
         }
@@ -52,10 +52,10 @@ namespace CosmicCuration.UI
             switch (powerUpType)
             {
                 case PowerUpType.RapidFire:
-                    gameplayUiView.DisableRapidFireText();
+                    gameplayUiView.ToggleRapidFireText();
                     break;
                 case PowerUpType.DoubleTurret:
-                    gameplayUiView.DisableDoubleTurretText();
+                    gameplayUiView.ToggleDoubleTurretText();
                     break;
             }
         }
