@@ -21,7 +21,7 @@ public class GameService : GenericMonoSingleton<GameService>
     private PowerUpService powerUpService;
     private VFXService vfxService;
     private SoundService soundService;
-    [SerializeField] private UiService uiService;
+    [SerializeField] private UIService uiService;
 
     #endregion
 
@@ -79,7 +79,7 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public SoundService GetSoundService() => soundService;
 
-    public UiService GetUIService() => uiService;
+    public UIService GetUIService() => uiService;
     #endregion
 
     private void SetDifficultyVariable()

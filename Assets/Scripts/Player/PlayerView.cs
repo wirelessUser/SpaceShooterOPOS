@@ -19,12 +19,12 @@ namespace CosmicCuration.Player
 
         public void TakeDamage(int damageToTake) => playerController.TakeDamage(damageToTake);
 
-        public void EnableShieldUi()
+        public void EnableShieldUI()
         {
             shield.SetActive(true);
         }
 
-        public void DisableShieldUi()
+        public void DisableShieldUI()
         {
             shield.SetActive(false);
         }

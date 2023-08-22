@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class GameOverUiView : MonoBehaviour, IUiView
+    public class GameOverUIView : MonoBehaviour, IUiView
     {
        [SerializeField] private Button playAgainButton;
        [SerializeField] private Button quitButton;

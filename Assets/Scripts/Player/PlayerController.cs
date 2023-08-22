@@ -115,11 +115,11 @@ namespace CosmicCuration.Player
         {
             if (currentShieldState == ShieldState.Activated)
             {
-                playerView.EnableShieldUi();
+                playerView.EnableShieldUI();
             }
             else
             {
-                playerView.DisableShieldUi();
+                playerView.DisableShieldUI();
             }
         }
 

@@ -30,7 +30,7 @@ namespace CosmicCuration.UI
 
         public void UpdateHealth(int healthToDisplay) => gameplayUiView.UpdateHealthUI(healthToDisplay);
 
-        public void EnablePowerUpUi(PowerUpType powerUpType)
+        public void EnablePowerUpUI(PowerUpType powerUpType)
         {
             switch (powerUpType)
             {
@@ -43,7 +43,7 @@ namespace CosmicCuration.UI
             }
         }
 
-        public void DisablePowerUpUi(PowerUpType powerUpType)
+        public void DisablePowerUpUI(PowerUpType powerUpType)
         {
             switch (powerUpType)
             {

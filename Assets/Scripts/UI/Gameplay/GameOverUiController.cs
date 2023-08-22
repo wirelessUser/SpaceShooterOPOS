@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CosmicCuration.UI
 {
-    public class GameOverUiController : IUIController
+    public class GameOverUIController : IUIController
     {
 
     }

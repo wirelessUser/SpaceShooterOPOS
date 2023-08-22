@@ -44,7 +44,7 @@ namespace CosmicCuration.UI
         private void OnClickBackBtn()
         {
             DisableView();
-            GameService.Instance.GetUIService().EnableMainMenuUi();
+            GameService.Instance.GetUIService().EnableMainMenuUI();
         }
     }
 }

@@ -3,12 +3,12 @@ using UnityEngine.SceneManagement;
 
 namespace CosmicCuration.UI
 {
-    public class UiService : MonoBehaviour
+    public class UIService : MonoBehaviour
     {
         #region References
 
         [Header("MainMenu UI:")]
-        private MainMenuUiController mainMenuUiController;
+        private MainMenuUiController mainMenuUIController;
         [SerializeField] private MainMenuView mainMenuView;
 
         [Header("Gameplay UI:")]
@@ -16,8 +16,8 @@ namespace CosmicCuration.UI
         [SerializeField] private GameplayUiView gameplayUiView;
 
         [Header("GameOver UI:")]
-        private GameOverUiController gameOverUiController;
-        [SerializeField] private GameOverUiView gameOverUiView;
+        private GameOverUIController gameOverUiController;
+        [SerializeField] private GameOverUIView gameOverUiView;
 
         [Header("Options UI:")]
         private OptionsUiController optionsUiController;
@@ -28,7 +28,7 @@ namespace CosmicCuration.UI
         #endregion
 
         #region Getters
-        public MainMenuUiController GetMainMenuController() => mainMenuUiController;
+        public MainMenuUiController GetMainMenuController() => mainMenuUIController;
         public GameplayUiController GetGameplayUiController() => gameplayUiController;
         public OptionsUiController GetOptionsUiController() => optionsUiController;
         #endregion
@@ -36,11 +36,11 @@ namespace CosmicCuration.UI
         // Ui service will make screen views.
         private void Start()
         {
-            mainMenuUiController = new MainMenuUiController(mainMenuView);
-            EnableMainMenuUi();
+            mainMenuUIController = new MainMenuUiController(mainMenuView);
+            EnableMainMenuUI();
         }
 
-        public void EnableMainMenuUi() => mainMenuView.EnableView();
+        public void EnableMainMenuUI() => mainMenuView.EnableView();
 
         public void EnableGameplayUi() => gameplayUiView.EnableView();
 
