@@ -32,7 +32,6 @@ namespace CosmicCuration.UI
         public GameplayUIController GetGameplayUiController() => gameplayUIController;
         public OptionsUIController GetOptionsUiController() => optionsUIController;
 
-        // Ui service will make screen views.
         private void Start()
         {
             mainMenuUIController = new MainMenuUIController(mainMenuView);

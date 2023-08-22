@@ -39,7 +39,6 @@ public class GameService : GenericMonoSingleton<GameService>
 
     private void Start()
     {
-        // Initialize all Services.
         soundService = new SoundService(soundScriptableObject, audioEffectSource, backgroundMusicSource);
     }
 
