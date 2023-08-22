@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,9 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class SoundSettingView : MonoBehaviour, IUiView
+    public class SoundSettingView : MonoBehaviour
     {
+        private SoundSettingController controller;
 
         [SerializeField] private Button SoundBtn;
         [SerializeField] private Button MusicBtn;
@@ -14,28 +16,18 @@ namespace CosmicCuration.UI
 
         private void Awake()
         {
-            SoundBtn.onClick.AddListener(OnClickSoundBtn);
-            MusicBtn.onClick.AddListener(OnClickMusicBtn);
-            backButton.onClick.AddListener(OnClickBackBtn);
+            SoundBtn.onClick.AddListener(SoundBtnClicked);
+            MusicBtn.onClick.AddListener(MusicBtnClicked);
+            backButton.onClick.AddListener(BackBtnClicked);
         }
 
-        public void DisableView() => gameObject.SetActive(false);
+        public void SetController(SoundSettingController controllerToSet) => controller = controllerToSet;
 
-        public void EnableView() => gameObject.SetActive(true);
+        private void BackBtnClicked()=> controller.OnClickBackBtn();
 
-        private void OnClickSoundBtn()
-        {
+        private void MusicBtnClicked() => controller.OnClickMusicBtn();
 
-        }
+        private void SoundBtnClicked() => controller.OnClickSoundBtn();
 
-        private void OnClickMusicBtn()
-        {
-
-        }
-        private void OnClickBackBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableOptionsScreen();
-        }
     }
 }

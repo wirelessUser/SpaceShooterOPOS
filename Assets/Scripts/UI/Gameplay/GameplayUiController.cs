@@ -5,16 +5,20 @@ using UnityEngine;
 
 namespace CosmicCuration.UI
 {
-    public class GameplayUiController : IUIController
+    public class GameplayUIController
     {
-        private GameplayUiView gameplayUiView;
-
+        private GameplayUIView gameplayUiView;
         private int currentScore;
-        public GameplayUiController(GameplayUiView gameplayUiView)
+
+        public GameplayUIController(GameplayUIView gameplayUiView)
         {
             this.gameplayUiView = gameplayUiView;
             this.gameplayUiView.SetController(this);
         }
+
+        public void DisableView() => gameplayUiView.gameObject.SetActive(false);
+
+        public void EnableView() => gameplayUiView.gameObject.SetActive(true);
 
         public void IncrementScore(int scoreToIncrement)
         {

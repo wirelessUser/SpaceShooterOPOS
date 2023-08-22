@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,10 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class OptionsUiView : MonoBehaviour, IUiView
+    public class OptionsUiView : MonoBehaviour
     {
+        private OptionsUIController controller;
+
         [SerializeField] private Button SoundSettingBtn;
         [SerializeField] private Button DifficultySettingBtn;
         [SerializeField] private Button GameInfoBtn;
@@ -14,37 +17,20 @@ namespace CosmicCuration.UI
 
         private void Awake()
         {
-            SoundSettingBtn.onClick.AddListener(OnClickSoundSettingBtn);
-            DifficultySettingBtn.onClick.AddListener(OnClickDifficultySettingBtn);
-            GameInfoBtn.onClick.AddListener(OnClcikGameInfoBtn);
-            backButton.onClick.AddListener(OnClickBackBtn);
-        }
-        public void DisableView() => gameObject.SetActive(false);
-
-        public void EnableView() => gameObject.SetActive(true);
-
-        private void OnClickSoundSettingBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableSoundSettingScreen();
+            SoundSettingBtn.onClick.AddListener(SoundSettingBtnClicked);
+            DifficultySettingBtn.onClick.AddListener(DifficultySettingBtnClicked);
+            GameInfoBtn.onClick.AddListener(GameInfoBtnClicked);
+            backButton.onClick.AddListener(BackBtnClicked);
         }
 
-        private void OnClickDifficultySettingBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableDifficultySettingScreen();
-        }
+        public void SetController(OptionsUIController controllerToSet) => controller = controllerToSet;
 
-        private void OnClcikGameInfoBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableGameInfoScreen();
-        }
-
-        private void OnClickBackBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableMainMenuUI();
-        }
+        private void BackBtnClicked()=> controller.OnClickBackBtn();
+        
+        private void GameInfoBtnClicked()=> controller.OnClcikGameInfoBtn();
+        
+        private void DifficultySettingBtnClicked()=> controller.OnClickDifficultySettingBtn();
+        
+        private void SoundSettingBtnClicked()=> controller.OnClickSoundSettingBtn();
     }
 }

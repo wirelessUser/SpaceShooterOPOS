@@ -1,22 +1,19 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class GameInfoView : MonoBehaviour, IUiView
+    public class GameInfoView : MonoBehaviour
     {
+        private GameInfoController controller;
+
         [SerializeField] private Button backButton;
 
-        private void Awake() => backButton.onClick.AddListener(OnClickBackBtn);
-        
-        public void DisableView() => gameObject.SetActive(false);
+        private void Awake() => backButton.onClick.AddListener(BackBtnClicked);
 
-        public void EnableView() => gameObject.SetActive(true);
+        public void SetController(GameInfoController controllerToSet) => controller = controllerToSet;
 
-        private void OnClickBackBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableOptionsScreen();
-        }
+        private void BackBtnClicked() => controller.OnClickBackBtn();
     }
 }

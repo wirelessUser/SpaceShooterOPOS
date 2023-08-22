@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,10 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class DifficultySettingView : MonoBehaviour,IUiView
+    public class DifficultySettingView : MonoBehaviour
     {
+        private DifficultySettingController controller;
+
         [SerializeField] private Button easyBtn;
         [SerializeField] private Button mediumBtn;
         [SerializeField] private Button hardBtn;
@@ -14,32 +17,20 @@ namespace CosmicCuration.UI
 
         private void Awake()
         {
-            easyBtn.onClick.AddListener(OnClickEasyBtn);
-            mediumBtn.onClick.AddListener(OnClickMediumBtn);
-            hardBtn.onClick.AddListener(OnClickHardBtn);
-            backButton.onClick.AddListener(OnClickBackBtn);
+            easyBtn.onClick.AddListener(EasyBtnClicked);
+            mediumBtn.onClick.AddListener(MediumBtnClicked);
+            hardBtn.onClick.AddListener(HardBtnClicked);
+            backButton.onClick.AddListener(BackBtnClicked);
         }
-        public void DisableView() => gameObject.SetActive(false);
 
-        public void EnableView() => gameObject.SetActive(true);
+        public void SetController(DifficultySettingController controllerToSet) => controller = controllerToSet;
 
-        private void OnClickEasyBtn() => GameService.Instance.currentDifficultyState = DifficultyState.Easy;
+        private void BackBtnClicked() => controller.OnClickBackBtn();
 
-        private void OnClickMediumBtn() => GameService.Instance.currentDifficultyState = DifficultyState.Medium;
+        private void HardBtnClicked() => controller.OnClickHardBtn();
 
-        private void OnClickHardBtn() => GameService.Instance.currentDifficultyState = DifficultyState.Hard;
-        
-        private void OnClickBackBtn()
-        {
-            DisableView();
-            GameService.Instance.GetUIService().EnableOptionsScreen();
-        }
-    }
+        private void MediumBtnClicked() => controller.OnClickMediumBtn();
 
-    public enum DifficultyState
-    {
-        Easy,
-        Medium,
-        Hard
+        private void EasyBtnClicked() => controller.OnClickEasyBtn();
     }
 }

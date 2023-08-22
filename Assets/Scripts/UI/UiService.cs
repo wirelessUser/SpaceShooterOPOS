@@ -7,52 +7,55 @@ namespace CosmicCuration.UI
     {
 
         [Header("MainMenu UI:")]
-        private MainMenuUiController mainMenuUIController;
+        private MainMenuUIController mainMenuUIController;
         [SerializeField] private MainMenuView mainMenuView;
 
         [Header("Gameplay UI:")]
-        private GameplayUiController gameplayUiController;
-        [SerializeField] private GameplayUiView gameplayUiView;
+        private GameplayUIController gameplayUIController;
+        [SerializeField] private GameplayUIView gameplayUIView;
 
         [Header("GameOver UI:")]
         private GameOverUIController gameOverUiController;
-        [SerializeField] private GameOverUIView gameOverUiView;
+        [SerializeField] private GameOverUIView gameOverUIView;
 
         [Header("Options UI:")]
-        private OptionsUiController optionsUiController;
-        [SerializeField] private OptionsUiView optionsUiView;
+        private OptionsUIController optionsUIController;
+        [SerializeField] private OptionsUiView optionsUIView;
+        private SoundSettingController soundSettingController;
         [SerializeField] private SoundSettingView soundSettingView;
+        private DifficultySettingController difficultySettingController;
         [SerializeField] private DifficultySettingView difficultySettingView;
+        private GameInfoController gameInfoController;
         [SerializeField] private GameInfoView gameInfoView;
       
-        public MainMenuUiController GetMainMenuController() => mainMenuUIController;
-        public GameplayUiController GetGameplayUiController() => gameplayUiController;
-        public OptionsUiController GetOptionsUiController() => optionsUiController;
+        public MainMenuUIController GetMainMenuController() => mainMenuUIController;
+        public GameplayUIController GetGameplayUiController() => gameplayUIController;
+        public OptionsUIController GetOptionsUiController() => optionsUIController;
 
         // Ui service will make screen views.
         private void Start()
         {
-            mainMenuUIController = new MainMenuUiController(mainMenuView);
+            mainMenuUIController = new MainMenuUIController(mainMenuView);
             EnableMainMenuUI();
         }
 
-        public void EnableMainMenuUI() => mainMenuView.EnableView();
+        public void EnableMainMenuUI() => mainMenuUIController.EnableView();
 
-        public void EnableGameplayUi() => gameplayUiView.EnableView();
+        public void EnableGameplayUi() => gameplayUIController.EnableView();
 
-        public void EnableOptionsScreen() => optionsUiView.EnableView();
+        public void EnableOptionsScreen() => optionsUIController.EnableView();
 
-        public void EnableSoundSettingScreen() => soundSettingView.EnableView();
+        public void EnableSoundSettingScreen() => soundSettingController.EnableView();
 
-        public void EnableDifficultySettingScreen() => difficultySettingView.EnableView();
+        public void EnableDifficultySettingScreen() => difficultySettingController.EnableView();
 
-        public void EnableGameInfoScreen() => gameInfoView.EnableView();
+        public void EnableGameInfoScreen() => gameInfoController.EnableView();
 
-        public void EnableGameOverUI() => gameOverUiView.EnableView();
+        public void EnableGameOverUI() => gameOverUiController.EnableView();
 
         public void StartGameplay()
         {
-            gameplayUiController = new GameplayUiController(gameplayUiView);
+            gameplayUIController = new GameplayUIController(gameplayUIView);
             GameService.Instance.InstantiateGameplayObjects();
             EnableGameplayUi();
         }

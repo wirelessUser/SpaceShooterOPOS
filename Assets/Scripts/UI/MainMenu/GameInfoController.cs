@@ -4,29 +4,19 @@ using UnityEngine;
 
 namespace CosmicCuration.UI
 {
-    public class SoundSettingController
+    public class GameInfoController
     {
-        private SoundSettingView UIView;
+        private GameInfoView UIView;
 
-        public SoundSettingController(SoundSettingView soundSettingView)
+        public GameInfoController(GameInfoView gameInfoView)
         {
-            UIView = soundSettingView;
+            UIView = gameInfoView;
             UIView.SetController(this);
         }
 
         public void DisableView() => UIView.gameObject.SetActive(false);
 
         public void EnableView() => UIView.gameObject.SetActive(true);
-
-        public void OnClickSoundBtn()
-        {
-
-        }
-
-        public void OnClickMusicBtn()
-        {
-
-        }
 
         public void OnClickBackBtn()
         {
