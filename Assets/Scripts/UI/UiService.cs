@@ -32,6 +32,13 @@ namespace CosmicCuration.UI
         private void Start()
         {
             mainMenuUIController = new MainMenuUIController(mainMenuView);
+            optionsUIController = new OptionsUIController(optionsUIView);
+            soundSettingController = new SoundSettingController(soundSettingView);
+            difficultySettingController = new DifficultySettingController(difficultySettingView);
+            gameInfoController = new GameInfoController(gameInfoView);
+            gameplayUIController = new GameplayUIController(gameplayUIView);
+            gameOverUiController = new GameOverUIController(gameOverUIView);
+
             EnableMainMenuUI();
         }
 
@@ -63,7 +70,6 @@ namespace CosmicCuration.UI
 
         public void StartGameplay()
         {
-            gameplayUIController = new GameplayUIController(gameplayUIView);
             GameService.Instance.InstantiateGameplayObjects();
             EnableGameplayUi();
         }
