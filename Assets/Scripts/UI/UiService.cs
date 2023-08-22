@@ -1,3 +1,4 @@
+using CosmicCuration.PowerUps;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,10 +28,6 @@ namespace CosmicCuration.UI
         [SerializeField] private DifficultySettingView difficultySettingView;
         private GameInfoController gameInfoController;
         [SerializeField] private GameInfoView gameInfoView;
-      
-        public MainMenuUIController GetMainMenuController() => mainMenuUIController;
-        public GameplayUIController GetGameplayUiController() => gameplayUIController;
-        public OptionsUIController GetOptionsUiController() => optionsUIController;
 
         private void Start()
         {
@@ -51,6 +48,18 @@ namespace CosmicCuration.UI
         public void EnableGameInfoScreen() => gameInfoController.EnableView();
 
         public void EnableGameOverUI() => gameOverUiController.EnableView();
+
+        public void TogglePowerUpUI(bool value, PowerUpType type)
+        {
+            if (value)
+                gameplayUIController.EnablePowerUpUI(type);
+            else
+                gameplayUIController.EnablePowerUpUI(type);
+        }
+
+        public void UpdateScoreUI(int score) => gameplayUIController.IncrementScore(score);
+
+        public void UpdateHealthUI(int hp) => gameplayUIController.UpdateHealth(hp);
 
         public void StartGameplay()
         {
