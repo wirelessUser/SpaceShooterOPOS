@@ -9,6 +9,8 @@ namespace CosmicCuration.Audio
         private AudioSource audioEffects;
         private AudioSource backgroundMusic;
 
+        public bool isSoundEffectsMuted;
+
         public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
         {
             this.soundScriptableObject = soundScriptableObject;
@@ -19,6 +21,8 @@ namespace CosmicCuration.Audio
 
         public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
         {
+            if (isSoundEffectsMuted) return;
+
             AudioClip clip = GetSoundClip(soundType);
             if (clip != null)
             {
@@ -30,7 +34,7 @@ namespace CosmicCuration.Audio
                 Debug.LogError("No Audio Clip selected.");
         }
 
-        private void PlaybackgroundMusic(SoundType soundType, bool loopSound = false)
+        public void PlaybackgroundMusic(SoundType soundType, bool loopSound = false)
         {
             AudioClip clip = GetSoundClip(soundType);
             if (clip != null)
@@ -38,6 +42,17 @@ namespace CosmicCuration.Audio
                 backgroundMusic.loop = loopSound;
                 backgroundMusic.clip = clip;
                 backgroundMusic.Play();
+            }
+            else
+                Debug.LogError("No Audio Clip selected.");
+        }
+
+        public void StopBackgroundMusic(SoundType soundType)
+        {
+            AudioClip clip = GetSoundClip(soundType);
+            if (clip != null)
+            {
+                backgroundMusic.Stop();
             }
             else
                 Debug.LogError("No Audio Clip selected.");
