@@ -15,6 +15,7 @@ public class GameService : GenericMonoSingleton<GameService>
 
     private PlayerService playerService;
     private EnemyService enemyService;
+    private DifficultyService difficultyService;
     private PowerUpService powerUpService;
     private VFXService vfxService;
     private SoundService soundService;
@@ -35,8 +36,6 @@ public class GameService : GenericMonoSingleton<GameService>
     [SerializeField] private AudioSource audioEffectSource;
     [SerializeField] private AudioSource backgroundMusicSource;
 
-    public DifficultyState currentDifficultyState;
-
     private void Start()
     {
         soundService = new SoundService(soundScriptableObject, audioEffectSource, backgroundMusicSource);
@@ -44,7 +43,7 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public void InstantiateGameplayObjects()
     {
-        SetDifficultyVariable();
+        difficultyService = new DifficultyService();
         playerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
         powerUpService = new PowerUpService(powerUpScriptableObject);
         enemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
@@ -61,6 +60,8 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public EnemyService GetEnemyService() => enemyService;
 
+    public DifficultyService GetDifficultyService() => difficultyService;
+
     public PowerUpService GetPowerUpService() => powerUpService;
 
     public VFXService GetVFXService() => vfxService;
@@ -68,22 +69,6 @@ public class GameService : GenericMonoSingleton<GameService>
     public SoundService GetSoundService() => soundService;
 
     public UIService GetUIService() => uiService;
-
-    private void SetDifficultyVariable()
-    {
-        switch (currentDifficultyState)
-        {
-            case DifficultyState.Easy:
-                // changing data values here
-                break;
-            case DifficultyState.Medium:
-                // changing data values here
-                break;
-            case DifficultyState.Hard:
-                // changing data values here
-                break;
-        }
-    }
 
     public void SetTimeScale(int value)
     {

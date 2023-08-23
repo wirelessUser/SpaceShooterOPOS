@@ -18,11 +18,11 @@ namespace CosmicCuration.UI
 
         public void EnableView() => UIView.gameObject.SetActive(true);
 
-        public void OnClickEasyBtn() => GameService.Instance.currentDifficultyState = DifficultyState.Easy;
+        public void OnClickEasyBtn() => GameService.Instance.GetDifficultyService().currentDifficultyState = DifficultyState.Easy;
 
-        public void OnClickMediumBtn() => GameService.Instance.currentDifficultyState = DifficultyState.Medium;
+        public void OnClickMediumBtn() => GameService.Instance.GetDifficultyService().currentDifficultyState = DifficultyState.Medium;
 
-        public void OnClickHardBtn() => GameService.Instance.currentDifficultyState = DifficultyState.Hard;
+        public void OnClickHardBtn() => GameService.Instance.GetDifficultyService().currentDifficultyState = DifficultyState.Hard;
 
         public void OnClickBackBtn()
         {
