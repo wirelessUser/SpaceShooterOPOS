@@ -1,31 +1,42 @@
+using CosmicCuration.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CosmicCuration.UI;
 
-public class DifficultyController 
+namespace CosmicCuration.Player
 {
-   public DifficultyController(DifficultyState difficultyState)=> SetDifficultyState(difficultyState);
-
-    private void SetDifficultyState(DifficultyState difficultyState)
+    public class DifficultyController
     {
-        switch (difficultyState)
+        private PlayerScriptableObject playerScriptableObject;
+        public DifficultyController(DifficultyState difficultyState, PlayerScriptableObject playerScriptable) => SetDifficultyState(difficultyState, playerScriptable);
+
+        private void SetDifficultyState(DifficultyState difficultyState, PlayerScriptableObject playerScriptableObject)
         {
-            case DifficultyState.Easy:
-                // changing data values here
-                break;
-            case DifficultyState.Medium:
-                // changing data values here
-                break;
-            case DifficultyState.Hard:
-                // changing data values here
-                break;
+            this.playerScriptableObject = playerScriptableObject;
+            
+            switch (difficultyState)
+            {
+                case DifficultyState.Easy:
+                    playerScriptableObject.movementSpeed = 3;
+                    break;
+
+                case DifficultyState.Medium:
+                    playerScriptableObject.movementSpeed = 5;
+                    break;
+
+                case DifficultyState.Hard:
+                    playerScriptableObject.movementSpeed = 7;
+                    break;
+
+                default:
+                    playerScriptableObject.movementSpeed = 3;
+                    break;
+            }
+
+            this.playerScriptableObject = playerScriptableObject;
         }
+
+        public PlayerScriptableObject GetDifficultyVariable() => playerScriptableObject;
+        
     }
-
-    public void GetDifficultyVariable()
-    {
-
-    }
-
 }

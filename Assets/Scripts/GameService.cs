@@ -18,6 +18,7 @@ public class GameService : GenericMonoSingleton<GameService>
     public PowerUpService PowerUpService { get; private set; }
     public VFXService VfxService { get; private set; }
     public SoundService SoundService { get; private set; }
+    public UIService UIService { get { return uiService; } }
 
     [SerializeField] private UIService uiService;
 
@@ -42,7 +43,10 @@ public class GameService : GenericMonoSingleton<GameService>
 
     public void InstantiateGameplayObjects()
     {
-        DifficultyService = new DifficultyService();
+        DifficultyService = new DifficultyService(playerScriptableObject);
+
+        playerScriptableObject = DifficultyService.GetDifficultyVariables();
+        
         PlayerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
         PowerUpService = new PowerUpService(powerUpScriptableObject);
         EnemyService = new EnemyService(enemyPrefab, enemyScriptableObject);

@@ -10,6 +10,15 @@ namespace CosmicCuration.Player
         private DifficultyController controller;
         public DifficultyState currentDifficultyState;
 
-        public DifficultyService() => controller = new DifficultyController(currentDifficultyState);
+        public DifficultyService(PlayerScriptableObject playerScriptableObject) => controller = new DifficultyController(currentDifficultyState, playerScriptableObject);
+
+        public PlayerScriptableObject GetDifficultyVariables() => controller.GetDifficultyVariable();
+    }
+
+    public enum DifficultyState
+    {
+        Easy,
+        Medium,
+        Hard
     }
 }
