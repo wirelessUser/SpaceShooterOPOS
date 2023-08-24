@@ -31,7 +31,12 @@ namespace CosmicCuration.UI
 
         private void Start()
         {
-            // TODO:    Encapsulate these lines in a seperate method: InitializeControllers()
+            InitializeController();
+            EnableMainMenuUI();
+        }
+
+        private void InitializeController()
+        {
             mainMenuUIController = new MainMenuUIController(mainMenuView);
             optionsUIController = new OptionsUIController(optionsUIView);
             soundSettingController = new SoundSettingController(soundSettingView);
@@ -39,7 +44,6 @@ namespace CosmicCuration.UI
             gameInfoController = new GameInfoController(gameInfoView);
             gameplayUIController = new GameplayUIController(gameplayUIView);
             gameOverUiController = new GameOverUIController(gameOverUIView);
-            EnableMainMenuUI();
         }
 
         public void EnableMainMenuUI() => mainMenuUIController.EnableView();
