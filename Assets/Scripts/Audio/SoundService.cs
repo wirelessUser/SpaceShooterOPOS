@@ -9,21 +9,34 @@ namespace CosmicCuration.Audio
         private AudioSource audioEffects;
         private AudioSource backgroundMusic;
 
-        // TODO: Will not be using booleans. Create an enum called SFXState with Mute and Unmute as values, even if there are only 2 values for that enum, the enum gives more readability to our code.
-        // TODO: Create a lambda method SetSFXState to update the mute state whenever needed.
-        public bool isSoundEffectsMuted;
+        private SfxState bgmState;
+        private SfxState gameplaySoundEffectsState;
 
         public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)
         {
             this.soundScriptableObject = soundScriptableObject;
             audioEffects = audioEffectSource;
             backgroundMusic = bgMusicSource;
+            bgmState = SfxState.Unmute;
+            gameplaySoundEffectsState = SfxState.Unmute;
             PlaybackgroundMusic(SoundType.BackgroundMusic, true);
         }
 
+        public void ToggleBGMState()
+        {
+            bgmState = bgmState == SfxState.Mute ? SfxState.Unmute : SfxState.Mute;
+
+            if (bgmState == SfxState.Mute)
+                StopBackgroundMusic(SoundType.BackgroundMusic);
+            else
+                PlaybackgroundMusic(SoundType.BackgroundMusic);
+        }
+
+        public void ToggleGameplaySoundEffectsState() => gameplaySoundEffectsState = gameplaySoundEffectsState == SfxState.Mute ? SfxState.Unmute : SfxState.Mute;
+        
         public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
         {
-            if (isSoundEffectsMuted) return;
+            if (gameplaySoundEffectsState==SfxState.Mute) return;
 
             AudioClip clip = GetSoundClip(soundType);
             if (clip != null)
@@ -67,5 +80,11 @@ namespace CosmicCuration.Audio
                 return st.audio;
             return null;
         }
+    }
+
+    public enum SfxState
+    {
+        Mute,
+        Unmute
     }
 }
