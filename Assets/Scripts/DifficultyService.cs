@@ -10,6 +10,7 @@ namespace CosmicCuration.Player
         private DifficultyController controller;
         public DifficultyState currentDifficultyState;
 
+        // TODO: Lambda method
         public DifficultyService()
         {
             controller = new DifficultyController(currentDifficultyState);

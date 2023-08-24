@@ -9,6 +9,8 @@ namespace CosmicCuration.Audio
         private AudioSource audioEffects;
         private AudioSource backgroundMusic;
 
+        // TODO: Will not be using booleans. Create an enum called SFXState with Mute and Unmute as values, even if there are only 2 values for that enum, the enum gives more readability to our code.
+        // TODO: Create a lambda method SetSFXState to update the mute state whenever needed.
         public bool isSoundEffectsMuted;
 
         public SoundService(SoundScriptableObject soundScriptableObject, AudioSource audioEffectSource, AudioSource bgMusicSource)

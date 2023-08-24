@@ -87,7 +87,7 @@ namespace CosmicCuration.Enemy
 
         private void SetTargetRotation()
         {
-            Vector3 direction = GameService.Instance.GetPlayerService().GetPlayerPosition() - enemyView.transform.position;
+            Vector3 direction = GameService.Instance.PlayerService.GetPlayerPosition() - enemyView.transform.position;
             targetRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f);
             currentEnemyState = EnemyState.Rotating;
         }
@@ -96,7 +96,7 @@ namespace CosmicCuration.Enemy
         {
             if (collidedGameObject.GetComponent<PlayerView>() != null)
             {
-                GameService.Instance.GetPlayerService().GetPlayerController().TakeDamage(enemyData.damageToInflict);
+                GameService.Instance.PlayerService.GetPlayerController().TakeDamage(enemyData.damageToInflict);
                 EnemyDestroyed();
             }
         }

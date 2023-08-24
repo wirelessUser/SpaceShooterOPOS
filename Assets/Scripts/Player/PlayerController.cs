@@ -137,9 +137,10 @@ namespace CosmicCuration.Player
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
 
             currentShootingState = ShootingState.NotFiring;
-            GameService.Instance.GetEnemyService().SetEnemySpawning(false);
+            GameService.Instance.EnemyService.SetEnemySpawning(false);
             GameService.Instance.GetPowerUpService().SetPowerUpSpawning(false);
-            
+
+            //  TODO: Clean these kinds of comments:
             // Wait for Player Ship Destruction.
             await Task.Delay(playerScriptableObject.deathDelay * 1000);
             GameService.Instance.GetUIService().EnableGameOverUI();
@@ -147,6 +148,7 @@ namespace CosmicCuration.Player
 
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
 
+        //  TODO: Clean these kinds of comments:
         // Enums
         private enum WeaponMode
         {

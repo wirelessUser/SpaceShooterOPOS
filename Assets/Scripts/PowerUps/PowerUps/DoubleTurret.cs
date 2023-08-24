@@ -7,14 +7,14 @@ namespace CosmicCuration.PowerUps
         public override void Activate()
         {
             base.Activate();
-            GameService.Instance.GetPlayerService().GetPlayerController().ToggleDoubleTurret(true);
+            GameService.Instance.PlayerService.GetPlayerController().ToggleDoubleTurret(true);
             GameService.Instance.GetUIService().TogglePowerUpUI(true, PowerUpType.DoubleTurret);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
-            GameService.Instance.GetPlayerService().GetPlayerController().ToggleDoubleTurret(false);
+            GameService.Instance.PlayerService.GetPlayerController().ToggleDoubleTurret(false);
             GameService.Instance.GetUIService().TogglePowerUpUI(false, PowerUpType.DoubleTurret);
         }
     }

@@ -12,9 +12,10 @@ using CosmicCuration.PowerUps;
 
 public class GameService : GenericMonoSingleton<GameService>
 {
-
-    private PlayerService playerService;
-    private EnemyService enemyService;
+    // TODO: Change Scene name from SampleScene to GameScene.
+    // TODO: Make all Services as properties with a private setter, eliminating need of Get***Service() methods. Take example of Player Service & Enemy Service.
+    public PlayerService PlayerService { get; private set; }
+    public EnemyService EnemyService { get; private set; }
     private DifficultyService difficultyService;
     private PowerUpService powerUpService;
     private VFXService vfxService;
@@ -44,22 +45,19 @@ public class GameService : GenericMonoSingleton<GameService>
     public void InstantiateGameplayObjects()
     {
         difficultyService = new DifficultyService();
-        playerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
+        PlayerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
         powerUpService = new PowerUpService(powerUpScriptableObject);
-        enemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
+        EnemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
         vfxService = new VFXService(vfxScriptableObject);
     }
 
     private void Update()
     {
         powerUpService?.Update();
-        enemyService?.Update();
+        EnemyService?.Update();
     }
 
-    public PlayerService GetPlayerService() => playerService;
-
-    public EnemyService GetEnemyService() => enemyService;
-
+    // TODO: Remove all these getters, use properties for C# instead.
     public DifficultyService GetDifficultyService() => difficultyService;
 
     public PowerUpService GetPowerUpService() => powerUpService;
