@@ -5,14 +5,9 @@ using CosmicCuration.UI;
 
 public class DifficultyController 
 {
-    // TODO: Lambda Method
-   public DifficultyController(DifficultyState difficultyState)
-    {
-        SetDifficultyVariable(difficultyState);
-    }
+   public DifficultyController(DifficultyState difficultyState)=> SetDifficultyState(difficultyState);
 
-    // TODO: Change name to SetDifficultyState()
-    private void SetDifficultyVariable(DifficultyState difficultyState)
+    private void SetDifficultyState(DifficultyState difficultyState)
     {
         switch (difficultyState)
         {
