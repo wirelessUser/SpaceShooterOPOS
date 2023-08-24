@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,6 +9,7 @@ namespace CosmicCuration.Enemy
     {
         private EnemyView enemyPrefab;
         private EnemyScriptableObject enemyScriptableObject;
+        private List<EnemyController> enemyControllers;
 
         private bool isSpawning;
         private float currentSpawnRate;
@@ -100,6 +102,14 @@ namespace CosmicCuration.Enemy
         private void ResetSpawnTimer() => spawnTimer = currentSpawnRate;
 
         public void SetEnemySpawning(bool setActive) => isSpawning = setActive;
+
+        public void DestroyActiveEnemies()
+        {
+            for (int i = 0; i < enemyControllers.Count; i++)
+            {
+                enemyControllers[i].DestroyEnemy();
+            }
+        }
     }
 
     public enum EnemyOrientation

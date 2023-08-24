@@ -63,4 +63,12 @@ public class GameService : GenericMonoSingleton<GameService>
     {
         Time.timeScale = value;
     }
+
+    public void OnGameOver()
+    {
+        PowerUpService.SetPowerUpSpawning(false);
+        PowerUpService.DestroyActivePowerUps();
+        EnemyService.SetEnemySpawning(false);
+        EnemyService.DestroyActiveEnemies();
+    }
 }

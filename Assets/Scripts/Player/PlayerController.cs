@@ -40,7 +40,7 @@ namespace CosmicCuration.Player
             currentRateOfFire = playerScriptableObject.defaultFireRate;
             currentShieldState = ShieldState.Deactivated;
             currentShootingState = ShootingState.NotFiring;
-            GameService.Instance.uIService().UpdateHealthUI(currentHealth);
+            GameService.Instance.UIService.UpdateHealthUI(currentHealth);
         }
 
 
@@ -104,7 +104,7 @@ namespace CosmicCuration.Player
         {
             BulletController bulletToFire = new BulletController(bulletPrefab, bulletScriptableObject);
             bulletToFire.ConfigureBullet(fireLocation);
-            GameService.Instance.soundService().PlaySoundEffects(SoundType.PlayerBullet);
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.PlayerBullet);
         } 
 
         // PowerUp Logic
@@ -122,7 +122,7 @@ namespace CosmicCuration.Player
             if (currentShieldState != ShieldState.Activated)
             {
                 currentHealth -= damageToTake;
-                GameService.Instance.uIService().UpdateHealthUI(currentHealth);
+                GameService.Instance.UIService.UpdateHealthUI(currentHealth);
             }
 
             if (currentHealth <= 0)
@@ -133,23 +133,20 @@ namespace CosmicCuration.Player
         {
             Object.Destroy(playerView.gameObject);
             
-            GameService.Instance.vFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
-            GameService.Instance.soundService().PlaySoundEffects(SoundType.PlayerDeath);
+            GameService.Instance.VfxService.PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.PlayerDeath);
 
             currentShootingState = ShootingState.NotFiring;
             GameService.Instance.EnemyService.SetEnemySpawning(false);
-            GameService.Instance.powerUpService().SetPowerUpSpawning(false);
+            GameService.Instance.PowerUpService.SetPowerUpSpawning(false);
 
-            //  TODO: Clean these kinds of comments:
-            // Wait for Player Ship Destruction.
             await Task.Delay(playerScriptableObject.deathDelay * 1000);
-            GameService.Instance.uIService().EnableGameOverUI();
+            GameService.Instance.UIService.EnableGameOverUI();
+            GameService.Instance.OnGameOver();
         }
 
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
 
-        //  TODO: Clean these kinds of comments:
-        // Enums
         private enum WeaponMode
         {
             SingleCanon,

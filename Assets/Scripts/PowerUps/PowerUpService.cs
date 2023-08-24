@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.PowerUps
@@ -6,6 +7,7 @@ namespace CosmicCuration.PowerUps
     public class PowerUpService
     {
         private PowerUpScriptableObject powerUpScriptableObject;
+        private List<PowerUpController> powerUpControllers;
         private bool isSpawning;
         private float spawnTimer;
 
@@ -40,6 +42,8 @@ namespace CosmicCuration.PowerUps
 
                 // Configure the PowerUp to be spawned.
                 powerUp.Configure(CalculateRandomSpawnPosition());
+
+                powerUpControllers.Add(powerUp);
             }
         }
 
@@ -77,5 +81,13 @@ namespace CosmicCuration.PowerUps
         }
 
         public void SetPowerUpSpawning(bool setSpawningActive) => isSpawning = setSpawningActive;
+
+        public void DestroyActivePowerUps()
+        {
+            for(int i=0; i < powerUpControllers.Count; i++)
+            {
+                powerUpControllers[i].DestroyPowerUp();
+            }
+        }
     } 
 }

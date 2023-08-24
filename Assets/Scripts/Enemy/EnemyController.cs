@@ -103,11 +103,13 @@ namespace CosmicCuration.Enemy
 
         private void EnemyDestroyed()
         {
-            GameService.Instance.uIService().UpdateScoreUI(enemyData.scoreToGrant);
-            GameService.Instance.soundService().PlaySoundEffects(SoundType.EnemyDeath);
-            GameService.Instance.vFXService().PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
+            GameService.Instance.UIService.UpdateScoreUI(enemyData.scoreToGrant);
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.EnemyDeath);
+            GameService.Instance.VfxService.PlayVFXAtPosition(VFXType.EnemyExplosion, enemyView.transform.position);
             Object.Destroy(enemyView.gameObject);
         }
+
+        private void DestroyEnemy() => Object.Destroy(enemyView?.gameObject);
 
         private enum EnemyState
         {
