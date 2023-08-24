@@ -21,7 +21,7 @@ namespace CosmicCuration.UI
         public void OnClickBackBtn()
         {
             DisableView();
-            GameService.Instance.GetUIService().EnableOptionsScreen();
+            GameService.Instance.uIService().EnableOptionsScreen();
         }
     }
 }

@@ -40,7 +40,7 @@ namespace CosmicCuration.Player
             currentRateOfFire = playerScriptableObject.defaultFireRate;
             currentShieldState = ShieldState.Deactivated;
             currentShootingState = ShootingState.NotFiring;
-            GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
+            GameService.Instance.uIService().UpdateHealthUI(currentHealth);
         }
 
 
@@ -104,7 +104,7 @@ namespace CosmicCuration.Player
         {
             BulletController bulletToFire = new BulletController(bulletPrefab, bulletScriptableObject);
             bulletToFire.ConfigureBullet(fireLocation);
-            GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
+            GameService.Instance.soundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 
 
         // PowerUp Logic
@@ -122,7 +122,7 @@ namespace CosmicCuration.Player
             if (currentShieldState != ShieldState.Activated)
             {
                 currentHealth -= damageToTake;
-                GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
+                GameService.Instance.uIService().UpdateHealthUI(currentHealth);
             }
 
             if (currentHealth <= 0)
@@ -133,17 +133,17 @@ namespace CosmicCuration.Player
         {
             Object.Destroy(playerView.gameObject);
             
-            GameService.Instance.GetVFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
-            GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerDeath);
+            GameService.Instance.vFXService().PlayVFXAtPosition(VFXType.PlayerExplosion, playerView.transform.position);
+            GameService.Instance.soundService().PlaySoundEffects(SoundType.PlayerDeath);
 
             currentShootingState = ShootingState.NotFiring;
             GameService.Instance.EnemyService.SetEnemySpawning(false);
-            GameService.Instance.GetPowerUpService().SetPowerUpSpawning(false);
+            GameService.Instance.powerUpService().SetPowerUpSpawning(false);
 
             //  TODO: Clean these kinds of comments:
             // Wait for Player Ship Destruction.
             await Task.Delay(playerScriptableObject.deathDelay * 1000);
-            GameService.Instance.GetUIService().EnableGameOverUI();
+            GameService.Instance.uIService().EnableGameOverUI();
         }
 
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;

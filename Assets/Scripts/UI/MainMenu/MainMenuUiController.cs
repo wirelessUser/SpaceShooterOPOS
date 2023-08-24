@@ -21,13 +21,13 @@ namespace CosmicCuration.UI
         public void OnClickPlayBtn()
         {
             DisableView();
-            GameService.Instance.GetUIService().StartGameplay();
+            GameService.Instance.uIService().StartGameplay();
         }
 
         public void OnClickOptionsBtn()
         {
             DisableView();
-            GameService.Instance.GetUIService().EnableOptionsScreen();
+            GameService.Instance.uIService().EnableOptionsScreen();
         }
     }
 }

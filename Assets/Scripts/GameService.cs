@@ -12,14 +12,12 @@ using CosmicCuration.PowerUps;
 
 public class GameService : GenericMonoSingleton<GameService>
 {
-    // TODO: Change Scene name from SampleScene to GameScene.
-    // TODO: Make all Services as properties with a private setter, eliminating need of Get***Service() methods. Take example of Player Service & Enemy Service.
     public PlayerService PlayerService { get; private set; }
     public EnemyService EnemyService { get; private set; }
-    private DifficultyService difficultyService;
-    private PowerUpService powerUpService;
-    private VFXService vfxService;
-    private SoundService soundService;
+    public DifficultyService difficultyService { get; private set; }
+    public PowerUpService powerUpService { get; private set; }
+    public VFXService vfxService { get; private set; }
+    public SoundService soundService { get; private set; }
 
     [SerializeField] private UIService uiService;
 
@@ -56,17 +54,6 @@ public class GameService : GenericMonoSingleton<GameService>
         powerUpService?.Update();
         EnemyService?.Update();
     }
-
-    // TODO: Remove all these getters, use properties for C# instead.
-    public DifficultyService GetDifficultyService() => difficultyService;
-
-    public PowerUpService GetPowerUpService() => powerUpService;
-
-    public VFXService GetVFXService() => vfxService;
-
-    public SoundService GetSoundService() => soundService;
-
-    public UIService GetUIService() => uiService;
 
     public void SetTimeScale(int value)
     {
