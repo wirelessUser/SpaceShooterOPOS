@@ -17,7 +17,6 @@ namespace CosmicCuration.UI
 
         private void OnEnable()
         {
-            GameService.Instance.SetTimeScale(0);
             playAgainButton.onClick.AddListener(PlayAgainClicked);
             quitButton.onClick.AddListener(QuitClicked);
         }

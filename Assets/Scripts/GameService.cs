@@ -59,9 +59,10 @@ public class GameService : GenericMonoSingleton<GameService>
         EnemyService?.Update();
     }
 
-    public void SetTimeScale(int value)
+    private void CalculateAndSaveHighScore()
     {
-        Time.timeScale = value;
+        int score = PlayerService.GetHighScore();
+        PlayerPrefs.SetInt("HighScore", score);
     }
 
     public void OnGameOver()
@@ -70,5 +71,7 @@ public class GameService : GenericMonoSingleton<GameService>
         PowerUpService.DestroyActivePowerUps();
         EnemyService.SetEnemySpawning(false);
         EnemyService.DestroyActiveEnemies();
+
+        CalculateAndSaveHighScore();
     }
 }

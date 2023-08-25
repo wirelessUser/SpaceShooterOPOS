@@ -70,6 +70,8 @@ namespace CosmicCuration.UI
 
         public void UpdateScoreUI(int score) => gameplayUIController.IncrementScore(score);
 
+        public void UpdateHighScoreUI(int score) => gameplayUIController.SetHighScore(score);
+
         public void UpdateHealthUI(int hp) => gameplayUIController.UpdateHealth(hp);
 
         public void StartGameplay()

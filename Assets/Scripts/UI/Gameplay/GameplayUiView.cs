@@ -9,6 +9,7 @@ namespace CosmicCuration.UI
     public class GameplayUIView : MonoBehaviour
     {
         [SerializeField] private Text scoreText;
+        [SerializeField] private Text highScoreText;
         [SerializeField] private Text healthText;
         [SerializeField] private GameObject rapidFireText;
         [SerializeField] private GameObject doubleTurretText;
@@ -18,6 +19,8 @@ namespace CosmicCuration.UI
         public void SetController(GameplayUIController controllerToSet) => controller = controllerToSet;
 
         public void UpdateScoreUI(int scoreToIncrement) => scoreText.text = scoreToIncrement.ToString();
+
+        public void UpdateHighScoreUI(int scoreToIncrement) => highScoreText.text = scoreToIncrement.ToString();
 
         public void UpdateHealthUI(int healthToDisplay) => healthText.text = healthToDisplay.ToString();
 

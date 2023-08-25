@@ -9,6 +9,7 @@ namespace CosmicCuration.UI
     {
         private GameplayUIView gameplayUiView;
         private int currentScore;
+        private int highScore;
 
         public GameplayUIController(GameplayUIView gameplayUiView)
         {
@@ -24,8 +25,20 @@ namespace CosmicCuration.UI
         {
             currentScore += scoreToIncrement;
             gameplayUiView.UpdateScoreUI(currentScore);
+
+            if (currentScore > highScore)
+            {
+                highScore = currentScore;
+                gameplayUiView.UpdateHighScoreUI(highScore);
+            }
         }
 
+        public void SetHighScore(int highScore)
+        {
+            this.highScore = highScore;
+            gameplayUiView.UpdateHighScoreUI(highScore);
+        }
+        
         public void ResetScore()
         {
             currentScore = 0;
