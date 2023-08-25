@@ -21,25 +21,25 @@ namespace CosmicCuration.UI
         public void OnClickSoundSettingBtn()
         {
             DisableView();
-            GameService.Instance.uIService().EnableSoundSettingScreen();
+            GameService.Instance.UIService.EnableSoundSettingScreen();
         }
 
         public void OnClickDifficultySettingBtn()
         {
             DisableView();
-            GameService.Instance.uIService().EnableDifficultySettingScreen();
+            GameService.Instance.UIService.EnableDifficultySettingScreen();
         }
 
         public void OnClcikGameInfoBtn()
         {
             DisableView();
-            GameService.Instance.uIService().EnableGameInfoScreen();
+            GameService.Instance.UIService.EnableGameInfoScreen();
         }
 
         public void OnClickBackBtn()
         {
             DisableView();
-            GameService.Instance.uIService().EnableMainMenuUI();
+            GameService.Instance.UIService.EnableMainMenuUI();
         }
     }
 }

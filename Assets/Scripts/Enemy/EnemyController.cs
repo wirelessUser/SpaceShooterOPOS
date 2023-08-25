@@ -109,7 +109,7 @@ namespace CosmicCuration.Enemy
             Object.Destroy(enemyView.gameObject);
         }
 
-        private void DestroyEnemy() => Object.Destroy(enemyView?.gameObject);
+        public void DestroyEnemy() => Object.Destroy(enemyView?.gameObject);
 
         private enum EnemyState
         {

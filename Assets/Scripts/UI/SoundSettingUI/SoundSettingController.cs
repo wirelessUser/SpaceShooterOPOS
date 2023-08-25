@@ -19,14 +19,14 @@ namespace CosmicCuration.UI
 
         public void EnableView() => UIView.gameObject.SetActive(true);
 
-        public void OnClickSoundBtn()=> GameService.Instance.soundService().ToggleGameplaySoundEffectsState();
+        public void OnClickSoundBtn()=> GameService.Instance.SoundService.ToggleGameplaySoundEffectsState();
 
-        public void OnClickMusicBtn()=> GameService.Instance.soundService().ToggleBGMState();
+        public void OnClickMusicBtn()=> GameService.Instance.SoundService.ToggleBGMState();
  
         public void OnClickBackBtn()
         {
             DisableView();
-            GameService.Instance.uIService().EnableOptionsScreen();
+            GameService.Instance.UIService.EnableOptionsScreen();
         }
     }
 }
