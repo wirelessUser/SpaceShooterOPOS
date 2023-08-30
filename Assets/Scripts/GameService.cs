@@ -39,12 +39,11 @@ public class GameService : GenericMonoSingleton<GameService>
     private void Start()
     {
         SoundService = new SoundService(soundScriptableObject, audioEffectSource, backgroundMusicSource);
+        DifficultyService = new DifficultyService(playerScriptableObject);
     }
 
     public void InstantiateGameplayObjects()
     {
-        DifficultyService = new DifficultyService(playerScriptableObject);
-
         playerScriptableObject = DifficultyService.GetDifficultyVariables();
         
         PlayerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
