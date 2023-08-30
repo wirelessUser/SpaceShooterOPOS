@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class MainMenuView : MonoBehaviour
+    public class MainMenuUIView : MonoBehaviour
     {
         [SerializeField] private Button playButton;
         [SerializeField] private Button optionsButton;

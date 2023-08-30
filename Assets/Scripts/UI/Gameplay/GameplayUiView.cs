@@ -8,9 +8,9 @@ namespace CosmicCuration.UI
 {
     public class GameplayUIView : MonoBehaviour
     {
-        [SerializeField] private Text scoreText;
-        [SerializeField] private Text highScoreText;
-        [SerializeField] private Text healthText;
+        [SerializeField] private TMP_Text scoreText;
+        [SerializeField] private TMP_Text highScoreText;
+        [SerializeField] private TMP_Text healthText;
         [SerializeField] private GameObject rapidFireText;
         [SerializeField] private GameObject doubleTurretText;
 

@@ -1,3 +1,4 @@
+using CosmicCuration.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,9 @@ namespace CosmicCuration.UI
 {
     public class OptionsUIController
     {
-        private OptionsUiView UIView;
+        private OptionsUIView UIView;
 
-        public OptionsUIController(OptionsUiView optionsUiView)
+        public OptionsUIController(OptionsUIView optionsUiView)
         {
             UIView = optionsUiView;
             UIView.SetController(this);

@@ -9,7 +9,7 @@ namespace CosmicCuration.UI
 
         [Header("MainMenu UI:")]
         private MainMenuUIController mainMenuUIController;
-        [SerializeField] private MainMenuView mainMenuView;
+        [SerializeField] private MainMenuUIView mainMenuView;
 
         [Header("Gameplay UI:")]
         private GameplayUIController gameplayUIController;
@@ -21,7 +21,7 @@ namespace CosmicCuration.UI
 
         [Header("Options UI:")]
         private OptionsUIController optionsUIController;
-        [SerializeField] private OptionsUiView optionsUIView;
+        [SerializeField] private OptionsUIView optionsUIView;
         private SoundSettingController soundSettingController;
         [SerializeField] private SoundSettingView soundSettingView;
         private DifficultySettingController difficultySettingController;

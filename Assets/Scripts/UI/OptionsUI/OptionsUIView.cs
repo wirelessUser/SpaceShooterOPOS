@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CosmicCuration.UI
 {
-    public class OptionsUiView : MonoBehaviour
+    public class OptionsUIView : MonoBehaviour
     {
         private OptionsUIController controller;
 
