@@ -14,6 +14,7 @@ namespace CosmicCuration.PowerUps
         public PowerUpService(PowerUpScriptableObject powerUpScriptableObject)
         {
             this.powerUpScriptableObject = powerUpScriptableObject;
+            powerUpControllers = new List<PowerUpController>();
             spawnTimer = this.powerUpScriptableObject.spawnRate;
             isSpawning = true;
         }
