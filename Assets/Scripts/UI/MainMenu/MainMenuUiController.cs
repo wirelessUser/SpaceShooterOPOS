@@ -1,3 +1,4 @@
+using CosmicCuration.Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,18 +8,19 @@ namespace CosmicCuration.UI
 {
     public class MainMenuUIController
     {
-        private MainMenuView mainMenuView;
+        private MainMenuUIView mainMenuView;
 
-        public MainMenuUIController(MainMenuView mainMenuView)
+        public MainMenuUIController(MainMenuUIView mainMenuView)
         {
             this.mainMenuView = mainMenuView;
+            this.mainMenuView.SetController(this);
         }
 
         public void DisableView() => mainMenuView.gameObject.SetActive(false);
 
         public void EnableView() => mainMenuView.gameObject.SetActive(true);
 
-        public void OnClickPlayBtn()
+        public async void OnClickPlayBtn()
         {
             DisableView();
             GameService.Instance.UIService.StartGameplay();
