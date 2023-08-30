@@ -21,24 +21,28 @@ namespace CosmicCuration.UI
         public void OnClickSoundSettingBtn()
         {
             DisableView();
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
             GameService.Instance.UIService.EnableSoundSettingScreen();
         }
 
         public void OnClickDifficultySettingBtn()
         {
             DisableView();
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
             GameService.Instance.UIService.EnableDifficultySettingScreen();
         }
 
         public void OnClcikGameInfoBtn()
         {
             DisableView();
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
             GameService.Instance.UIService.EnableGameInfoScreen();
         }
 
         public void OnClickBackBtn()
         {
             DisableView();
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
             GameService.Instance.UIService.EnableMainMenuUI();
         }
     }

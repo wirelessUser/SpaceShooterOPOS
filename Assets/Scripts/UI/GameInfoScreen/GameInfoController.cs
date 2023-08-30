@@ -1,3 +1,4 @@
+using CosmicCuration.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace CosmicCuration.UI
         public void OnClickBackBtn()
         {
             DisableView();
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
             GameService.Instance.UIService.EnableOptionsScreen();
         }
     }

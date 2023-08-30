@@ -1,3 +1,4 @@
+using CosmicCuration.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,8 +20,16 @@ namespace CosmicCuration.UI
 
         public void EnableView() => UIView.gameObject.SetActive(true);
 
-        public void OnPlayAgainClicked() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        public void OnPlayAgainClicked()
+        {
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
-        public void OnQuitClicked() => Application.Quit();
+        public void OnQuitClicked()
+        {
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
+            Application.Quit();
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace CosmicCuration.UI
         public void OnClickOptionsBtn()
         {
             DisableView();
+            GameService.Instance.SoundService.PlaySoundEffects(SoundType.ButtonClick);
             GameService.Instance.UIService.EnableOptionsScreen();
         }
     }
