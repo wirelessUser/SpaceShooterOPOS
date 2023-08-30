@@ -20,7 +20,7 @@ namespace CosmicCuration.UI
 
         public void EnableView() => mainMenuView.gameObject.SetActive(true);
 
-        public async void OnClickPlayBtn()
+        public void OnClickPlayBtn()
         {
             DisableView();
             GameService.Instance.UIService.StartGameplay();
