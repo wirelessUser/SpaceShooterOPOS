@@ -17,6 +17,10 @@ namespace CosmicCuration.Player
 
         public PlayerController GetPlayerController() => playerController;
 
+        public Vector3 GetPlayerPosition() => playerController.GetPlayerPosition();
+
+        public int GetCurrentScore() => currentScore;
+       
         private void UpdateHighScore()
         {
             int score = PlayerPrefs.GetInt("HighScore", 0);
@@ -38,7 +42,5 @@ namespace CosmicCuration.Player
 
             return highScore;
         }
-        
-        public Vector3 GetPlayerPosition() => playerController.GetPlayerPosition();
     } 
 }

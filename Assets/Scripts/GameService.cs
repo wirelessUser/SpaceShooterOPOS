@@ -72,5 +72,6 @@ public class GameService : GenericMonoSingleton<GameService>
         EnemyService.DestroyActiveEnemies();
 
         CalculateAndSaveHighScore();
+        PlayerService.UpdateScoreValue(0);
     }
 }

@@ -68,9 +68,9 @@ namespace CosmicCuration.UI
                 gameplayUIController.DisablePowerUpUI(type);
         }
 
-        public void UpdateScoreUI(int score) => gameplayUIController.IncrementScore(score);
+        public void UpdateScoreUI(int score) => gameplayUIController.ChangeScoreInUI(score);
 
-        public void UpdateHighScoreUI(int score) => gameplayUIController.SetHighScore(score);
+        public void UpdateHighScoreUI(int score) => gameplayUIController.ChangeHighScoreInUI(score);
 
         public void UpdateHealthUI(int hp) => gameplayUIController.UpdateHealth(hp);
 
