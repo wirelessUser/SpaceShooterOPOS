@@ -3178,7 +3178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundBtn: {fileID: 1214728423}
+  soundONIndicator: {fileID: 1379007786}
   MusicBtn: {fileID: 1483990606}
+  musicONIndicator: {fileID: 1925447110}
   backButton: {fileID: 1221795728}
 --- !u!114 &693010590
 MonoBehaviour:

@@ -33,6 +33,10 @@ namespace CosmicCuration.Audio
         }
 
         public void ToggleGameplaySoundEffectsState() => gameplaySoundEffectsState = gameplaySoundEffectsState == SfxState.Mute ? SfxState.Unmute : SfxState.Mute;
+
+        public SfxState GetSoundState() => gameplaySoundEffectsState;
+
+        public SfxState GetMusicState() => bgmState;
         
         public void PlaySoundEffects(SoundType soundType, bool loopSound = false)
         {

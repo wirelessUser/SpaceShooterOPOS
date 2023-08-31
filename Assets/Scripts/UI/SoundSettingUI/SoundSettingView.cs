@@ -11,7 +11,9 @@ namespace CosmicCuration.UI
         private SoundSettingController controller;
 
         [SerializeField] private Button SoundBtn;
+        [SerializeField] private GameObject soundONIndicator;
         [SerializeField] private Button MusicBtn;
+        [SerializeField] private GameObject musicONIndicator;
         [SerializeField] private Button backButton;
 
         private void Awake()
@@ -29,5 +31,8 @@ namespace CosmicCuration.UI
 
         private void SoundBtnClicked() => controller.OnClickSoundBtn();
 
+        public void ToggleSoundIndicator(bool value) => soundONIndicator.SetActive(value);
+
+        public void ToggleMusicIndicator(bool value) => musicONIndicator.SetActive(value);
     }
 }
