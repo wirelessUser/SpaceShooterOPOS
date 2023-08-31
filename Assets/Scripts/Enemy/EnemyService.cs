@@ -27,6 +27,7 @@ namespace CosmicCuration.Enemy
             isSpawning = true;
             currentSpawnRate = enemyScriptableObject.initialSpawnRate;
             spawnTimer = currentSpawnRate;
+            enemyControllers = new List<EnemyController>();
         } 
 
         public void Update()
