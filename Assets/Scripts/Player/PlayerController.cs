@@ -120,13 +120,12 @@ namespace CosmicCuration.Player
         public void TakeDamage(int damageToTake)
         {
             if (currentShieldState != ShieldState.Activated)
-            {
                 currentHealth -= damageToTake;
-                GameService.Instance.UIService.UpdateHealthUI(currentHealth);
-            }
 
             if (currentHealth <= 0)
                 PlayerDeath();
+
+            GameService.Instance.UIService.UpdateHealthUI(currentHealth);
         }
 
         private async void PlayerDeath()
