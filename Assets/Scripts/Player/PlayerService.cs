@@ -8,39 +8,37 @@ namespace CosmicCuration.Player
         private PlayerController playerController;
 
         private int currentScore;
+        private int highScore;
 
-        public PlayerService(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)
-        {
-            playerController = new PlayerController(playerViewPrefab, playerScriptableObject, bulletPrefab, bulletScriptableObject);
-            UpdateHighScore();
-        }
-
+        public PlayerService(PlayerView playerViewPrefab, PlayerScriptableObject playerScriptableObject, BulletView bulletPrefab, BulletScriptableObject bulletScriptableObject)=> playerController = new PlayerController(playerViewPrefab, playerScriptableObject, bulletPrefab, bulletScriptableObject);
+        
         public PlayerController GetPlayerController() => playerController;
 
         public Vector3 GetPlayerPosition() => playerController.GetPlayerPosition();
 
         public int GetCurrentScore() => currentScore;
-       
-        private void UpdateHighScore()
-        {
-            int score = PlayerPrefs.GetInt("HighScore", 0);
-            GameService.Instance.UIService.UpdateHighScoreUI(score);
-        }
 
-       public void UpdateScoreValue(int score)
+        public void UpdateScoreValue(int score)
         {
-            currentScore = score;
-            GameService.Instance.UIService.UpdateScoreUI(score);
+            currentScore += score;
+            GameService.Instance.UIService.UpdateScoreUI(currentScore);
+
+            if (currentScore > highScore)
+            {
+                highScore = currentScore;
+                PlayerPrefs.SetInt("HighScore", highScore);
+            }
         }
 
         public int GetHighScore()
         {
-            int highScore = PlayerPrefs.GetInt("HighScore", 0);
+            if (PlayerPrefs.HasKey("HighScore"))
+                highScore = PlayerPrefs.GetInt("HighScore");
 
             if (currentScore > highScore)
                 highScore = currentScore;
 
             return highScore;
         }
-    } 
+    }
 }

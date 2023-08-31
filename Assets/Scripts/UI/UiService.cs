@@ -70,7 +70,11 @@ namespace CosmicCuration.UI
 
         public void UpdateScoreUI(int score) => gameplayUIController.ChangeScoreInUI(score);
 
-        public void UpdateHighScoreUI(int score) => gameplayUIController.ChangeHighScoreInUI(score);
+        public void UpdateHighScoreUI()
+        {
+            int score = GameService.Instance.PlayerService.GetHighScore();
+            gameplayUIController.ChangeHighScoreInUI(score);
+        }
 
         public void UpdateHealthUI(int hp) => gameplayUIController.UpdateHealth(hp);
 
@@ -78,6 +82,7 @@ namespace CosmicCuration.UI
         {
             GameService.Instance.InstantiateGameplayObjects();
             EnableGameplayUi();
+            UpdateHighScoreUI();
         }
     }
 }
