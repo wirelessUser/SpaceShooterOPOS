@@ -8,12 +8,10 @@ namespace CosmicCuration.Player
 {
     public class PlayerController
     {
-        // Dependencies
         private PlayerView playerView;
         private PlayerScriptableObject playerScriptableObject;
         private BulletPool bulletPool;
 
-        // Variables
         private WeaponMode currentWeaponMode;
         private ShootingState currentShootingState;
         private ShieldState currentShieldState;
@@ -40,8 +38,6 @@ namespace CosmicCuration.Player
             GameService.Instance.GetUIService().UpdateHealthUI(currentHealth);
         }
 
-
-        // Input Handling:
         public void HandlePlayerInput()
         {
             HandlePlayerMovement();
@@ -77,7 +73,6 @@ namespace CosmicCuration.Player
                 currentShootingState = ShootingState.NotFiring;
         }
 
-        // Firing Weapons:
         private async void FireWeapon()
         {
             currentShootingState = ShootingState.Firing;
@@ -104,7 +99,6 @@ namespace CosmicCuration.Player
             GameService.Instance.GetSoundService().PlaySoundEffects(SoundType.PlayerBullet);
         } 
 
-        // PowerUp Logic:
         public void SetShieldState(ShieldState shieldStateToSet) => currentShieldState = shieldStateToSet;
 
         public void ToggleDoubleTurret(bool doubleTurretActive) => currentWeaponMode = doubleTurretActive ? WeaponMode.DoubleTurret : WeaponMode.SingleCanon;
@@ -141,7 +135,6 @@ namespace CosmicCuration.Player
 
         public Vector3 GetPlayerPosition() => playerView != null ? playerView.transform.position : default;
 
-        // Enums
         private enum WeaponMode
         {
             SingleCanon,
